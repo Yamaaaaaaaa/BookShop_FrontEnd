@@ -1,0 +1,4 @@
+- Web vital: Tải npm i web-vitals là đc
+- Lỗi `NPM ERR CODE ERESOLVE` bản React-19: 
+  - npx create-react-app book_shop --legacy-peer-deps : buộc npm bỏ qua xung đột dependency
+  - npm install ajv@latest
