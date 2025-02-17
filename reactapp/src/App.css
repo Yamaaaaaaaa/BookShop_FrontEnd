@@ -6,37 +6,6 @@
   border-radius: 20px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.city-display {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin-right: 10px;
-}
-
-.weather-info, .forecast, .temperature-chart, .rainfall-chart {
-  margin-bottom: 20px;
-}
-
-.forecast-day {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-}
 
 /* Light theme */
 .light {
