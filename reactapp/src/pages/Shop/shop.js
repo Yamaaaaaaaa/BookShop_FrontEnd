@@ -229,7 +229,7 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      <div className={openSideBarFilter ? "shop__sidebarfilter open": "shop__sidebarfilter"}>
+      <div className={openSideBarFilter ? "shop__sidebarfilter openFilterSidebar": "shop__sidebarfilter closeFilterSidebar"}>
         <div className="shop__sidebarfilter__title">
           <h1>Filter Option</h1>
           <button onClick={() => setOpenSideBarFilter(false)}><RxExit /></button>

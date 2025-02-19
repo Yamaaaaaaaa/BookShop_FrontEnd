@@ -228,9 +228,7 @@
     z-index: 100;
     padding: 0px 15px;
     color: #233180;
-    display: none;
-    opacity: 0;
-    z-index: 0;
+
     &__title{
       display: flex;
       justify-content: space-between;
@@ -254,14 +252,15 @@
   }
 }
 
-.open{
-  opacity: 1;
-  z-index: 100;
-  display: block;
+.openFilterSidebar{
+  // opacity: 1;
+  // z-index: 100;
+  // display: block;
   transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-  transform: translateX(0);
+  transform: translateX(0%);
 }
-.close{
+.closeFilterSidebar{
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
   transform: translateX(-100%);
-  display: none;
+  // display: none;
 }
