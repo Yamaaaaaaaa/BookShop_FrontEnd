@@ -1,6 +1,7 @@
 import { useState } from "react"
 import "./shop.scss"
 import { Link } from "react-router-dom"
+import { RxExit } from "react-icons/rx";
 
 export const books = [
   {
@@ -70,6 +71,7 @@ const Shop = () => {
   const [favorites, setFavorites] = useState([])
   const [selectedCategories, setSelectedCategories] = useState([])
   const [selectedPublishers, setSelectedPublishers] = useState([])
+  const [openSideBarFilter, setOpenSideBarFilter] = useState(false)
 
   const toggleSection = (section) => {
     setOpenSection(openSection === section ? null : section)
@@ -104,16 +106,19 @@ const Shop = () => {
       (selectedPublishers.length === 0 || selectedPublishers.includes(book.publisher)),
   )
 
+
+
   return (
     <main className="shop">
       <div className="shop__container">
         <aside className="shop__sidebar">
           <h2>Filter Options</h2>
 
+          {/* Chọn khoảng giá */}
           <div className="shop__filter-section">
-            <button className="shop__section-header" onClick={() => toggleSection("price")}>
+            <button className="shop__filter-section__section-header" onClick={() => toggleSection("price")}>
               Price Range
-              <span className="shop__arrow">{openSection === "price" ? "▼" : "▶"}</span>
+              <span className="shop__filter-section__arrow">{openSection === "price" ? "▼" : "▶"}</span>
             </button>
             <div className={`shop__section-content ${openSection === "price" ? "active" : ""}`}>
               <div className="shop__price-range">
@@ -131,10 +136,11 @@ const Shop = () => {
               </div>
             </div>
           </div>
+          {/* Lọc theo Category */}
           <div className="shop__filter-section">
-            <button className="shop__section-header" onClick={() => toggleSection("category")}>
+            <button className="shop__filter-section__section-header" onClick={() => toggleSection("category")}>
               Shop by Category
-              <span className="shop__arrow">{openSection === "category" ? "▼" : "▶"}</span>
+              <span className="shop__filter-section__arrow">{openSection === "category" ? "▼" : "▶"}</span>
             </button>
             <div className={`shop__section-content ${openSection === "category" ? "active" : ""}`}>
               {categories.map((category) => (
@@ -150,10 +156,11 @@ const Shop = () => {
               ))}
             </div>
           </div>
+          {/* Lọc theo nhà xuất bản */}
           <div className="shop__filter-section">
-            <button className="shop__section-header" onClick={() => toggleSection("publisher")}>
+            <button className="shop__filter-section__section-header" onClick={() => toggleSection("publisher")}>
               Choose Publisher
-              <span className="shop__arrow">{openSection === "publisher" ? "▼" : "▶"}</span>
+              <span className="shop__filter-section__arrow">{openSection === "publisher" ? "▼" : "▶"}</span>
             </button>
             <div className={`shop__section-content ${openSection === "publisher" ? "active" : ""}`}>
               {publishers.map((publisher) => (
@@ -169,8 +176,9 @@ const Shop = () => {
               ))}
             </div>
           </div>
+          {/* Reset Filter */}
           <div className="shop__filter-section">
-            <button className="shop__section-header" onClick={handleResetFilter}>
+            <button className="shop__filter-section__section-header" onClick={handleResetFilter}>
               Reset Filter
             </button>
           </div>
@@ -186,6 +194,9 @@ const Shop = () => {
               <select>
                 <option>Newest</option>
               </select>
+              <button onClick={() => setOpenSideBarFilter(true)}>
+                <span>Filter</span>
+              </button>
             </div>
           </div>
 
@@ -217,6 +228,80 @@ const Shop = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div className={openSideBarFilter ? "shop__sidebarfilter open": "shop__sidebarfilter"}>
+        <div className="shop__sidebarfilter__title">
+          <h1>Filter Option</h1>
+          <button onClick={() => setOpenSideBarFilter(false)}><RxExit /></button>
+        </div>
+        
+        <div className="shop__filter-section">
+            <button className="shop__filter-section__section-header" onClick={() => toggleSection("price")}>
+              Price Range
+              <span className="shop__filter-section__arrow">{openSection === "price" ? "▼" : "▶"}</span>
+            </button>
+            <div className={`shop__section-content ${openSection === "price" ? "active" : ""}`}>
+              <div className="shop__price-range">
+                <span>0.0</span>
+                <div className="shop__range-slider">
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={priceRange}
+                    onChange={(e) => setPriceRange(Number(e.target.value))}
+                  />
+                </div>
+                <span>80.00</span>
+              </div>
+            </div>
+          </div>
+          {/* Lọc theo Category */}
+          <div className="shop__filter-section">
+            <button className="shop__filter-section__section-header" onClick={() => toggleSection("category")}>
+              Shop by Category
+              <span className="shop__filter-section__arrow">{openSection === "category" ? "▼" : "▶"}</span>
+            </button>
+            <div className={`shop__section-content ${openSection === "category" ? "active" : ""}`}>
+              {categories.map((category) => (
+                <label key={category} className="shop__checkbox-label">
+                  <input
+                    type="checkbox"
+                    value={category}
+                    checked={selectedCategories.includes(category)}
+                    onChange={() => toggleCategory(category)}
+                  />
+                  {category}
+                </label>
+              ))}
+            </div>
+          </div>
+          {/* Lọc theo nhà xuất bản */}
+          <div className="shop__filter-section">
+            <button className="shop__filter-section__section-header" onClick={() => toggleSection("publisher")}>
+              Choose Publisher
+              <span className="shop__filter-section__arrow">{openSection === "publisher" ? "▼" : "▶"}</span>
+            </button>
+            <div className={`shop__section-content ${openSection === "publisher" ? "active" : ""}`}>
+              {publishers.map((publisher) => (
+                <label key={publisher} className="shop__checkbox-label">
+                  <input
+                    type="checkbox"
+                    value={publisher}
+                    checked={selectedPublishers.includes(publisher)}
+                    onChange={() => togglePublisher(publisher)}
+                  />
+                  {publisher}
+                </label>
+              ))}
+            </div>
+          </div>
+          {/* Reset Filter */}
+          <div className="shop__filter-section">
+            <button className="shop__filter-section__section-header" onClick={handleResetFilter}>
+              Reset Filter
+            </button>
+          </div>
       </div>
     </main>
   )

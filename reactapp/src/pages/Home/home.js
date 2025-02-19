@@ -84,27 +84,27 @@ const Home = () => {
     <main>
       <div className="hero-section">
         <div className="hero-section__content">
-          <span className="hero-section__category">BEST MANAGEMENT</span>
-          <h1>Think and Grow Rich</h1>
-          <p className="hero-section__author">Napoleon Hill | Business & Strategy</p>
-          <p className="hero-section__description">
+          <span className="hero-section__content__category">BEST MANAGEMENT</span>
+          <h1 className="hero-section__content__title">Think and Grow Rich</h1>
+          <p className="hero-section__content__author">Napoleon Hill | Business & Strategy</p>
+          <p className="hero-section__content__description">
             It is a long established fact that a reader will be distracted by the readable content of a page when
             looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
           </p>
-          <div className="hero-section__price-section">
-            <span className="current-price">$17.2</span>
-            <span className="original-price">$15.25</span>
-            <span className="discount">15% OFF</span>
+          <div className="hero-section__content__price-section">
+            <span className="hero-section__content__price-section__current-price">$17.2</span>
+            <span className="hero-section__content__price-section__original-price">$15.25</span>
+            <span className="hero-section__content__price-section__discount">15% OFF</span>
           </div>
-          <div className="hero-section__cta-buttons">
-            <button className="buy-now">Buy Now</button>
-            <button className="see-details">See Details</button>
+          <div className="hero-section__content__cta-buttons">
+            <button className="hero-section__content__cta-buttons__buy-now">Buy Now</button>
+            <button className="hero-section__content__cta-buttons__see-details">See Details</button>
           </div>
         </div>
       </div>
       <div className="recommended-section">
         <div className="container">
-          <h2>Recommended For You</h2>
+          <h2 className="container__label">Recommended For You</h2>
           <p className="recommended-section__subtitle">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -130,7 +130,7 @@ const Home = () => {
       </div>
       <div className="sale-section">
         <div className="container">
-          <h2>Books on Sale</h2>
+          <h2 className="container__label">Books on Sale</h2>
           <div className="sale-section__product-grid">
             {saleBooks.map((book) => (
               <div key={book.id} className="product-card">

@@ -3,10 +3,10 @@ import ProtectRoute from "./ProtectRoute"
 import ShopLayout from "../components/layouts/ShopLayout"
 import Login from "../pages/Auth/Login"
 import Home from "../pages/Home/home"
-import Shop from "../pages/Shop"
-import Cart from "../pages/Cart"
-import Profile from "../pages/Profile"
-import BookDetail from "../pages/BookDetail"
+import Shop from "../pages/Shop/shop"
+import Cart from "../pages/Cart/cart"
+import Profile from "../pages/Profile/profile"
+import BookDetail from "../pages/BookDetail/bookdetail"
 
 const ShopRoute = () =>{
     return (

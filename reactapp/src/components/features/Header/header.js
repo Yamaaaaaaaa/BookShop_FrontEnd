@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./header.scss"
+import { RiMenu2Line } from "react-icons/ri";
 
 function Header() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isSideBarOpen, setIsSideBarStatus] = useState(false)
+  
+  
   const navigate = useNavigate()
   const dropdownRef = useRef(null)
 
@@ -31,17 +35,17 @@ function Header() {
     <header className="header">
       <div className="header__top">
         <div className="header__logo-section">
-          <Link to="/" className="header__logo">
-            <span className="header__logo-text">
-              <span className="header__logo-brand">Book</span>
-              <span className="header__logo-brand header__logo-brand--accent">land</span>
+          <Link to="/" className="header__logo-section__logo">
+            <span className="header__logo-section__logo-text">
+              <span className="header__logo-section__logo-brand">Book</span>
+              <span className="header__logo-section__logo-brand header__logo-section__logo-brand--accent">land</span>
             </span>
           </Link>
-          <span className="header__logo-subtitle">Book Store Website</span>
+          <span className="header__logo-section__logo-subtitle">Book Store Website</span>
         </div>
 
         <div className="header__search-section">
-          <div className="header__category-dropdown">
+          <div className="header__search-section__category-dropdown">
             <select>
               <option>Category</option>
               <option>Photography</option>
@@ -60,92 +64,146 @@ function Header() {
             </select>
           </div>
 
-          <div className="header__search-bar">
+          <div className="header__search-section__search-bar">
             <input
               type="text"
               placeholder="Search Books Here"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="header__search-button">
-              <i className="search-icon">🔍</i>
+            <button className="header__search-section__search-button">
+              <i className="header__search-section__search-icon">🔍</i>
             </button>
           </div>
         </div>
 
         <div className="header__user-section">
-          <div className="header__icon-button">
-            <span className="icon">
+          <div className="header__user-section__icon-button">
+            <span className="header__user-section__icon-button__icon">
               <Link to="/cart">🛒</Link>
             </span>
-            <span className="counter">5</span>
+            <span className="header__user-section__icon-button__counter">5</span>
           </div>
 
-          <div className="header__user-profile" ref={dropdownRef}>
-            <div className="header__profile-trigger" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-              <img src="../../../assets/image/OIP.jpg" alt="User Avatar" className="header__avatar" />
-              <div className="header__user-info">
-                <span className="header__user-name">Brian</span>
-                <span className="header__user-email">info@gmail.com</span>
+          <div className="header__user-section__user-profile" ref={dropdownRef}>
+            <div className="header__user-section__user-profile__profile-trigger" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              <img src="../../../assets/image/OIP.jpg" alt="User Avatar" className="header__user-section__user-profile__profile-trigger__avatar" />
+              <div className="header__user-section__user-profile__profile-trigger__user-info">
+                <span className="header__user-section__user-profile__profile-trigger__user-name">Brian</span>
+                <span className="header__user-section__user-profile__profile-trigger__user-email">info@gmail.com</span>
               </div>
             </div>
 
             {isDropdownOpen && (
-              <div className="header__profile-dropdown">
-                <div className="header__dropdown-header">
-                  <span className="header__dropdown-name">Brian</span>
-                  <span className="header__dropdown-email">info@gmail.com</span>
+              <div className="header__user-section__user-profile__profile-dropdown">
+                <div className="header__user-section__user-profile__profile-dropdown__dropdown-header">
+                  <span className="header__user-section__user-profile__profile-dropdown__dropdown-name">Brian</span>
+                  <span className="header__user-section__user-profile__profile-dropdown__dropdown-email">info@gmail.com</span>
                 </div>
 
-                <div className="header__dropdown-menu">
-                  <Link to="/profile" className="header__dropdown-item">
-                    <span className="dropdown-icon">👤</span>
+                <div className="header__user-section__user-profile__profile-dropdown__dropdown-menu">
+                  <Link to="/profile" className="header__user-section__user-profile__profile-dropdown__dropdown-item">
+                    <span className="header__user-section__user-profile__profile-dropdown__dropdown-icon">👤</span>
                     Profile
                   </Link>
                 </div>
 
-                <button onClick={handleLogout} className="header__logout-button">
+                <button onClick={handleLogout} className="header__user-section__user-profile__profile-dropdown__logout-button">
                   Log Out
                 </button>
               </div>
             )}
           </div>
+          <button className="header__user-section__open-sidebar" onClick={() => setIsSideBarStatus(true)}>
+            <RiMenu2Line />
+          </button>
         </div>
+        
       </div>
 
       <nav className="header__main-nav">
-        <ul className="header__nav-links">
-          <li className="header__nav-item">
-            <Link to="/home" className="header__nav-link">
+        <ul className="header__main-nav__nav-links">
+          <li className="header__main-nav__nav-links__nav-item">
+            <Link to="/home" className="header__main-nav__nav-links__nav-link">
               Home
             </Link>
           </li>
-          <li className="header__nav-item">
-            <Link to="/pages" className="header__nav-link">
+          <li className="header__main-nav__nav-links__nav-item">
+            <Link to="/pages" className="header__main-nav__nav-links__nav-link">
               Pages
             </Link>
           </li>
-          <li className="header__nav-item">
+          <li className="header__main-nav__nav-links__nav-item">
             <Link to="/shop" className="header__nav-link">
               Shop
             </Link>
           </li>
-          <li className="header__nav-item">
-            <Link to="/blog" className="header__nav-link">
+          <li className="header__main-nav__nav-links__nav-item">
+            <Link to="/blog" className="header__main-nav__nav-links__nav-link">
               Blog
             </Link>
           </li>
-          <li className="header__nav-item">
-            <Link to="/contact" className="header__nav-link">
+          <li className="header__main-nav__nav-links__nav-item">
+            <Link to="/contact" className="header__main-nav__nav-links__nav-link">
               Contact Us
             </Link>
           </li>
         </ul>
-        <button className="header__get-in-touch">Get in Touch</button>
       </nav>
+      <div className={isSideBarOpen ? "header__side-bar open1": "header__side-bar close"}>
+        <div className={isSideBarOpen ? "header__side-bar__main open2": "header__side-bar__main close"}>
+          <Link to="/" className="header__side-bar__main__logo">
+            <span className="header__side-bar__main__logo-text">
+              <span className="header__side-bar__main__logo-brand">Book</span>
+              <span className="header__side-bar__main__logo-brand header__side-bar__main__logo-brand--accent">land</span>
+            </span>
+          </Link>
+          <div className="header__side-bar__main__search-bar">
+            <input
+              type="text"
+              placeholder="Search Books Here"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button className="header__search-section__search-button">
+              <i className="header__search-section__search-icon">🔍</i>
+            </button>
+          </div>
+          <ul className="header__side-bar__main__nav-links">
+            <li className="header__side-bar__main__nav-links__nav-item">
+              <Link to="/home" className="header__side-bar__main__nav-links__nav-link">
+                Home
+              </Link>
+            </li>
+            <li className="header__side-bar__main__nav-links__nav-item">
+              <Link to="/pages" className="header__side-bar__main__nav-links__nav-link">
+                Pages
+              </Link>
+            </li>
+            <li className="header__side-bar__main__nav-links__nav-item">
+              <Link to="/shop" className="header__side-bar__main__nav-links__nav-link">
+                Shop
+              </Link>
+            </li>
+            <li className="header__side-bar__main__nav-links__nav-item">
+              <Link to="/blog" className="header__side-bar__main__nav-links__nav-link">
+                Blog
+              </Link>
+            </li>
+            <li className="header__side-bar__main__nav-links__nav-item">
+              <Link to="/contact" className="header__side-bar__main__nav-links__nav-link">
+                Contact Us
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="header__side-bar__exit" onClick={() => setIsSideBarStatus(false)}></div>
+      </div>
     </header>
   )
 }
 
 export default Header
+
+
 

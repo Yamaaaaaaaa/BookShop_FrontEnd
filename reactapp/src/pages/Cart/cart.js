@@ -1,4 +1,4 @@
-import "./style.css"
+import "./cart.scss"
 
 const mock_items = [
     {
@@ -26,18 +26,16 @@ const mock_items = [
         quantity: 4
     }
 ]
+
 const Cart = () => {
-    
-    // C1: Để Setup Những Sách ta Recommend
-    // C2: SetUp Full Shop Sách luôn
     return (
-        <div class="cart-main">
-            <div class="cart-hero">
+        <div className="cart">
+            <div className="cart-hero">
                 <h1>Cart</h1>
             </div>
 
-            <div class="cart-container">
-                <table class="cart-table">
+            <div className="cart-container">
+                <table className="cart-table">
                     <thead>
                         <tr>
                             <th>Product</th>
@@ -51,19 +49,19 @@ const Cart = () => {
                     <tbody>
                         { 
                             mock_items.map(item => (
-                                <tr>
-                                    <td><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gePMbyniirM8evxLDQqDBRqvBrVjb7.png" alt="Battle Drive" class="product-img"/></td>
+                                <tr key={item.id}>
+                                    <td><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gePMbyniirM8evxLDQqDBRqvBrVjb7.png" alt="Battle Drive" className="product-img"/></td>
                                     <td>{item.name}</td>
-                                    <td class="price">${item.price}</td>
+                                    <td className="price">${item.price.toFixed(2)}</td>
                                     <td>
-                                        <div class="quantity-control">
-                                            <button class="quantity-btn">-</button>
-                                            <input type="text" value={item.quantity} class="quantity-input"/>
-                                            <button class="quantity-btn">+</button>
+                                        <div className="quantity-control">
+                                            <button className="quantity-btn">-</button>
+                                            <input type="text" value={item.quantity} className="quantity-input"/>
+                                            <button className="quantity-btn">+</button>
                                         </div>
                                     </td>
-                                    <td class="price">{item.price * item.quantity}</td>
-                                    <td><button class="close-btn">×</button></td>
+                                    <td className="price">${(item.price * item.quantity).toFixed(2)}</td>
+                                    <td><button className="close-btn">×</button></td>
                                 </tr>
                             ))
                         }
