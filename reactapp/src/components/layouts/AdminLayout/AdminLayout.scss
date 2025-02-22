@@ -1,0 +1,20 @@
+.admin-app{
+    width: 100vw;
+    position: relative;
+    &__sidebar{
+        width: 18%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #859573;
+        height: 100vh;
+    }
+    &__main{
+        margin-left: 18%;
+        padding: 15px 0px;
+        &__header{
+            height: 6.5%;
+            width: 100%;
+        }
+    }
+}

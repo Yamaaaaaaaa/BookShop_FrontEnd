@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import ProtectRoute from "./ProtectRoute"
 import ShopLayout from "../components/layouts/ShopLayout"
-import Login from "../pages/Auth/Login"
-import Home from "../pages/Home/home"
-import Shop from "../pages/Shop/shop"
-import Cart from "../pages/Cart/cart"
-import Profile from "../pages/Profile/profile"
-import BookDetail from "../pages/BookDetail/bookdetail"
+import Login from "../pages/Client/Auth/Login"
+import Home from "../pages/Client/Home/home"
+import Shop from "../pages/Client/Shop/shop"
+import Cart from "../pages/Client/Cart/cart"
+import Profile from "../pages/Client/Profile/profile"
+import BookDetail from "../pages/Client/BookDetail/bookdetail"
 
 const ShopRoute = () =>{
     return (
