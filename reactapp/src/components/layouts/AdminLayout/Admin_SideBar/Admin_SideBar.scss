@@ -1,11 +1,11 @@
 .admin-sidebar {
     &__header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2rem;
-      text-align: center;
-      padding-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+        text-align: center;
+        padding-top: 1.5rem;
     }
   
     &__logo {
@@ -86,4 +86,4 @@
             font-size: 0.9rem;
         }
     }
-  }
+}

@@ -16,7 +16,7 @@ $light-bg: #f8f9fa;
 }
 
 // Main Container
-.categories-management {
+.user-management {
     padding: 24px;
     max-width: 1200px;
     margin: 0 auto;
@@ -86,7 +86,6 @@ $light-bg: #f8f9fa;
                 padding: 12px 16px;
                 text-align: left;
                 border-bottom: 1px solid $border-color;
-                font-size: 14px;
             }
 
             th {
@@ -102,37 +101,7 @@ $light-bg: #f8f9fa;
     }
 }
 
-// Action Buttons
-.action-cell {
-    display: flex;
-    gap: 8px;
-}
-
-.action-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-
-    &.edit {
-        background-color: #2196F3;
-        color: white;
-        &:hover { background-color: darken(#2196F3, 10%); }
-    }
-
-
-    &.delete:hover {
-        color: $danger-color;
-        background-color: rgba($danger-color, 0.1);
-    }
-}
-
-// Modal Styles (reusing from previous example)
+// Modal Styles
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -209,6 +178,15 @@ $light-bg: #f8f9fa;
             }
         }
     }
+
+    .form-row {
+        display: flex;
+        gap: 16px;
+
+        .form-group {
+            flex: 1;
+        }
+    }
 }
 
 .modal-footer {
@@ -248,6 +226,57 @@ $light-bg: #f8f9fa;
         &:hover {
             background-color: darken($danger-color, 10%);
         }
+    }
+}
+
+// Address Button
+.address-btn {
+    @include button-base;
+    padding: 4px 8px;
+    background-color: green;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 5px;
+    &:hover {
+        background-color: darken($light-bg, 5%);
+    }
+
+    i {
+        font-size: 12px;
+    }
+}
+
+// Action Buttons
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &.delete {
+        background-color: #F44336;
+        color: white;
+        &:hover { background-color: darken(#F44336, 10%); }
+    }
+}
+
+// Address Items
+.address-item {
+    padding: 8px 12px;
+    background-color: $light-bg;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-size: 14px;
+
+    &:last-child {
+        margin-bottom: 0;
     }
 }
 

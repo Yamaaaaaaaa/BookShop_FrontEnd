@@ -50,8 +50,8 @@ const Admin_SideBar = () => {
 
     const handleLogout = () => {
         sessionStorage.removeItem('token');
-        sessionStorage.removeItem('user');
-        navigate('/login');
+        sessionStorage.removeItem('admin');
+        navigate('/admin/login');
     };
 
     return (
