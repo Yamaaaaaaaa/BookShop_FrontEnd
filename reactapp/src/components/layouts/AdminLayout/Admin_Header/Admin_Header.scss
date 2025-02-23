@@ -2,79 +2,79 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 1rem;
+    padding: 8px 16px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    &__user {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
+.admin-header__user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-    &__user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #859573;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 500;
-        font-size: 1.2rem;
-    }
+.admin-header__user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #859573;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 19px;
+}
 
-    &__user-info {
-        display: flex;
-        flex-direction: column;
-    }
+.admin-header__user-info {
+    display: flex;
+    flex-direction: column;
+}
 
-    &__user-name {
-        font-weight: 500;
-        color: #333;
-    }
+.admin-header__user-name {
+    font-weight: 500;
+    color: #333;
+}
 
-    &__user-role {
-        font-size: 0.8rem;
-        color: #666;
-    }
+.admin-header__user-role {
+    font-size: 13px;
+    color: #666;
+}
 
-    &__actions {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-    }
+.admin-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
 
-    &__datetime {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        color: #333;
-    }
+.admin-header__datetime {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #333;
+}
 
-    &__time {
-        font-weight: 500;
-    }
+.admin-header__time {
+    font-weight: 500;
+}
 
-    &__date {
-        color: #666;
-    }
+.admin-header__date {
+    color: #666;
+}
 
-    &__settings {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #333;
-        transition: color 0.2s;
+.admin-header__settings {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: color 0.2s;
+}
 
-        &:hover {
-            color: #859573;
-        }
-    }
+.admin-header__settings:hover {
+    color: #859573;
 }

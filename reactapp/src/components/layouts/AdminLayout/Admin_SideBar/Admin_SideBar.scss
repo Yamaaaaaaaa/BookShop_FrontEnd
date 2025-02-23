@@ -3,27 +3,27 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 2rem;
+        margin-bottom: 32px;
         text-align: center;
-        padding-top: 1.5rem;
+        padding-top: 24px;
     }
   
     &__logo {
         width: 60px;
         height: auto;
-        margin-bottom: 0.5rem;
+        margin-bottom: 8px;
     }
   
     &__brand {
         h1 {
-            font-size: 1.25rem;
+            font-size: 20px;
             font-weight: 600;
             margin: 0;
             color: white;
         }
     
         p {
-            font-size: 0.875rem;
+            font-size: 14px;
             color: #E4A853;
             margin: 0;
         }
@@ -32,42 +32,43 @@
     &__nav {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 8px;
+        width: 100%;
     }
   
     &__item {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: #4A5D47;
+        gap: 12px;
+        text-decoration: none;
+        padding: 12px 16px;
+        background-color: #4A5D47;
         border: none;
         color: white;
         cursor: pointer;
         transition: background-color 0.2s;
-        margin-bottom:5px;
+        margin-bottom: 5px;
   
         &:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
     
-        &--active {
+        .active {
             background-color: white;
             color: black;
         }
     
         span {
-            font-size: 0.9rem;
+            font-size: 14px;
         }
     }
   
     &__logout {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        width: calc(100%);
-        padding: 0.75rem 1rem;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
         margin-top: auto;
         background: #4A5D47;
         border: none;
@@ -83,7 +84,12 @@
         }
     
         span {
-            font-size: 0.9rem;
+            font-size: 14px;
         }
     }
+}
+
+.active {
+    background-color: white;
+    color: black;
 }

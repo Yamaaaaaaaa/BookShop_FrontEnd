@@ -1,4 +1,3 @@
-
 .admin-login-page {
     display: flex;
     min-height: 100vh;
@@ -8,7 +7,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 2rem;
+        padding: 32px;
         background-color: #fff;
     }
 
@@ -17,7 +16,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 2rem;
+        padding: 32px;
         background-color: #859573;
         border-radius: 50px 0 0 50px;
     }
@@ -29,30 +28,21 @@
         text-align: center;
     }
 
-    // &__logo {
-    //     margin-bottom: 1.5rem;
-        
-    //     img {
-    //     width: 60px;
-    //     height: auto;
-    //     }
-    // }
-
     &__title {
-        font-size: 2rem;
+        font-size: 32px;
         color: #333;
-        margin-bottom: 0.5rem;
+        margin-bottom: 8px;
     }
 
     &__subtitle {
         color: #666;
-        margin-bottom: 2rem;
+        margin-bottom: 32px;
     }
 
     &__brand {
-        font-size: 2rem;
+        font-size: 32px;
         color: #333;
-        margin: 1rem 0;
+        margin: 16px 0;
 
         &--highlight {
         color: #E4A853;
@@ -61,21 +51,21 @@
 
     &__manage {
         color: #E4A853;
-        margin-bottom: 2rem;
+        margin-bottom: 32px;
     }
 
     &__cta {
         color: #fff;
-        margin-bottom: 2rem;
+        margin-bottom: 32px;
     }
 
     &__button {
         background-color: #4A5D47;
         border: 2px solid #fff;
         color: #fff;
-        padding: 0.8rem 3rem;
+        padding: 13px 48px;
         border-radius: 5px;
-        font-size: 1rem;
+        font-size: 16px;
         cursor: pointer;
         transition: all 0.3s ease;
 
@@ -87,19 +77,20 @@
 }
 
 .admin-login-form {
-    text-align: left;
+    text-align: center;
     width: 100%;
+    
     &__group {
-        margin-bottom: 1.5rem;
+        margin-bottom: 24px;
         width: 100%;
     }
 
     &__input {
         width: 93%;
-        padding: 0.8rem;
+        padding: 13px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        font-size: 1rem;
+        font-size: 16px;
 
         &:focus {
             outline: none;
@@ -111,7 +102,7 @@
             
             &:focus {
                 border-color: #dc3545;
-                box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+                box-shadow: 0 0 0 3.2px rgba(220, 53, 69, 0.25);
             }
         }
     }
@@ -119,15 +110,15 @@
     &__error {
         display: block;
         color: #dc3545;
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
+        font-size: 14px;
+        margin-top: 4px;
     }
 
     &__error-message {
         color: #dc3545;
         text-align: center;
-        margin-bottom: 1rem;
-        padding: 0.5rem;
+        margin-bottom: 16px;
+        padding: 8px;
         border: 1px solid #dc3545;
         border-radius: 4px;
         background-color: rgba(220, 53, 69, 0.1);
@@ -138,8 +129,8 @@
         text-align: left;
         color: #4A5D47;
         text-decoration: none;
-        margin-bottom: 2rem;
-        font-size: 0.9rem;
+        margin-bottom: 32px;
+        font-size: 14px;
 
         &:hover {
             color: #333;
@@ -147,13 +138,12 @@
     }
 
     &__button {
-        width: 100%;
-        padding: 0.8rem;
+        padding: 15px 60px;
         background-color: #4A5D47;
         border: none;
         border-radius: 5px;
         color: #fff;
-        font-size: 1rem;
+        font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
 
@@ -178,7 +168,7 @@
 
         &__signin,
         &__signup {
-            padding: 2rem 1rem;
+            padding: 32px 16px;
         }
     }
 }

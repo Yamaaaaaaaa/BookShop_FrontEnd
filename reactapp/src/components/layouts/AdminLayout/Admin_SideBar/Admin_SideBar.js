@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, NavLink } from 'react-router-dom';
 import { 
   MdDashboard, 
   MdCategory, 
@@ -67,14 +67,14 @@ const Admin_SideBar = () => {
             {/* Navigation */}
             <nav className="admin-sidebar__nav">
                 {menuItems.map((item) => (
-                    <button
-                        key={item.title}
-                        className={`admin-sidebar__item ${location.pathname === item.path ? 'admin-sidebar__item--active' : ''}`}
+                    <NavLink
+                        to={item.title}
+                        className="admin-sidebar__item "
                         onClick={() => navigate(item.path)}
                     >
                         {item.icon}
                         <span>{item.title}</span>
-                    </button>
+                    </NavLink>
                 ))}
             </nav>
 

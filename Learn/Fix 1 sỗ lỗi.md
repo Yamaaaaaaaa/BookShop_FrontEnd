@@ -6,3 +6,5 @@
 
 1. Cho cái product nó nhích lên trên, có bóng ở viền khi hover: 
   - ![alt text](image.png)
+2. Gap: Cho các phần từ bên trong cách nhau 1 chút (dùng mỗi cái này, đỡ phải gọi tên class từng cái, rồi margin left right phiền lắm ):
+  - ![alt text](image-1.png)
