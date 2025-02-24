@@ -50,9 +50,9 @@ const Cart = () => {
                         { 
                             mock_items.map(item => (
                                 <tr key={item.id}>
-                                    <td><img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gePMbyniirM8evxLDQqDBRqvBrVjb7.png" alt="Battle Drive" className="product-img"/></td>
+                                    <td><img src="https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg" alt="Battle Drive" className="product-img"/></td>
                                     <td>{item.name}</td>
-                                    <td className="price">${item.price.toFixed(2)}</td>
+                                    <td className="cart_price">${item.price.toFixed(2)}</td>
                                     <td>
                                         <div className="quantity-control">
                                             <button className="quantity-btn">-</button>
@@ -60,7 +60,7 @@ const Cart = () => {
                                             <button className="quantity-btn">+</button>
                                         </div>
                                     </td>
-                                    <td className="price">${(item.price * item.quantity).toFixed(2)}</td>
+                                    <td className="cart_price">${(item.price * item.quantity).toFixed(2)}</td>
                                     <td><button className="close-btn">×</button></td>
                                 </tr>
                             ))

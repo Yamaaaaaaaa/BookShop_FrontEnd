@@ -3,12 +3,12 @@ import "./shop.scss"
 import { Link } from "react-router-dom"
 import { RxExit } from "react-icons/rx";
 
-export const books = [
+const books = [
   {
     id: 1,
     title: "Thunder Stunt",
     price: 20.11,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-DECGAFw4lLuzh85VEVEwZexuOUmLPA.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
     category: "Action",
     publisher: "Publisher A",
   },
@@ -16,7 +16,7 @@ export const books = [
     id: 2,
     title: "Battler Drive",
     price: 20.12,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-cETOqCqBlA0JtM6j1ZRf09jSy5hQ56.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
     category: "Adventure",
     publisher: "Publisher B",
   },
@@ -24,7 +24,7 @@ export const books = [
     id: 3,
     title: "Take Out Tango",
     price: 20.22,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-SSwgSxohZGwqcwHyLgMhOHBNgVhr1i.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
     category: "Comedy",
     publisher: "Publisher C",
   },
@@ -32,7 +32,7 @@ export const books = [
     id: 4,
     title: "Cosmic Journey",
     price: 20.33,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-SSwgSxohZGwqcwHyLgMhOHBNgVhr1i.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
     category: "Adventure",
     publisher: "Publisher A",
   },
@@ -40,7 +40,7 @@ export const books = [
     id: 5,
     title: "Laugh Out Loud",
     price: 20.4,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-SSwgSxohZGwqcwHyLgMhOHBNgVhr1i.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
     category: "Comedy",
     publisher: "Publisher B",
   },
@@ -48,7 +48,7 @@ export const books = [
     id: 6,
     title: "Hero's Quest",
     price: 20.55,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-SSwgSxohZGwqcwHyLgMhOHBNgVhr1i.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
     category: "Action",
     publisher: "Publisher C",
   },
@@ -56,15 +56,15 @@ export const books = [
     id: 7,
     title: "Mystic Tales",
     price: 20.8,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-SSwgSxohZGwqcwHyLgMhOHBNgVhr1i.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
     category: "Adventure",
     publisher: "Publisher A",
   },
 ]
 
 
-export const categories = ["Action", "Adventure", "Animation", "Biography", "Comedy"]
-export const publishers = ["Publisher A", "Publisher B", "Publisher C"]
+const categories = ["Action", "Adventure", "Animation", "Biography", "Comedy"]
+const publishers = ["Publisher A", "Publisher B", "Publisher C"]
 const Shop = () => {
   const [openSection, setOpenSection] = useState("price")
   const [priceRange, setPriceRange] = useState(50)

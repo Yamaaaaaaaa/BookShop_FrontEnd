@@ -8,7 +8,7 @@ const mockBooks = [
     description: "Lorem ipsum dolor sit amet",
     category: "Adventure",
     price: 18.78,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ const mockBooks = [
     description: "",
     category: "Dance",
     price: 18.78,
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-wYZ3NbjFSO29DdKDKHJkcqKBx2Llvb.png",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const mockBooks = [
     description: "DANZE STIMH",
     category: "Home",
     price: 18.78,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
   {
     id: 4,
@@ -32,7 +32,7 @@ const mockBooks = [
     description: "",
     category: "Action",
     price: 18.78,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
   {
     id: 5,
@@ -40,7 +40,7 @@ const mockBooks = [
     description: "",
     category: "Fitness",
     price: 18.78,
-    image: "/placeholder.svg?height=200&width=200",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
 ]
 
@@ -50,28 +50,28 @@ const mockBlogs = [
     title: "10 Things you must know to improve your reading skills",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempor",
     date: "18 July, 2024",
-    image: "/placeholder.svg?height=250&width=400",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
   {
     id: 2,
     title: "Benefits of reading: Smart, Diligent, Happy, Intelligent",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempor",
     date: "7 June, 2024",
-    image: "/placeholder.svg?height=250&width=400",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
   {
     id: 3,
     title: "We Must know why reading is important for children?",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempor",
     date: "30 May, 2024",
-    image: "/placeholder.svg?height=250&width=400",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
   {
     id: 4,
     title: "Benefits of reading: Smart, Diligent, Happy, Intelligent",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempor",
     date: "24 March, 2024",
-    image: "/placeholder.svg?height=250&width=400",
+    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
   },
 ]
 

@@ -28,7 +28,7 @@ const Profile = () => {
             <aside className="sidebar">
                 <div className="profile-section">
                     <div className="profile-image">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jgjKb0hqsVkr7AgPQC1MHBJ1cW17Qx.png" alt="Profile Picture"/>
+                        <img src="https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg" alt="Profile Picture"/>
                     </div>
                     <h2 className="profile-name">David Matin</h2>
                     <p className="profile-title">Web developer</p>

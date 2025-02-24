@@ -5,7 +5,7 @@ $text-color: #666;
 $background-color: #f8f9fa;
 $white: #fff;
 
-@mixin flex-center {
+@mixin flex-center { // :))))
   display: flex;
   justify-content: center;
   align-items: center;
