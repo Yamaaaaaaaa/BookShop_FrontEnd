@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom"
 
 const ProtectRoute = ({ children }) => {
     // Check if user is authenticated via sessionStorage
-    const isAuth = sessionStorage.getItem('user') !== null
+    const isAuth = sessionStorage.getItem('access_token') !== null
 
     // If not authenticated, redirect to login
     if (!isAuth) {

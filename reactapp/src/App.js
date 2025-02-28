@@ -5,7 +5,6 @@ import ShopRoute from './routes/ShopRoute';
 import AdminRoute from './routes/AdminRoute';
 
 export default function App() {
-
   return (
     <Router>
       <Routes>
