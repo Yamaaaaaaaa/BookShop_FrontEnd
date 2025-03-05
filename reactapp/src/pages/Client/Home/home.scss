@@ -140,6 +140,7 @@ $white: #fff;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
     margin-top: 40px;
+    place-items: start; // Cái này sẽ giúp nếu có 1, 2 phần tử (<min ptu) thì nó vẫn giữ kích cỡ, kéo về đầu giao diện
   }
 }
 
@@ -150,15 +151,17 @@ $white: #fff;
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-
+  height: 480px;
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   }
 
   &__image {
+    flex: 1;
     background-color: #B91C1C;
     height: 250px;
+    width: 190px;
     background-size: cover;
     background-position: center;
     @include flex-center;

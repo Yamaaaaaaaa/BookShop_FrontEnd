@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./home.scss"
+import { getBooks } from "../../../service/bookService"
 
 const mockBooks = [
   {
@@ -76,9 +77,24 @@ const mockBlogs = [
 ]
 
 const Home = () => {
-  const [recommendedBooks] = useState(mockBooks)
+  const [recommendedBooks, setRecommendBooks] = useState([])
   const [saleBooks] = useState(mockBooks)
   const [blogs] = useState(mockBlogs)
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      const rcmBook = await getBooks({
+        pin: 1,
+        limit: 5, 
+      })      
+      console.log(rcmBook.data);
+      
+      if(rcmBook){
+        setRecommendBooks(rcmBook.data.data)
+      }
+    }
+    fetchBook()
+  }, [])
 
   return (
     <main>
@@ -102,23 +118,23 @@ const Home = () => {
           </div>
         </div>
       </div>
+
       <div className="recommended-section">
         <div className="container">
           <h2 className="container__label">Recommended For You</h2>
           <p className="recommended-section__subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            For you, passionate readers who love books and appreciate remarkable literary works.
           </p>
 
           <div className="recommended-section__product-grid">
             {recommendedBooks.map((book) => (
               <div key={book.id} className="product-card">
-                <div className="product-card__image" style={{ backgroundImage: `url(${book.image})` }}>
-                  <h3>{book.title}</h3>
-                  <p>{book.description}</p>
+                <div className="product-card__image" style={{ backgroundImage: `url(${book.bookImageUrl})` }}>
+                  {/* <h3>{book.name}</h3>
+                  <p>{book.description}</p> */}
                 </div>
-                <h4>{book.category}</h4>
-                <span className="product-card__price">${book.price.toFixed(2)}</span>
+                <h4>{book.name}</h4>
+                <span className="product-card__price">${book.sale.toFixed(2)}</span>
                 <button className="product-card__add-to-cart">
                   <span className="cart-icon">🛒</span>
                   Add To Cart
