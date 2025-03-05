@@ -71,9 +71,9 @@ function Header() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="header__search-section__search-button">
+            <Link className="header__search-section__search-button" to="/search" state={{keyword: searchQuery}}>
               <i className="header__search-section__search-icon">🔍</i>
-            </button>
+            </Link>
           </div>
         </div>
 
