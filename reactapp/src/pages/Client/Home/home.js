@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import "./home.scss"
 import { getBooks } from "../../../service/bookService"
+import { addBookToCartForUser } from "../../../service/userService"
+import { toast } from "react-toastify"
 
 const mockBooks = [
   {
@@ -78,24 +80,44 @@ const mockBlogs = [
 
 const Home = () => {
   const [recommendedBooks, setRecommendBooks] = useState([])
+  const [user] = useState(JSON.parse(sessionStorage.getItem("user")))
   const [saleBooks] = useState(mockBooks)
   const [blogs] = useState(mockBlogs)
 
-  useEffect(() => {
-    const fetchBook = async () => {
-      const rcmBook = await getBooks({
-        pin: 1,
-        limit: 5, 
-      })      
-      console.log(rcmBook.data);
-      
-      if(rcmBook && +rcmBook.data.status === 1){
-        setRecommendBooks(rcmBook.data.data)
+  const fetchBook = async () => {
+    const rcmBook = await getBooks({
+      pin: 1,
+      limit: 5, 
+    })      
+    console.log(rcmBook.data);
+    
+    if(rcmBook && +rcmBook.data.status === 1){
+      setRecommendBooks(rcmBook.data.data)
+    }
+    else{
+      setRecommendBooks([])
+    }
+  }
+
+  const handleAddToCart = async (bookId, userId) => {
+    console.log("book: ", bookId, "user: ", userId);
+    
+    const response = await addBookToCartForUser(bookId, userId)
+
+    if(response){
+      if(+response.status === 1){
+        toast.success(response.message)
+        fetchBook()
       }
       else{
-        setRecommendBooks([])
+        toast.error(response.message)
       }
+    }else{
+      toast.error(response.message)
     }
+  }
+
+  useEffect(() => {
     fetchBook()
   }, [])
 
@@ -138,7 +160,7 @@ const Home = () => {
                 </div>
                 <h4>{book.name}</h4>
                 <span className="product-card__price">${book.sale.toFixed(2)}</span>
-                <button className="product-card__add-to-cart">
+                <button className="product-card__add-to-cart" onClick={() => handleAddToCart(book.id, user.id)}>
                   <span className="cart-icon">🛒</span>
                   Add To Cart
                 </button>

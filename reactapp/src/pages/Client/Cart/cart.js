@@ -32,34 +32,17 @@ const Cart = () => {
                 getCart()
             }
             else {
-                toast.error(response.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: "Bounce",
-                });
+                toast.error(response.message);
             }
         }
         else 
         {
-            toast.error(response.message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: "Bounce",
-            });
+            toast.error(response.message);
         }
     }
+
+    
+
     useEffect(() => {
         getCart()
     }, [userID])

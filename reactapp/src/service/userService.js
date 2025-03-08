@@ -12,3 +12,9 @@ export const updateCartForUser = async (cartID, action) => {
         params: { cartID, action }
     });
 };
+
+export const addBookToCartForUser = async (bookId, userId) => {
+    return await instance.post(mainUrl + "/user/add-to-cart", {}, { // Body rỗng (Tk Put nó nhận đó)
+        params: { bookId, userId }
+    });
+};

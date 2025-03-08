@@ -5,12 +5,15 @@ import { RxExit } from "react-icons/rx";
 import { getBooks } from "../../../service/bookService";
 import { getAllCategories } from "../../../service/categoryService";
 import { getAllPublisher } from "../../../service/publisherService";
+import { toast } from "react-toastify";
+import { addBookToCartForUser } from "../../../service/userService";
 
 
 const Shop = () => {
     const [books, setBooks] = useState([])
     const [categories, setCategories] = useState([])
     const [publishers, setPublishers] = useState([])
+    const [user] = useState(JSON.parse(sessionStorage.getItem("user")))
 
     //Lọc
     const [filteredBooks, setFilterBooks] = useState([])
@@ -43,20 +46,38 @@ const Shop = () => {
         )
     }
   
+    const handleAddToCart = async (event, bookId, userId) => {
+        event.preventDefault()
+        console.log("book: ", bookId, "user: ", userId);
+        
+        const response = await addBookToCartForUser(bookId, userId)
+    
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+                fetchInitialBook()
+            }
+            else{
+                toast.error(response.message)
+            }
+        }else{
+            toast.error(response.message)
+        }
+    }
+
+    const fetchInitialBook = async () => {
+        try {
+            const rcmBook = await getBooks();
+            if (rcmBook?.data?.data) {
+                setBooks(rcmBook.data.data);
+                setFilterBooks(rcmBook.data.data);
+            }
+        } catch (error) {
+            console.error("Error fetching books:", error);
+        }
+    };
     // Lấy các Data Ban đầu
     useEffect(() => {
-        const fetchInitialBook = async () => {
-            try {
-                const rcmBook = await getBooks();
-                if (rcmBook?.data?.data) {
-                    setBooks(rcmBook.data.data);
-                    setFilterBooks(rcmBook.data.data);
-                }
-            } catch (error) {
-                console.error("Error fetching books:", error);
-            }
-        };
-    
         const fetchCategories = async () => {
             try {
                 const listCategories = await getAllCategories();
@@ -231,7 +252,7 @@ const Shop = () => {
                             <div className="shop__book-info">
                                 <h3 className="shop__book-title">{book.name}</h3>
                                 {/* <span className="shop__book-price">${book.sale.toFixed(2)}</span> */}
-                                <button className="shop__add-to-cart">
+                                <button className="shop__add-to-cart" onClick={(e) => handleAddToCart(e, book.id, user.id)}>
                                     <span className="shop__cart-icon">🛒</span>
                                     Add To Cart
                                 </button>
