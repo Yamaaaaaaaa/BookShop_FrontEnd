@@ -1,3 +1,5 @@
+@import "../../../constant/color.scss";
+
 .shop {
   position: relative;
   &__container {
@@ -107,7 +109,7 @@
       border-radius: 4px;
     }
     button{
-      background-color: #d69c2f;
+      background-color: $accent-color;
       color: white;
       border: none;
       border-radius: 4px;
@@ -200,7 +202,7 @@
     align-items: center;
     gap: 8px;
     padding: 8px;
-    background-color: #f97316;
+    background-color: $accent-color;
     color: white;
     border: none;
     border-radius: 4px;
@@ -236,7 +238,7 @@
       padding: 20px 0px;
       button{
         border: none;
-        background-color: #d69c2f;
+        background-color: $accent-color;
         border-radius: 5px;
         padding: 6px 8px;
         cursor: pointer;

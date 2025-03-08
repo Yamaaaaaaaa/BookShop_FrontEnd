@@ -89,8 +89,11 @@ const Home = () => {
       })      
       console.log(rcmBook.data);
       
-      if(rcmBook){
+      if(rcmBook && +rcmBook.data.status === 1){
         setRecommendBooks(rcmBook.data.data)
+      }
+      else{
+        setRecommendBooks([])
       }
     }
     fetchBook()
@@ -165,31 +168,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <section className="blog-section">
-        <div className="container">
-          <h2>Blog Newest</h2>
-          <p className="blog-section__subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua
-          </p>
-
-          <div className="blog-section__grid">
-            {blogs.map((blog) => (
-              <article key={blog.id} className="blog-card">
-                <img src={blog.image || "/placeholder.svg"} alt={blog.title} className="blog-card__image" />
-                <div className="blog-card__content">
-                  <h3>{blog.title}</h3>
-                  <p>{blog.description}</p>
-                  <div className="blog-card__date">
-                    <span className="calendar-icon">📅</span>
-                    {blog.date}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   )
 }

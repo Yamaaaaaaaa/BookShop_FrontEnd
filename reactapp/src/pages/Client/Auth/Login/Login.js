@@ -52,12 +52,7 @@ export default function Login() {
             
             if(response && response.data && +response.data.status === 1 && response.data.access_token) {
                 sessionStorage.setItem('access_token', response.data.access_token);
-                sessionStorage.setItem('user', JSON.stringify(
-                    {
-                        email: formData.email,
-                        name: 'Test User'
-                    }
-                ));
+                sessionStorage.setItem('user', JSON.stringify(response.data.data));
                 navigate("/")
             }else {
                 setLoginError(response.data.message);

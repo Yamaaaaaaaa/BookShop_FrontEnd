@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./header.scss"
 import { RiMenu2Line } from "react-icons/ri";
+import { LuShoppingCart } from "react-icons/lu";
+import { RiFindReplaceLine } from "react-icons/ri";
 
 function Header() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isSideBarOpen, setIsSideBarStatus] = useState(false)
-  
+  let userProfile = JSON.parse(sessionStorage.getItem("user"))
+  console.log(userProfile);
   
   const navigate = useNavigate()
   const dropdownRef = useRef(null)
@@ -27,9 +30,11 @@ function Header() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("user")
-    sessionStorage.removeItem("token")
+    sessionStorage.removeItem("access_token")
     navigate("/login")
   }
+
+
 
   return (
     <header className="header">
@@ -72,7 +77,7 @@ function Header() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <Link className="header__search-section__search-button" to="/search" state={{keyword: searchQuery}}>
-              <i className="header__search-section__search-icon">🔍</i>
+              <i className="header__search-section__search-icon"><RiFindReplaceLine/></i>
             </Link>
           </div>
         </div>
@@ -80,7 +85,7 @@ function Header() {
         <div className="header__user-section">
           <div className="header__user-section__icon-button">
             <span className="header__user-section__icon-button__icon">
-              <Link to="/cart">🛒</Link>
+              <Link to="/cart"><LuShoppingCart /></Link>
             </span>
             <span className="header__user-section__icon-button__counter">5</span>
           </div>
@@ -89,16 +94,16 @@ function Header() {
             <div className="header__user-section__user-profile__profile-trigger" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <img src="../../../assets/image/OIP.jpg" alt="User Avatar" className="header__user-section__user-profile__profile-trigger__avatar" />
               <div className="header__user-section__user-profile__profile-trigger__user-info">
-                <span className="header__user-section__user-profile__profile-trigger__user-name">Brian</span>
-                <span className="header__user-section__user-profile__profile-trigger__user-email">info@gmail.com</span>
+                <span className="header__user-section__user-profile__profile-trigger__user-name">{userProfile.name}</span>
+                <span className="header__user-section__user-profile__profile-trigger__user-email">{userProfile.email}</span>
               </div>
             </div>
 
             {isDropdownOpen && (
               <div className="header__user-section__user-profile__profile-dropdown">
                 <div className="header__user-section__user-profile__profile-dropdown__dropdown-header">
-                  <span className="header__user-section__user-profile__profile-dropdown__dropdown-name">Brian</span>
-                  <span className="header__user-section__user-profile__profile-dropdown__dropdown-email">info@gmail.com</span>
+                  <span className="header__user-section__user-profile__profile-dropdown__dropdown-name">{userProfile.name}</span>
+                  <span className="header__user-section__user-profile__profile-dropdown__dropdown-email">{userProfile.email}</span>
                 </div>
 
                 <div className="header__user-section__user-profile__profile-dropdown__dropdown-menu">
@@ -129,18 +134,8 @@ function Header() {
             </Link>
           </li>
           <li className="header__main-nav__nav-links__nav-item">
-            <Link to="/pages" className="header__main-nav__nav-links__nav-link">
-              Pages
-            </Link>
-          </li>
-          <li className="header__main-nav__nav-links__nav-item">
-            <Link to="/shop" className="header__nav-link">
+            <Link to="/shop" className="header__main-nav__nav-links__nav-link">
               Shop
-            </Link>
-          </li>
-          <li className="header__main-nav__nav-links__nav-item">
-            <Link to="/blog" className="header__main-nav__nav-links__nav-link">
-              Blog
             </Link>
           </li>
           <li className="header__main-nav__nav-links__nav-item">
@@ -166,7 +161,7 @@ function Header() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button className="header__search-section__search-button">
-              <i className="header__search-section__search-icon">🔍</i>
+              <i className="header__search-section__search-icon"><RiFindReplaceLine /></i>
             </button>
           </div>
           <ul className="header__side-bar__main__nav-links">

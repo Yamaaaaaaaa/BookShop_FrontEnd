@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react"
 import "./cart.scss"
+import { getCartforUser } from "../../../service/userService"
 
 const mock_items = [
     {
@@ -28,6 +30,24 @@ const mock_items = [
 ]
 
 const Cart = () => {
+    const [userCart, setUserCart] = useState([])
+    const userID = JSON.parse(sessionStorage.getItem("user")).id
+    console.log("userID", userID);
+    
+    useEffect(() => {
+        const getCart = async () => {
+            const responseGetCart = await getCartforUser(userID)
+            console.log("responseGetCart", responseGetCart);
+            
+            if(responseGetCart && responseGetCart.status === 1 && responseGetCart.data){
+                setUserCart(responseGetCart.data)
+                console.log("userCart",responseGetCart.data);
+            }else{
+                setUserCart([])
+            }
+        }
+        getCart()
+    }, [userID])
     return (
         <div className="cart">
             <div className="cart-hero">
@@ -48,11 +68,11 @@ const Cart = () => {
                     </thead>
                     <tbody>
                         { 
-                            mock_items.map(item => (
+                            userCart.map(item => (
                                 <tr key={item.id}>
-                                    <td><img src="https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg" alt="Battle Drive" className="product-img"/></td>
-                                    <td>{item.name}</td>
-                                    <td className="cart_price">${item.price.toFixed(2)}</td>
+                                    <td><img src={item.Book.bookImageUrl} alt="Battle Drive" className="product-img"/></td>
+                                    <td>{item.Book.name}</td>
+                                    <td className="cart_price">${item.Book.sale.toFixed(2)}</td>
                                     <td>
                                         <div className="quantity-control">
                                             <button className="quantity-btn">-</button>
@@ -60,7 +80,7 @@ const Cart = () => {
                                             <button className="quantity-btn">+</button>
                                         </div>
                                     </td>
-                                    <td className="cart_price">${(item.price * item.quantity).toFixed(2)}</td>
+                                    <td className="cart_price">${(item.Book.sale * item.quantity).toFixed(2)}</td>
                                     <td><button className="close-btn">×</button></td>
                                 </tr>
                             ))

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import { Outlet } from "react-router-dom"
 import "./AdminLayout.scss"
 import Admin_SideBar from "./Admin_SideBar/Admin_SideBar"

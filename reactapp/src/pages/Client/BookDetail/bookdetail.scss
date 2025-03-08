@@ -1,3 +1,4 @@
+@import "../../../constant/color.scss";
 .book-detail {
     max-width: 1200px;
     margin: 0 auto;
@@ -21,13 +22,13 @@
     }
   
     &__title {
-      color: #1a237e;
+      color: $primary-color;
       font-size: 2.5em;
       margin-bottom: 15px;
     }
   
     &__rating {
-      color: #ffc107;
+      color: $accent-color;
       font-size: 20px;
       margin-bottom: 15px;
     }
@@ -43,7 +44,7 @@
       }
   
       div {
-        background: #fff;
+        background: $bg-color_one;
         padding: 10px;
         border-radius: 6px;
       }
@@ -90,7 +91,7 @@
     }
   
     &__cart-button {
-      background: #f4a261;
+      background: $accent-color;
       color: white;
       border: none;
       padding: 12px 30px;
@@ -134,8 +135,8 @@
       font-size: 1.1em;
   
       &.active {
-        border-bottom: 2px solid #f4a261;
-        color: #f4a261;
+        border-bottom: 2px solid $accent-color;
+        color: $accent-color;
       }
     }
   
@@ -156,7 +157,7 @@
   
         &:first-child {
           font-weight: bold;
-          color: #1a237e;
+          color: $primary-color;
           width: 200px;
         }
       }
@@ -169,7 +170,7 @@
     }
   
     &__tag {
-      background: #f4a261;
+      background: $accent-color;
       color: white;
       padding: 5px 15px;
       border-radius: 20px;
@@ -180,7 +181,7 @@
       margin-top: 40px;
   
       h2 {
-        color: #1a237e;
+        color: $primary-color;
         margin-bottom: 20px;
       }
     }
@@ -209,7 +210,7 @@
       }
   
       .categories {
-        color: #f4a261;
+        color: $primary-color;
         font-size: 0.9em;
         margin: 5px 0;
       }

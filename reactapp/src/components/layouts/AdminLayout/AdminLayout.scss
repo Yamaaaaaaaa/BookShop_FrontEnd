@@ -1,3 +1,5 @@
+@import "../../../constant/color.scss";
+
 .admin-app{
     width: 100vw;
     position: relative;
@@ -6,7 +8,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        background-color: #859573;
+        background-color: $admin_primary-color;
         height: 100vh;
     }
     &__main{

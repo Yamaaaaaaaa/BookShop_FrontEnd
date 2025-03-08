@@ -62,7 +62,7 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        if (!validateForm()) return;
+        // if (!validateForm()) return;
 
         setIsLoading(true);
         setLoginError('');

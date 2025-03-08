@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react"
 import "./Search.scss"
 import { Link, useLocation } from "react-router-dom"
-import { RxExit } from "react-icons/rx";
 import { getBooks } from "../../../service/bookService";
-import { getAllCategories } from "../../../service/categoryService";
-import { getAllPublisher } from "../../../service/publisherService";
 
 
 const Search = () => {
