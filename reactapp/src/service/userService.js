@@ -18,3 +18,13 @@ export const addBookToCartForUser = async (bookId, userId) => {
         params: { bookId, userId }
     });
 };
+
+export const createBillForUser = async (billData) => {
+    return await instance.post(mainUrl + "/bill/create-bill", billData);
+};
+
+export const getAllBillForUser = async (userId) => {
+    return await instance.get(mainUrl + "/bill/get-all-bill", {
+        params: {userId: userId}
+    });
+}
