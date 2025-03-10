@@ -1,5 +1,7 @@
+@import "../../../constant/color.scss";
+
+
 // Variables
-$primary-color: #859573;
 $danger-color: #dc3545;
 $border-color: #dee2e6;
 $text-color: #333;
@@ -50,21 +52,21 @@ $light-bg: #f8f9fa;
 
             &:focus {
                 outline: none;
-                border-color: $primary-color;
+                border-color: $admin_primary-color;
             }
         }
     }
 
     &__add-btn {
         @include button-base;
-        background-color: $primary-color;
+        background-color: $admin_primary-color;
         color: white;
         display: flex;
         align-items: center;
         gap: 8px;
 
         &:hover {
-            background-color: darken($primary-color, 10%);
+            background-color: darken($admin_primary-color, 10%);
         }
 
         i {
@@ -173,7 +175,7 @@ $light-bg: #f8f9fa;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: $primary-color;
+        color: $admin_primary-color;
     }
 
     h2 {
@@ -205,7 +207,7 @@ $light-bg: #f8f9fa;
 
             &:focus {
                 outline: none;
-                border-color: $primary-color;
+                border-color: $admin_primary-color;
             }
         }
     }
@@ -224,11 +226,11 @@ $light-bg: #f8f9fa;
     @include button-base;
 
     &-primary {
-        background-color: $primary-color;
+        background-color: $admin_primary-color;
         color: white;
 
         &:hover {
-            background-color: darken($primary-color, 10%);
+            background-color: darken($admin_primary-color, 10%);
         }
     }
 

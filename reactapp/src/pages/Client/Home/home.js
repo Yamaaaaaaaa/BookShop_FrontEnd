@@ -3,6 +3,7 @@ import "./home.scss"
 import { getBooks } from "../../../service/bookService"
 import { addBookToCartForUser } from "../../../service/userService"
 import { toast } from "react-toastify"
+import { Link } from "react-router-dom"
 
 const mockBooks = [
   {
@@ -154,10 +155,10 @@ const Home = () => {
           <div className="recommended-section__product-grid">
             {recommendedBooks.map((book) => (
               <div key={book.id} className="product-card">
-                <div className="product-card__image" style={{ backgroundImage: `url(${book.bookImageUrl})` }}>
+                <Link to="/bookdetail" className="product-card__image" style={{ backgroundImage: `url(${book.bookImageUrl})` }}>
                   {/* <h3>{book.name}</h3>
                   <p>{book.description}</p> */}
-                </div>
+                </Link>
                 <h4>{book.name}</h4>
                 <span className="product-card__price">${book.sale.toFixed(2)}</span>
                 <button className="product-card__add-to-cart" onClick={() => handleAddToCart(book.id, user.id)}>
@@ -175,10 +176,10 @@ const Home = () => {
           <div className="sale-section__product-grid">
             {saleBooks.map((book) => (
               <div key={book.id} className="product-card">
-                <div className="product-card__image" style={{ backgroundImage: `url(${book.image})` }}>
+                <Link to="/bookdetail" className="product-card__image" style={{ backgroundImage: `url(${book.image})` }}>
                   <h3>{book.title}</h3>
                   <p>{book.description}</p>
-                </div>
+                </Link>
                 <h4>{book.category}</h4>
                 <span className="product-card__price">${book.price.toFixed(2)}</span>
                 <button className="product-card__add-to-cart">

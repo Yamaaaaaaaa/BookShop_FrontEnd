@@ -1,3 +1,4 @@
+@import "../../../constant/color.scss";
 .admin-login-page {
     display: flex;
     min-height: 100vh;
@@ -17,7 +18,7 @@
         align-items: center;
         justify-content: center;
         padding: 32px;
-        background-color: #859573;
+        background-color: $admin_primary-color;
         border-radius: 50px 0 0 50px;
     }
 
@@ -45,12 +46,12 @@
         margin: 16px 0;
 
         &--highlight {
-        color: #E4A853;
+        color: $accent-color;
         }
     }
 
     &__manage {
-        color: #E4A853;
+        color:$accent-color;
         margin-bottom: 32px;
     }
 
@@ -60,7 +61,7 @@
     }
 
     &__button {
-        background-color: #4A5D47;
+        background-color: $admin_secondary-color;
         border: 2px solid #fff;
         color: #fff;
         padding: 13px 48px;
@@ -71,7 +72,7 @@
 
         &:hover {
             background-color: #fff;
-            color: #8B9E82;
+            color: $admin_primary-color;
         }
     }
 }
@@ -94,7 +95,7 @@
 
         &:focus {
             outline: none;
-            border-color: #8B9E82;
+            border-color: $admin_primary-color;
         }
 
         &--error {
@@ -127,7 +128,7 @@
     &__forgot {
         display: block;
         text-align: left;
-        color: #4A5D47;
+        color: $admin_primary-color;
         text-decoration: none;
         margin-bottom: 32px;
         font-size: 14px;
@@ -139,7 +140,7 @@
 
     &__button {
         padding: 15px 60px;
-        background-color: #4A5D47;
+        background-color: $admin_secondary-color;
         border: none;
         border-radius: 5px;
         color: #fff;
@@ -148,7 +149,7 @@
         transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: darken(#8B9E82, 10%);
+            background-color: darken($admin_primary-color, 10%);
         }
 
         &:disabled {

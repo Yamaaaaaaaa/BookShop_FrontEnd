@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Link, useNavigate } from "react-router-dom"
 import "./profile.scss"
 import { LuShoppingCart } from "react-icons/lu";
@@ -9,211 +11,15 @@ import { MdOutlinePageview } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
 import { getAllBillForUser } from "../../../service/userService";
 import { toast } from "react-toastify";
-
-// Mock data for bills
-const mockBills = [
-    {
-      id: 1,
-      date: "2024-03-09T10:30:00",
-      status: "Completed",
-      totalCost: 45.97,
-      subtotal: 39.97,
-      shipping: 6.00,
-      paymentMethod: "Credit Card",
-      items: [
-        {
-            id: 1,
-            book: {
-                name: "The Great Gatsby",
-                imageUrl: "/gatsby.jpg",
-            },
-            price: 12.99,
-            quantity: 2
-        },
-        {
-            id: 2,
-            book: {
-                name: "1984",
-                imageUrl: "/1984.jpg",
-            },
-            price: 13.99,
-            quantity: 1
-        }
-      ]
-    },
-    {
-      id: 2,
-      date: "2024-03-08T15:45:00",
-      status: "Pending",
-      totalCost: 33.98,
-      subtotal: 27.98,
-      shipping: 6.00,
-      paymentMethod: "PayPal",
-      items: [
-        {
-          id: 3,
-          book: {
-            name: "To Kill a Mockingbird",
-            imageUrl: "/mockingbird.jpg",
-          },
-          price: 13.99,
-          quantity: 2
-        }
-      ]
-    },
-    {
-      id: 3,
-      date: "2024-03-07T09:15:00",
-      status: "Cancelled",
-      totalCost: 26.99,
-      subtotal: 20.99,
-      shipping: 6.00,
-      paymentMethod: "Cash on Delivery",
-      items: [
-        {
-          id: 4,
-          book: {
-            name: "Pride and Prejudice",
-            imageUrl: "/pride.jpg",
-          },
-          price: 10.99,
-          quantity: 1
-        },
-        {
-          id: 5,
-          book: {
-            name: "The Catcher in the Rye",
-            imageUrl: "/catcher.jpg",
-          },
-          price: 9.99,
-          quantity: 1
-        }
-      ]
-    },
-    {
-      id: 4,
-      date: "2024-03-05T14:20:00",
-      status: "Completed",
-      totalCost: 52.97,
-      subtotal: 46.97,
-      shipping: 6.00,
-      paymentMethod: "Credit Card",
-      items: [
-        {
-          id: 6,
-          book: {
-            name: "The Hobbit",
-            imageUrl: "/hobbit.jpg",
-          },
-          price: 15.99,
-          quantity: 1
-        },
-        {
-          id: 7,
-          book: {
-            name: "Harry Potter and the Sorcerer's Stone",
-            imageUrl: "/harry.jpg",
-          },
-          price: 14.99,
-          quantity: 1
-        },
-        {
-          id: 8,
-          book: {
-            name: "The Lord of the Rings",
-            imageUrl: "/lotr.jpg",
-          },
-          price: 15.99,
-          quantity: 1
-        }
-      ]
-    },
-    {
-      id: 5,
-      date: "2024-03-01T09:10:00",
-      status: "Completed",
-      totalCost: 29.98,
-      subtotal: 23.98,
-      shipping: 6.00,
-      paymentMethod: "Bank Transfer",
-      items: [
-        {
-          id: 9,
-          book: {
-            name: "The Alchemist",
-            imageUrl: "/alchemist.jpg",
-          },
-          price: 11.99,
-          quantity: 2
-        }
-      ]
-    },
-    {
-      id: 6,
-      date: "2024-02-28T16:35:00",
-      status: "Pending",
-      totalCost: 41.97,
-      subtotal: 35.97,
-      shipping: 6.00,
-      paymentMethod: "PayPal",
-      items: [
-        {
-          id: 10,
-          book: {
-            name: "Brave New World",
-            imageUrl: "/brave.jpg",
-          },
-          price: 11.99,
-          quantity: 1
-        },
-        {
-          id: 11,
-          book: {
-            name: "The Odyssey",
-            imageUrl: "/odyssey.jpg",
-          },
-          price: 12.99,
-          quantity: 1
-        },
-        {
-          id: 12,
-          book: {
-            name: "Crime and Punishment",
-            imageUrl: "/crime.jpg",
-          },
-          price: 10.99,
-          quantity: 1
-        }
-      ]
-    },
-    {
-      id: 7,
-      date: "2024-02-25T11:20:00",
-      status: "Cancelled",
-      totalCost: 18.99,
-      subtotal: 12.99,
-      shipping: 6.00,
-      paymentMethod: "Credit Card",
-      items: [
-        {
-          id: 13,
-          book: {
-            name: "The Shining",
-            imageUrl: "/shining.jpg",
-          },
-          price: 12.99,
-          quantity: 1
-        }
-      ]
-    }
-  ];
-  
+import BillDetailsModal from "./BillDetailModal";
   
 
 const Profile = () => {
     const navigate = useNavigate()
     const [userProfile, setUserProfile] = useState({})
     const [billData, setBillData] = useState([])
+    const [selectedBill, setSelectedBill] = useState(null)
+    const [showModal, setShowModal] = useState(false)
 
     const fetchAllBillForUser = async () => {
       const responseGetBill = await getAllBillForUser(userProfile.id)
@@ -228,6 +34,12 @@ const Profile = () => {
       }
       toast.error("Failed to get Bill")
     }
+
+    const handleViewDetails = (bill) => {
+      setSelectedBill(bill)
+      setShowModal(true)
+    }
+    
     useEffect(() => {
         setUserProfile(JSON.parse(sessionStorage.getItem("user")))
         fetchAllBillForUser()
@@ -303,6 +115,9 @@ const Profile = () => {
                             <textarea className="form-control"></textarea>
                         </div>
                     </div>
+					<div>
+						<button className="profile_updateprofile">Update Profile</button>
+					</div>
                 </section>
                 <section className="section bills-section">
                     <h2 className="section-title">MY BILLS</h2>
@@ -329,7 +144,7 @@ const Profile = () => {
                                         <td className="bill-amount">${bill.totalCost.toFixed(2)}</td>
                                         <td>{bill.PaymentMethod.name}</td>
                                         <td className="actions-cell">
-                                            <button className="action-btn view-btn">
+                                            <button className="action-btn view-btn"  onClick={() => handleViewDetails(bill)}>
                                                 <MdOutlinePageview />
                                             </button>
                                             <button className="action-btn delete-btn">
@@ -343,6 +158,15 @@ const Profile = () => {
                     </div>
                 </section>
             </main>
+            {showModal && selectedBill && (
+				<BillDetailsModal
+					bill={selectedBill}
+					onClose={() => {
+						setShowModal(false)
+						setSelectedBill(null)
+					}}
+				/>
+            )}
         </div>
     )
 }
