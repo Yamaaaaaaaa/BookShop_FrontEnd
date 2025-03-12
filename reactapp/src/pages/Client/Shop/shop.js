@@ -50,7 +50,7 @@ const Shop = () => {
         event.preventDefault()
         console.log("book: ", bookId, "user: ", userId);
         
-        const response = await addBookToCartForUser(bookId, userId)
+        const response = await addBookToCartForUser(bookId, userId, 1)
     
         if(response){
             if(+response.status === 1){
@@ -235,7 +235,7 @@ const Shop = () => {
 
                 <div className="shop__books-grid">
                     {filteredBooks.map((book) => (
-                        <Link to="/bookdetail" key={book.id} className="shop__book-card">
+                        <Link to="/bookdetail" state={{id: book.id}} key={book.id} className="shop__book-card">
                             <div className="shop__book-image">
                                 <img src={book.bookImageUrl} alt={book.name} />
                                 <button

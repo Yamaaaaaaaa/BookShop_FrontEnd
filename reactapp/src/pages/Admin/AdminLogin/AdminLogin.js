@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./adminlogin.scss";
+import { loginAdminService } from "../../../service/authService";
+import { toast } from "react-toastify";
 
 // Test credentials
 const TEST_CREDENTIALS = {
@@ -21,26 +23,6 @@ const LoginPage = () => {
     const [loginError, setLoginError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const validateForm = () => {
-        const newErrors = {};
-
-        // Email validation
-        if (!formData.email) {
-            newErrors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = 'Email is invalid';
-        }
-
-        // Password validation
-        if (!formData.password) {
-            newErrors.password = 'Password is required';
-        } else if (formData.password.length < 6) {
-            newErrors.password = 'Password must be at least 6 characters';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -62,30 +44,30 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // if (!validateForm()) return;
+        // Simple validation
+        const newErrors = {};
+        if (!formData.email) newErrors.email = 'Email is required';
+        if (!formData.password) newErrors.password = 'Password is required';
+        
+        if (Object.keys(newErrors).length > 0) {
+            setLoginError(newErrors);
+            return;
+        }
 
         setIsLoading(true);
-        setLoginError('');
 
         try {
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            if (
-                formData.email === TEST_CREDENTIALS.email && 
-                formData.password === TEST_CREDENTIALS.password
-            ) {
-                // Store auth data
-                sessionStorage.setItem('token', 'fake-jwt-token');
-                sessionStorage.setItem('admin', JSON.stringify({
-                email: formData.email,
-                    role: 'admin'
-                }));
-
-                // Redirect to dashboard
-                navigate('/admin/dashboard');
-            } else {
-                setLoginError('Invalid email or password');
+            const response = await loginAdminService(formData)
+            console.log("Response Admin Login: ", response);
+            
+            if(response && +response.status === 1 && response.access_token) {
+                sessionStorage.setItem('access_token', response.access_token);
+                sessionStorage.setItem('admin', JSON.stringify(response.data));
+                navigate("/admin/dashboard")
+                toast.success(response.message)
+                return
+            }else {
+                setLoginError(response.message);
             }
         } catch (error) {
             setLoginError('An error occurred. Please try again.');

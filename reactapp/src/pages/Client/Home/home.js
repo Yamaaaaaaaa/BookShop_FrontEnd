@@ -100,10 +100,8 @@ const Home = () => {
     }
   }
 
-  const handleAddToCart = async (bookId, userId) => {
-    console.log("book: ", bookId, "user: ", userId);
-    
-    const response = await addBookToCartForUser(bookId, userId)
+  const handleAddToCart = async (bookId, userId) => {    
+    const response = await addBookToCartForUser(bookId, userId, 1)
 
     if(response){
       if(+response.status === 1){

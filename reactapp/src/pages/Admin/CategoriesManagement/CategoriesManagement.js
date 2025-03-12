@@ -1,76 +1,51 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CategoryFormModal from "./CategoryFormModal"
 import DeleteCategoryModal from "./DeleteCategoryModal"
 import "./CategoriesManagement.scss"
 import { MdDelete, MdEdit } from "react-icons/md"
+import { getAllCategories } from "../../../service/categoryService"
+import { toast } from "react-toastify"
 
-const mockCategories = [
-    {
-        id: "001",
-        name: "Education",
-        amount: "002 Books",
-        createdAt: "25-02-2024 10:39:43",
-    },
-    {
-        id: "002",
-        name: "Science",
-        amount: "005 Books",
-        createdAt: "25-02-2024 10:39:43",
-    },
-    {
-        id: "003",
-        name: "Technology",
-        amount: "003 Books",
-        createdAt: "25-02-2024 10:39:43",
-    },
-]
 
 const CategoriesManagement = () => {
-    const [categories, setCategories] = useState(mockCategories)
+    const [categoriesData, setCategoriesData] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
     const [formModal, setFormModal] = useState({ show: false, mode: "add", category: null })
     const [deleteModal, setDeleteModal] = useState({ show: false, category: null })
 
     const handleAdd = (newCategory) => {
-        const lastId = Math.max(...categories.map((cat) => Number.parseInt(cat.id)))
-        const newId = (lastId + 1).toString().padStart(3, "0")
-        const now = new Date()
-            .toLocaleString("en-GB", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-            })
-            .replace(",", "")
-
-            setCategories([
-            ...categories,
-            {
-                ...newCategory,
-                id: newId,
-                createdAt: now,
-                amount: "000 Books",
-            },
-        ])
-        setFormModal({ show: false, mode: "add", category: null })
+        
     }
 
     const handleEdit = (editedCategory) => {
-        setCategories(categories.map((category) => (category.id === editedCategory.id ? editedCategory : category)))
-        setFormModal({ show: false, mode: "add", category: null })
+
     }
 
     const handleDelete = (id) => {
-        setCategories(categories.filter((category) => category.id !== id))
-        setDeleteModal({ show: false, category: null })
+
     }
 
-    const filteredCategories = categories.filter(
-        (category) => category.name.toLowerCase().includes(searchTerm.toLowerCase()) || category.id.includes(searchTerm),
+    const filteredCategories = categoriesData.filter(
+        (category) => category.name.toLowerCase().includes(searchTerm.toLowerCase()) || category.id.toString().includes(searchTerm),
     )
-
+    const fetchCategories = async () => {
+        try {
+            const listCategories = await getAllCategories();
+            if (listCategories?.data?.data) {
+                setCategoriesData(listCategories.data.data);
+                console.log("All Cate: ", listCategories.data.data);
+                
+                toast.success(listCategories.data.message)
+                return
+            }
+            else toast.error(listCategories.data.message)
+        } catch (error) {
+            toast.error("Error fetching categories:", error);
+        }
+    };
+    useEffect(() => {
+        fetchCategories()
+    }, [])
     return (
     <div className="categories-management">
         <div className="categories-management__header">
@@ -99,8 +74,7 @@ const CategoriesManagement = () => {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Amount</th>
-                        <th>Created At</th>
+                        <th>Description</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -109,8 +83,7 @@ const CategoriesManagement = () => {
                         <tr key={category.id}>
                             <td>{category.id}</td>
                             <td>{category.name}</td>
-                            <td>{category.amount}</td>
-                            <td>{category.createdAt}</td>
+                            <td>{category.description}</td>
                             <td className="action-cell">
                             <button
                                 className="action-btn edit"
@@ -140,6 +113,7 @@ const CategoriesManagement = () => {
                 category={formModal.category}
                 onClose={() => setFormModal({ show: false, mode: "add", category: null })}
                 onSubmit={formModal.mode === "add" ? handleAdd : handleEdit}
+                fetchCategories={fetchCategories}
             />
         )}
 
@@ -148,6 +122,7 @@ const CategoriesManagement = () => {
             category={deleteModal.category}
             onClose={() => setDeleteModal({ show: false, category: null })}
             onConfirm={() => handleDelete(deleteModal.category.id)}
+            fetchCategories={fetchCategories}
             />
         )}
     </div>

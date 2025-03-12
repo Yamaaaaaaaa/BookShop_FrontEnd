@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AddUserModal from "./AddUserModal"
 import DeleteUserModal from "./DeleteUserModal"
 import ViewAddressesModal from "./ViewAddressesModal"
 import "./UserManagement.scss"
 import { MdAdd, MdEdit, MdDelete, MdVisibility } from 'react-icons/md';
 import { IoLocation } from "react-icons/io5";
+import { getAllUser } from "../../../service/userService"
+import { toast } from "react-toastify"
 
 const mockUsers = [
     {
@@ -33,6 +35,7 @@ const mockUsers = [
   
 const UserManagement = () => {
     const [users, setUsers] = useState(mockUsers)
+    const [userData, setUserData] = useState([])
     const [addModal, setAddModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState({ show: false, user: null })
     const [addressModal, setAddressModal] = useState({ show: false, user: null })
@@ -49,11 +52,30 @@ const UserManagement = () => {
         setDeleteModal({ show: false, user: null })
     }
 
-    const filteredUsers = users.filter(
+    const filteredUsers = userData.filter(
         (user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.id.toString().includes(searchTerm),
     )
 
-  return (
+    const fetchAllUser = async () => {
+        
+        try {
+            const dataUsers = await getAllUser()
+            if (dataUsers?.data) {
+                setUserData(dataUsers.data);
+                console.log("All User: ", dataUsers.data);
+                
+                toast.success(dataUsers.message)
+                return
+            }
+            else toast.error(dataUsers.message)
+        } catch (error) {
+            toast.error("Error fetching All User:", error);
+        } 
+    }
+    useEffect(() => {
+        fetchAllUser()
+    }, [])
+    return (
     <div className="user-management">
         <div className="user-management__header">
             <h1>User Management</h1>
@@ -79,7 +101,7 @@ const UserManagement = () => {
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Username</th>
+                    <th>Group Role</th>
                     <th>Addresses</th>
                     <th>Action</th>
                 </tr>
@@ -90,14 +112,12 @@ const UserManagement = () => {
                         <td>{user.id}</td>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
-                        <td>{user.username}</td>
-                        <td>
-                        <button className="address-btn" onClick={() => setAddressModal({ show: true, user })}>
-                            <IoLocation/>
-                            <span>{user.addresses.length}</span>
-                        </button>
-                        </td>
-                        <td>
+                        <td>{user.Group.name}</td>
+                        <td>{user.address} </td>
+                        <td className="action_btn">
+                            <button onClick={() => setDeleteModal({ show: true, user })} className="action-btn edit">
+                                <MdEdit/>
+                            </button>
                             <button onClick={() => setDeleteModal({ show: true, user })} className="action-btn delete">
                                 <MdDelete/>
                             </button>

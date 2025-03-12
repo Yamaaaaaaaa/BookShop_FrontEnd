@@ -9,7 +9,9 @@ import { IoIosExit } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { MdOutlinePageview } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
+import { deleteOwnBill } from "../../../service/billService";
 import { getAllBillForUser } from "../../../service/userService";
+
 import { toast } from "react-toastify";
 import BillDetailsModal from "./BillDetailModal";
   
@@ -35,11 +37,28 @@ const Profile = () => {
       toast.error("Failed to get Bill")
     }
 
+    const handleDeleteOwnBill = async (userId, billId) => {
+        const responseDeleteOwnBill = await deleteOwnBill(userId, billId)
+        if(responseDeleteOwnBill){
+            if(responseDeleteOwnBill.status === 1){
+                toast.success(responseDeleteOwnBill.message)
+                fetchAllBillForUser()
+                return 
+            }
+            else{
+                toast.error(responseDeleteOwnBill.message)
+                return 
+            }
+        }
+        toast.error("Failed to Delete Bill")
+    }
+
     const handleViewDetails = (bill) => {
       setSelectedBill(bill)
       setShowModal(true)
     }
     
+
     useEffect(() => {
         setUserProfile(JSON.parse(sessionStorage.getItem("user")))
         fetchAllBillForUser()
@@ -147,7 +166,7 @@ const Profile = () => {
                                             <button className="action-btn view-btn"  onClick={() => handleViewDetails(bill)}>
                                                 <MdOutlinePageview />
                                             </button>
-                                            <button className="action-btn delete-btn">
+                                            <button className="action-btn delete-btn" onClick={() => handleDeleteOwnBill(userProfile.id, bill.id)}>
                                                 <TiDelete />
                                             </button>
                                         </td>

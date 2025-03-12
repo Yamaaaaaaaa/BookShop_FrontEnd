@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect, useRef } from "react"
 import { MdBook } from "react-icons/md"
 import "./Modal.scss"
@@ -7,11 +5,9 @@ import { getAllPublisher } from "../../../service/publisherService"
 import { getAllAuthor } from "../../../service/authorService"
 import { getAllSeries } from "../../../service/serieService"
 import { toast } from "react-toastify"
-import { createBook, updateBook } from "../../../service/bookService"
 
-const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) => {
+const AddEditBookModal = ({ type, book, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
-    id: "",
     name: "",
     description: "",
     series: "",
@@ -51,7 +47,6 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
   useEffect(() => {
     if (type === "edit" && book) {
       setFormData({
-        id: book.id,
         name: book.name,
         description: book.description,
         series: book.Serie?.name || "",
@@ -151,7 +146,6 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
       publisher: publisher.name,
       publisherId: publisher.id,
     }))
-    setPublisherSearch("")
     setPublisherDropdownOpen(false)
   }
 
@@ -161,7 +155,6 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
       author: author.name,
       authorId: author.id,
     }))
-    setAuthorSearch("")
     setAuthorDropdownOpen(false)
   }
 
@@ -171,69 +164,18 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
       series: series.name,
       seriesId: series.id,
     }))
-    setSeriesSearch("")
     setSeriesDropdownOpen(false)
   }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        if(type === "edit"){
-            const response = await updateBook({
-                id: formData.id,
-                name: formData.name,
-                description: formData.description,
-                originalCost: formData.originalCost,
-                sale: formData.sale,
-                stock: formData.stock,
-                publisherId: formData.publisherId,
-                authorId: formData.authorId,
-                state: formData.state,
-                publishedDate: formData.publishedDate,
-                seriesId: formData.seriesId,
-                bookImageUrl: formData.bookImageUrl
-            })
-            // console.log("Submitting with selected data:", {
-            //   publisher: { id: formData.publisherId, name: formData.publisher },
-            //   author: { id: formData.authorId, name: formData.author },
-            //   series: { id: formData.seriesId, name: formData.series },
-            // })
-            if(response){
-                if(response.status === 1){
-                    toast.success(response.message)
-                    return
-                }
-            }
-            toast.success(response.message)
-        }
-        else{
-            const response = await createBook({
-                name: formData.name,
-                description: formData.description,
-                originalCost: formData.originalCost,
-                sale: formData.sale,
-                stock: formData.stock,
-                publisherId: formData.publisherId,
-                authorId: formData.authorId,
-                state: formData.state,
-                publishedDate: formData.publishedDate,
-                seriesId: formData.seriesId,
-                bookImageUrl: formData.bookImageUrl
-            })
-            // console.log("Submitting with selected data:", {
-            //   publisher: { id: formData.publisherId, name: formData.publisher },
-            //   author: { id: formData.authorId, name: formData.author },
-            //   series: { id: formData.seriesId, name: formData.series },
-            // })
-            if(response){
-                if(response.status === 1){
-                    toast.success(response.message)
-                    return
-                }
-            }
-            toast.success(response.message)
-        }
-        fetchInitialBook()
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("Submitting with selected data:", {
+      publisher: { id: formData.publisherId, name: formData.publisher },
+      author: { id: formData.authorId, name: formData.author },
+      series: { id: formData.seriesId, name: formData.series },
+    })
+    onSubmit(formData)
+  }
 
   return (
     <div className="modal-overlay">
@@ -269,19 +211,18 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
             </div>
             <div className="form-group" ref={seriesRef}>
               <label htmlFor="series">Series:</label>
-              <div className="search-dropdown">
+              <div className="dropdown-container">
                 <input
-                  id="series-search"
+                  id="series"
                   type="text"
                   value={seriesSearch}
                   onChange={(e) => setSeriesSearch(e.target.value)}
                   onFocus={() => setSeriesDropdownOpen(true)}
-                  placeholder={type === "edit" ? "" : (formData.series || "Search series...")}
-                  className="search-input"
+                  placeholder={formData.series || "Search series..."}
+                  required
                 />
-                {formData.series && !seriesSearch && <div className="selected-item">{formData.series}</div>}
                 {seriesDropdownOpen && (
-                  <div className="dropdown-menu">
+                  <div className="dropdown-list">
                     {filteredSeries.length > 0 ? (
                       filteredSeries.map((series) => (
                         <div key={series.id} className="dropdown-item" onClick={() => handleSeriesSelect(series)}>
@@ -289,32 +230,29 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
                         </div>
                       ))
                     ) : (
-                      <div className="dropdown-item no-results">No results found</div>
+                      <div className="dropdown-item">No results found</div>
                     )}
                   </div>
                 )}
               </div>
-              <input type="hidden" name="series" value={formData.series} required />
-              <input type="hidden" name="seriesId" value={formData.seriesId || ""} />
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group" ref={publisherRef}>
               <label htmlFor="publisher">Publisher:</label>
-              <div className="search-dropdown">
+              <div className="dropdown-container">
                 <input
-                  id="publisher-search"
+                  id="publisher"
                   type="text"
                   value={publisherSearch}
                   onChange={(e) => setPublisherSearch(e.target.value)}
                   onFocus={() => setPublisherDropdownOpen(true)}
-                  placeholder={type === "edit" ? "" : (formData.publisher || "Search publisher...")}
-                  className="search-input"
+                  placeholder={formData.publisher || "Search publisher..."}
+                  required
                 />
-                {formData.publisher && !publisherSearch && <div className="selected-item">{formData.publisher}</div>}
                 {publisherDropdownOpen && (
-                  <div className="dropdown-menu">
+                  <div className="dropdown-list">
                     {filteredPublishers.length > 0 ? (
                       filteredPublishers.map((publisher) => (
                         <div
@@ -326,29 +264,26 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
                         </div>
                       ))
                     ) : (
-                      <div className="dropdown-item no-results">No results found</div>
+                      <div className="dropdown-item">No results found</div>
                     )}
                   </div>
                 )}
               </div>
-              <input type="hidden" name="publisher" value={formData.publisher} required />
-              <input type="hidden" name="publisherId" value={formData.publisherId || ""} />
             </div>
             <div className="form-group" ref={authorRef}>
               <label htmlFor="author">Author:</label>
-              <div className="search-dropdown">
+              <div className="dropdown-container">
                 <input
-                  id="author-search"
+                  id="author"
                   type="text"
                   value={authorSearch}
                   onChange={(e) => setAuthorSearch(e.target.value)}
                   onFocus={() => setAuthorDropdownOpen(true)}
-                  placeholder={type === "edit" ? "" : (formData.author || "Search author...")}
-                  className="search-input"
+                  placeholder={formData.author || "Search author..."}
+                  required
                 />
-                {formData.author && !authorSearch && <div className="selected-item">{formData.author}</div>}
                 {authorDropdownOpen && (
-                  <div className="dropdown-menu">
+                  <div className="dropdown-list">
                     {filteredAuthors.length > 0 ? (
                       filteredAuthors.map((author) => (
                         <div key={author.id} className="dropdown-item" onClick={() => handleAuthorSelect(author)}>
@@ -356,13 +291,11 @@ const AddEditBookModal = ({ type, book, onClose, onSubmit, fetchInitialBook }) =
                         </div>
                       ))
                     ) : (
-                      <div className="dropdown-item no-results">No results found</div>
+                      <div className="dropdown-item">No results found</div>
                     )}
                   </div>
                 )}
               </div>
-              <input type="hidden" name="author" value={formData.author} required />
-              <input type="hidden" name="authorId" value={formData.authorId || ""} />
             </div>
           </div>
 

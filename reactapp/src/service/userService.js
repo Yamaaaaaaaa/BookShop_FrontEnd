@@ -13,9 +13,9 @@ export const updateCartForUser = async (cartID, action) => {
     });
 };
 
-export const addBookToCartForUser = async (bookId, userId) => {
+export const addBookToCartForUser = async (bookId, userId,quantity) => {
     return await instance.post(mainUrl + "/user/add-to-cart", {}, { // Body rỗng (Tk Put nó nhận đó)
-        params: { bookId, userId }
+        params: { bookId, userId ,quantity}
     });
 };
 
@@ -24,7 +24,17 @@ export const createBillForUser = async (billData) => {
 };
 
 export const getAllBillForUser = async (userId) => {
-    return await instance.get(mainUrl + "/bill/get-all-bill", {
+    return await instance.get(mainUrl + "/bill/get-own-bill", {
         params: {userId: userId}
     });
+}
+
+export const getPaymentMethod = async () => {
+    return await instance.get(mainUrl + "/payment/get-paymentMethod");
+}
+
+
+
+export const getAllUser = async () => {
+    return await instance.get(mainUrl + "/user/get-all-user")
 }

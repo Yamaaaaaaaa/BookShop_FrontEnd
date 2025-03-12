@@ -1,5 +1,9 @@
-import { useState } from "react"
-import "./bookdetail.scss"
+import { useEffect, useState } from "react";
+import "./bookdetail.scss";
+import { useLocation } from "react-router-dom";
+import { getABooks } from "../../../service/bookService";
+import { toast } from "react-toastify";
+import { addBookToCartForUser } from "../../../service/userService";
 
 const relatedBooks = [
     {
@@ -26,100 +30,100 @@ const relatedBooks = [
         year: 2024,
         categories: ["SCIENCE FICTION", "ADVENTURE"],
     },
-]
-const mockBook = {
-    id: 1,
-    title: "Think and Grow Rich",
-    author: "Napoleon Hill",
-    price: 54.78,
-    originalPrice: 70.0,
-    image: "https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg",
-    rating: 4,
-    publisher: "Printarea Studios",
-    year: 2019,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    isbn: "121341381648 (ISBN13: 121341381648)",
-    language: "English",
-    format: "Paperback, 450 Pages",
-    tags: ["Drama", "Adventure", "Survival", "Biography", "Trending2024", "Bestseller"],
-    categories: ["Self-help", "Personal Development"],
-}
+];
+
 const BookDetail = () => {
-    const [activeTab, setActiveTab] = useState("details")
-    const [quantity, setQuantity] = useState(1)
+    const params = useLocation();
+    const bookId = params.state?.id;
+    const userId = JSON.parse(sessionStorage.getItem("user"))?.id
+    const [activeTab, setActiveTab] = useState("details");
+    const [quantity, setQuantity] = useState(1);
+    const [bookData, setBookData] = useState({
+        name: "Unknown",
+        Author: { name: "Unknown" },
+        Publisher: { name: "Unknown" },
+        sale: 0,
+        originalCost: 0,
+        description: "No description available.",
+        bookImageUrl: "/placeholder.svg",
+    });
 
-    const handleQuantityChange = (amount) => {
-        setQuantity((prev) => Math.max(1, prev + amount))
+    const fetchBook = async () => {
+        try {
+            const response = await getABooks({ id: bookId });
+            if (response?.status === 1) {
+                setBookData(response.data);
+                toast.success(response.message);
+            } else {
+                toast.error("Failed to get book data");
+            }
+        } catch (error) {
+            toast.error("Error fetching book data");
+        }
+    };
+
+    const handleAddtoCard = async (e) => {
+        const response = await addBookToCartForUser(bookId, userId, quantity)
+
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+                fetchBook()
+            }
+            else{
+                toast.error(response.message)
+            }
+            
+        }
+        else toast.error(response.message)
     }
 
-    const renderRating = (rating) => {
-        if (rating == null) return "No Rating"
-        const fullStars = Math.floor(rating)
-        const emptyStars = 5 - fullStars
-        return (
-            <>
-                {"★".repeat(fullStars)}
-                {"☆".repeat(emptyStars)} {rating.toFixed(1)}
-            </>
-        )
-    }
+    useEffect(() => {
+        if (!bookId) {
+            toast.error("Book ID is missing");
+            return;
+        }
+        fetchBook();
+    }, [bookId]);
 
     return (
         <div className="book-detail">
             <div className="book-detail__grid">
                 <div className="book-detail__image-container">
-                    <img src={mockBook.image || "/placeholder.svg"} alt={mockBook.title} className="book-detail__image" />
+                    <img
+                        src={bookData.bookImageUrl || "/placeholder.svg"}
+                        alt={bookData.name}
+                        className="book-detail__image"
+                    />
                 </div>
 
                 <div className="book-detail__info">
-                    <h1 className="book-detail__title">{mockBook.title}</h1>
-                    <div className="book-detail__rating">{renderRating(mockBook.rating)}</div>
-
+                    <h1 className="book-detail__title">{bookData.name}</h1>
                     <div className="book-detail__author-info">
                         <div>
                             <small>Written by</small>
-                            <p>{mockBook.author}</p>
+                            <p>{bookData?.Author?.name || "Unknown Author"}</p>
                         </div>
                         <div>
                             <small>Publisher</small>
-                            <p>{mockBook.publisher}</p>
-                        </div>
-                        <div>
-                            <small>Year</small>
-                            <p>{mockBook.year}</p>
+                            <p>{bookData?.Publisher?.name || "Unknown Publisher"}</p>
                         </div>
                     </div>
 
-                    <p className="book-detail__description">{mockBook.description}</p>
+                    <p className="book-detail__description">{bookData.description}</p>
 
                     <div className="book-detail__price">
-                        ${mockBook.price.toFixed(2)}{" "}
-                        <span className="book-detail__original-price">${mockBook.originalPrice.toFixed(2)}</span>
+                        ${bookData.sale?.toFixed(2)}{" "}
+                        <span className="book-detail__original-price">${bookData.originalCost?.toFixed(2)}</span>
                     </div>
 
                     <div className="book-detail__add-to-cart">
                         <div className="book-detail__quantity">
-                            <button onClick={() => handleQuantityChange(-1)}>-</button>
+                            <button onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}>-</button>
                             <input type="number" value={quantity} readOnly />
-                            <button onClick={() => handleQuantityChange(1)}>+</button>
+                            <button onClick={() => setQuantity((prev) => prev + 1)}>+</button>
                         </div>
-                        <button className="book-detail__cart-button">Add To Cart</button>
-                    </div>
-
-                    <div className="book-detail__social-share">
-                        <a href="#" className="book-detail__social-icon book-detail__social-icon--facebook">
-                            f
-                        </a>
-                        <a href="#" className="book-detail__social-icon book-detail__social-icon--twitter">
-                            t
-                        </a>
-                        <a href="#" className="book-detail__social-icon book-detail__social-icon--whatsapp">
-                            w
-                        </a>
-                        <a href="#" className="book-detail__social-icon book-detail__social-icon--email">
-                            e
-                        </a>
+                        <button className="book-detail__cart-button" onClick={(e) => handleAddtoCard(e)}>Add To Cart</button>
                     </div>
                 </div>
             </div>
@@ -145,35 +149,15 @@ const BookDetail = () => {
                         <tbody>
                             <tr>
                                 <td>Book Title</td>
-                                <td>{mockBook.title}</td>
+                                <td>{bookData.name}</td>
                             </tr>
                             <tr>
                                 <td>Author</td>
-                                <td>{mockBook.author}</td>
+                                <td>{bookData?.Author?.name || "Unknown Author"}</td>
                             </tr>
                             <tr>
-                                <td>ISBN</td>
-                                <td>{mockBook.isbn}</td>
-                            </tr>
-                            <tr>
-                                <td>Edition Language</td>
-                                <td>{mockBook.language}</td>
-                            </tr>
-                            <tr>
-                                <td>Book Format</td>
-                                <td>{mockBook.format}</td>
-                            </tr>
-                            <tr>
-                                <td>Tags</td>
-                                <td>
-                                    <div className="book-detail__tags">
-                                        {mockBook.tags.map((tag, index) => (
-                                            <span key={index} className="book-detail__tag">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </td>
+                                <td>Publisher</td>
+                                <td>{bookData?.Publisher?.name || "Unknown Publisher"}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -185,6 +169,7 @@ const BookDetail = () => {
                     <p>Customer reviews will be displayed here.</p>
                 </div>
             )}
+
             <div className="book-detail__related-books">
                 <h2>RELATED BOOKS</h2>
                 <div className="book-detail__book-grid">
@@ -194,8 +179,10 @@ const BookDetail = () => {
                             <h3>{book.title}</h3>
                             <div className="book-detail__categories">{book.categories?.join(", ") || "Unknown"}</div>
                             <div className="book-detail__price">
-                                    {book.price != null ? `$${book.price.toFixed(2)}` : "N/A"} 
-                                    {book.originalPrice ? <span className="book-detail__original-price">${book.originalPrice.toFixed(2)}</span> : null}
+                                {book.price != null ? `$${book.price.toFixed(2)}` : "N/A"}{" "}
+                                {book.originalPrice ? (
+                                    <span className="book-detail__original-price">${book.originalPrice.toFixed(2)}</span>
+                                ) : null}
                             </div>
                             <button className="book-detail__cart-button">Add To Cart</button>
                         </div>
@@ -203,7 +190,7 @@ const BookDetail = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default BookDetail
+export default BookDetail;

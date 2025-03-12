@@ -1,5 +1,23 @@
-const DeleteCategoryModal = ({ category, onClose, onConfirm }) => {
-    return (
+import { toast } from "react-toastify"
+import { deleteCategories } from "../../../service/categoryService"
+
+const DeleteCategoryModal = ({ category, onClose, onConfirm, fetchCategories}) => {
+    
+  const handleDelete = async (e) => {
+      e.preventDefault()
+      const response = await deleteCategories(category.id)
+      if(response){
+        if(response.status === 1){
+            toast.success(response.message)
+            fetchCategories()
+            onClose()
+            return
+        }
+      }
+      toast.error(response.message)
+      onClose()
+  }
+  return (
       <div className="modal-overlay">
         <div className="modal-content delete-modal">
           <div className="modal-header">
@@ -17,7 +35,7 @@ const DeleteCategoryModal = ({ category, onClose, onConfirm }) => {
             <button className="btn btn-secondary" onClick={onClose}>
               Cancel
             </button>
-            <button className="btn btn-danger" onClick={onConfirm}>
+            <button className="btn btn-danger"  onClick={(e) => handleDelete(e)}>
               Confirm
             </button>
           </div>

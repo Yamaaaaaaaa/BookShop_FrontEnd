@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import "./cart.scss"
-import { createBillForUser, getCartForUser, updateCartForUser } from "../../../service/userService"
+import { createBillForUser, getCartForUser, getPaymentMethod, updateCartForUser } from "../../../service/userService"
 import { toast } from "react-toastify"
 import { RiBankFill } from "react-icons/ri";
 import { FaCreditCard } from "react-icons/fa";
@@ -9,7 +9,8 @@ import { MdDeliveryDining } from "react-icons/md";
 const Cart = () => {
     const [userCart, setUserCart] = useState([])
     const [selectedItems, setSelectedItems] = useState({})
-    const [paymentMethod, setPaymentMethod] = useState("credit-card")
+    const [paymentMethod, setPaymentMethod] = useState({})
+    const [paymentMethods, setPaymentMethods] = useState([])
     const user = sessionStorage.getItem("user")
     const userID = JSON.parse(sessionStorage.getItem("user"))?.id || ""
 
@@ -28,7 +29,20 @@ const Cart = () => {
             setUserCart([])
         }
     }
-
+    const fetchAllPaymentMethod = async () => {
+        const responseGetPayment = await getPaymentMethod()
+        if(responseGetPayment && responseGetPayment.status === 1 && responseGetPayment.data){
+            setPaymentMethods(responseGetPayment.data)
+            console.log(responseGetPayment.data);
+            
+            toast.success(responseGetPayment.message)
+            return
+        } else {
+            toast.error(responseGetPayment.message)
+            setPaymentMethods([])
+            return
+        }
+    }
     const handleUpdateCart = async (cartID, action) => {
         const response = await updateCartForUser(cartID, action)
         
@@ -86,7 +100,7 @@ const Cart = () => {
         }));
         const responseCreateBill = await createBillForUser({
             user: user,
-            paymentMethodId: "1", 
+            paymentMethodId: paymentMethod.id, 
             totalCost: (parseFloat(calculateTotal()) + 5).toFixed(2),
             shippingMethod: "GHTK",
             books: JSON.stringify(books)
@@ -108,6 +122,7 @@ const Cart = () => {
         if (userID) {
             getCart()
         }
+        fetchAllPaymentMethod()
     }, [userID])
 
     const isAllSelected = userCart.length > 0 && userCart.every(item => selectedItems[item.id])
@@ -204,56 +219,24 @@ const Cart = () => {
                             <div className="payment-methods">
                                 <h3>Payment Method</h3>
                                 <div className="payment-options">
-                                    <div className="payment-option">
-                                        <label className="radio-container">
-                                            <input 
-                                                type="radio" 
-                                                name="payment" 
-                                                value="credit-card" 
-                                                checked={paymentMethod === "credit-card"}
-                                                onChange={() => setPaymentMethod("credit-card")}
-                                            />
-                                            <span className="radio-checkmark"></span>
-                                            <div className="payment-label">
-                                                <span className="payment-icon credit-card-icon"><FaCreditCard /></span>
-                                                <span>Credit Card</span>
+                                    {paymentMethods.length > 0 ? (
+                                        paymentMethods.map(item => (
+                                            <div className="payment-option">
+                                                <label className="radio-container">
+                                                    <input 
+                                                        type="radio" 
+                                                        name="payment" 
+                                                        value="credit-card" 
+                                                        onChange={() => setPaymentMethod(item)}
+                                                    />
+                                                    <span className="radio-checkmark"></span>
+                                                    <div className="payment-label">
+                                                        <span>{item.name}</span>
+                                                    </div>
+                                                </label>
                                             </div>
-                                        </label>
-                                    </div>
-                                    
-                                    <div className="payment-option">
-                                        <label className="radio-container">
-                                            <input 
-                                                type="radio" 
-                                                name="payment" 
-                                                value="cash" 
-                                                checked={paymentMethod === "cash"}
-                                                onChange={() => setPaymentMethod("cash")}
-                                            />
-                                            <span className="radio-checkmark"></span>
-                                            <div className="payment-label">
-                                                <span className="payment-icon cash-icon"><MdDeliveryDining /></span>
-                                                <span>Cash on Delivery</span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                    
-                                    <div className="payment-option">
-                                        <label className="radio-container">
-                                            <input 
-                                                type="radio" 
-                                                name="payment" 
-                                                value="bank-transfer" 
-                                                checked={paymentMethod === "bank-transfer"}
-                                                onChange={() => setPaymentMethod("bank-transfer")}
-                                            />
-                                            <span className="radio-checkmark"></span>
-                                            <div className="payment-label">
-                                                <span className="payment-icon bank-icon"><RiBankFill /></span>
-                                                <span>Bank Transfer</span>
-                                            </div>
-                                        </label>
-                                    </div>
+                                        ))
+                                    ) : (<></>)}
                                 </div>
                             </div>
                             

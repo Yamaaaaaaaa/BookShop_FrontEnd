@@ -30,32 +30,32 @@ const ViewBookModal = ({ book, onClose, formatCurrency }) => {
                             <span>{book.description}</span>
                         </div>
 
-                        <div className="info-row">
+                        {/* <div className="info-row">
                             <label>Category:</label>
                             <span>{book.categories}</span>
-                        </div>
+                        </div> */}
 
                         <div className="info-row">
                             <label>Series:</label>
-                            <span>{book.series}</span>
+                            <span>{book.Serie ? book.Serie.name : "Unknown"}</span>
                         </div>
 
                         <div className="info-row">
                             <label>Publisher:</label>
-                            <span>{book.publisher}</span>
+                            <span>{book.Publisher.name}</span>
                         </div>
 
                         <div className="info-row">
                             <label>Author:</label>
-                            <span>{book.author}</span>
+                            <span>{book.Author.name}</span>
                         </div>
 
                         <div className="info-row">
                             <label>Price:</label>
                             <div className="price">
                                 <span className="sale">{formatCurrency(book.sale)}</span>
-                                {book.originalPrice > book.sale && (
-                                    <span className="original">{formatCurrency(book.originalPrice)}</span>
+                                {book.originalCost > book.sale && (
+                                    <span className="original">{formatCurrency(book.originalCost)}</span>
                                 )}
                             </div>
                         </div>
@@ -68,7 +68,7 @@ const ViewBookModal = ({ book, onClose, formatCurrency }) => {
 
                     <div className="view-book__image">
                         <div className="image-placeholder">
-                            Image Book
+                            <img src={book.bookImageUrl} alt="Image Book"/>
                         </div>
                     </div>
                 </div>

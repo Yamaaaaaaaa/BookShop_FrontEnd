@@ -103,6 +103,11 @@ $light-bg: #f8f9fa;
     }
 }
 
+.action_btn{
+    display: flex;
+    gap: 10px;
+}
+
 // Modal Styles
 .modal-overlay {
     position: fixed;
@@ -231,24 +236,6 @@ $light-bg: #f8f9fa;
     }
 }
 
-// Address Button
-.address-btn {
-    @include button-base;
-    padding: 4px 8px;
-    background-color: green;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 7px 5px;
-    &:hover {
-        background-color: darken($light-bg, 5%);
-    }
-
-    i {
-        font-size: 12px;
-    }
-}
 
 // Action Buttons
 .action-btn {
@@ -266,6 +253,11 @@ $light-bg: #f8f9fa;
         background-color: #F44336;
         color: white;
         &:hover { background-color: darken(#F44336, 10%); }
+    }
+    &.edit {
+        background-color: #4b4eeb;
+        color: white;
+        &:hover { background-color: darken(#1c1fd7, 10%); }
     }
 }
 

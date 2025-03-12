@@ -59,16 +59,17 @@ const Admin_SideBar = () => {
             {/* Header */}
             <div className="admin-sidebar__header">
                 <div className="admin-sidebar__brand">
-                <h1>Bookland</h1>
-                <p>Manage Page</p>
+                    <h1>Bookland</h1>
+                    <p>Manage Page</p>
                 </div>
             </div>
 
             {/* Navigation */}
             <nav className="admin-sidebar__nav">
-                {menuItems.map((item) => (
+                {menuItems.map((item, index) => (
                     <NavLink
                         to={item.title}
+                        key={index}
                         className="admin-sidebar__item "
                         onClick={() => navigate(item.path)}
                     >

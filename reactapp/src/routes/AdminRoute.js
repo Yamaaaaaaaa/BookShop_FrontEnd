@@ -7,6 +7,7 @@ import BooksManagement from "../pages/Admin/BooksManagement/BooksManagement"
 import UserManagement from "../pages/Admin/UserManagement/UserManagement"
 import SeriesManagement from "../pages/Admin/SeriesManagement/SeriesManagement"
 import CategoriesManagement from "../pages/Admin/CategoriesManagement/CategoriesManagement"
+import BillsManagement from "../pages/Admin/BillManagement/BillManagement"
 
 const AdminRoute = () =>{
     return (
@@ -25,6 +26,7 @@ const AdminRoute = () =>{
                 <Route path="users" element={<UserManagement/>}/>
                 <Route path="series" element={<SeriesManagement/>}/>
                 <Route path="categories" element={<CategoriesManagement/>}/>
+                <Route path="bills" element={<BillsManagement/>}/>
             </Route>
             <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
         </Routes>
