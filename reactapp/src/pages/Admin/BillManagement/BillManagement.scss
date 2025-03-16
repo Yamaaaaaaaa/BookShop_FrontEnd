@@ -1,137 +1,137 @@
 @import '../../../constant/color.scss';
 
 .bills-management {
-  padding: 10px;
-  margin-right: 20px;
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+	padding: 10px;
+	margin-right: 20px;
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
 
-    h1 {
-      font-size: 24px;
-      color: #333;
-    }
-  }
+		h1 {
+			font-size: 24px;
+			color: #333;
+		}
+	}
 
-  &__actions {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-  }
+	&__actions {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
 
-  &__search {
-    input {
-      padding: 8px 16px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      width: 250px;
-      
-      &:focus {
-        outline: none;
-        border-color: $admin_primary-color;
-      }
-    }
-  }
+	&__search {
+		input {
+			padding: 8px 16px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			width: 250px;
+			
+			&:focus {
+				outline: none;
+				border-color: $admin_primary-color;
+			}
+		}
+	}
 
-  &__add-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background-color: $admin_primary-color;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+	&__add-btn {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 16px;
+		background-color: $admin_primary-color;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background-color 0.2s;
 
-    &:hover {
-      background-color: darken($admin_primary-color, 10%);
-    }
-  }
+		&:hover {
+			background-color: darken($admin_primary-color, 10%);
+		}
+	}
 
-  &__table {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    font-size: 12px;
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
+	&__table {
+		background: white;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		overflow: hidden;
+		font-size: 12px;
+		
+		table {
+			width: 100%;
+			border-collapse: collapse;
 
-      th, td {
-        padding: 16px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-      }
+			th, td {
+				padding: 16px;
+				text-align: left;
+				border-bottom: 1px solid #eee;
+			}
 
-      th {
-        background-color: #f8f9fa;
-        font-weight: 500;
-        color: #333;
-      }
+			th {
+				background-color: #f8f9fa;
+				font-weight: 500;
+				color: #333;
+			}
 
-      tr:hover {
-        background-color: #f8f9fa;
-      }
-    }
-  }
+			tr:hover {
+				background-color: #f8f9fa;
+			}
+		}
+	}
 
-  &__actions-cell {
-    display: flex;
-    gap: 8px;
+	&__actions-cell {
+		display: flex;
+		gap: 8px;
 
-    .action-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
+		.action-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 32px;
+			height: 32px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.2s;
 
-      &.view {
-        background-color: #4CAF50;
-        color: white;
-        &:hover { background-color: darken(#4CAF50, 10%); }
-      }
+			&.view {
+				background-color: #4CAF50;
+				color: white;
+				&:hover { background-color: darken(#4CAF50, 10%); }
+			}
 
-      &.edit {
-        background-color: #2196F3;
-        color: white;
-        &:hover { background-color: darken(#2196F3, 10%); }
-      }
+			&.edit {
+				background-color: #2196F3;
+				color: white;
+				&:hover { background-color: darken(#2196F3, 10%); }
+			}
 
-      &.delete {
-        background-color: #F44336;
-        color: white;
-        &:hover { background-color: darken(#F44336, 10%); }
-      }
-    }
-  }
+			&.delete {
+				background-color: #F44336;
+				color: white;
+				&:hover { background-color: darken(#F44336, 10%); }
+			}
+		}
+	}
 }
 
 .details-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	background-color: #333;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s;
 
-  &:hover {
-    background-color: darken(#333, 10%);
-  }
+	&:hover {
+		background-color: darken(#333, 10%);
+	}
 }
 

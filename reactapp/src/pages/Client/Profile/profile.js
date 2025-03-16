@@ -24,17 +24,17 @@ const Profile = () => {
     const [showModal, setShowModal] = useState(false)
 
     const fetchAllBillForUser = async () => {
-      const responseGetBill = await getAllBillForUser(userProfile.id)
-      console.log(responseGetBill);
-      
-      if(responseGetBill){
-        if(responseGetBill.status === 1 && responseGetBill.data){
-          setBillData(responseGetBill.data)
-          toast.success(responseGetBill.message)
-          return 
+        const responseGetBill = await getAllBillForUser(userProfile.id)
+        console.log(responseGetBill);
+        
+        if(responseGetBill){
+            if(responseGetBill.status === 1 && responseGetBill.data){
+                setBillData(responseGetBill.data)
+                toast.success(responseGetBill.message)
+                return 
+            }
         }
-      }
-      toast.error("Failed to get Bill")
+        toast.error("Failed to get Bill")
     }
 
     const handleDeleteOwnBill = async (userId, billId) => {
@@ -54,8 +54,8 @@ const Profile = () => {
     }
 
     const handleViewDetails = (bill) => {
-      setSelectedBill(bill)
-      setShowModal(true)
+        setSelectedBill(bill)
+        setShowModal(true)
     }
     
 

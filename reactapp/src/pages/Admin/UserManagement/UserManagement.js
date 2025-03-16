@@ -95,54 +95,54 @@ const UserManagement = () => {
         </div>
 
         <div className="user-management__table">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Group Role</th>
-                    <th>Addresses</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {filteredUsers.map((user) => (
-                    <tr key={user.id}>
-                        <td>{user.id}</td>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.Group.name}</td>
-                        <td>{user.address} </td>
-                        <td className="action_btn">
-                            <button onClick={() => setDeleteModal({ show: true, user })} className="action-btn edit">
-                                <MdEdit/>
-                            </button>
-                            <button onClick={() => setDeleteModal({ show: true, user })} className="action-btn delete">
-                                <MdDelete/>
-                            </button>
-                        </td>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Group Role</th>
+                        <th>Addresses</th>
+                        <th>Action</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
-      </div>
+                </thead>
+                <tbody>
+                    {filteredUsers.map((user) => (
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.Group.name}</td>
+                            <td>{user.address} </td>
+                            <td className="action_btn">
+                                <button onClick={() => setDeleteModal({ show: true, user })} className="action-btn edit">
+                                    <MdEdit/>
+                                </button>
+                                <button onClick={() => setDeleteModal({ show: true, user })} className="action-btn delete">
+                                    <MdDelete/>
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
 
-      {addModal && <AddUserModal onClose={() => setAddModal(false)} onSubmit={handleAdd} />}
+        {addModal && <AddUserModal onClose={() => setAddModal(false)} onSubmit={handleAdd} />}
 
-      {deleteModal.show && (
-        <DeleteUserModal
-          user={deleteModal.user}
-          onClose={() => setDeleteModal({ show: false, user: null })}
-          onConfirm={() => handleDelete(deleteModal.user.id)}
-        />
-      )}
+        {deleteModal.show && (
+            <DeleteUserModal
+                user={deleteModal.user}
+                onClose={() => setDeleteModal({ show: false, user: null })}
+                onConfirm={() => handleDelete(deleteModal.user.id)}
+            />
+        )}
 
-      {addressModal.show && (
-        <ViewAddressesModal user={addressModal.user} onClose={() => setAddressModal({ show: false, user: null })} />
-      )}
+        {addressModal.show && (
+            <ViewAddressesModal user={addressModal.user} onClose={() => setAddressModal({ show: false, user: null })} />
+        )}
     </div>
-  )
+    )
 }
 
 export default UserManagement

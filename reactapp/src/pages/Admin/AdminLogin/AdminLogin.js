@@ -4,12 +4,6 @@ import "./adminlogin.scss";
 import { loginAdminService } from "../../../service/authService";
 import { toast } from "react-toastify";
 
-// Test credentials
-const TEST_CREDENTIALS = {
-    email: 'admin@example.com',
-    password: 'admin123'
-};
-
 
 const LoginPage = () => {
     const navigate = useNavigate();
