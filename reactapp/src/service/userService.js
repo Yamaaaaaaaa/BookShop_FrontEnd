@@ -38,3 +38,6 @@ export const getPaymentMethod = async () => {
 export const getAllUser = async () => {
     return await instance.get(mainUrl + "/user/get-all-user")
 }
+export const deleteUser = async (userId) => {
+    return await instance.delete(mainUrl + "/user/delete-user", {params: {id: userId}})
+}

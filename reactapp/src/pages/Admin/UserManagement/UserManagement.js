@@ -3,7 +3,7 @@ import AddUserModal from "./AddUserModal"
 import DeleteUserModal from "./DeleteUserModal"
 import ViewAddressesModal from "./ViewAddressesModal"
 import "./UserManagement.scss"
-import { MdAdd, MdEdit, MdDelete, MdVisibility } from 'react-icons/md';
+import { MdEdit, MdDelete } from 'react-icons/md';
 import { getAllUser } from "../../../service/userService"
 import { toast } from "react-toastify"
 
@@ -18,7 +18,7 @@ const UserManagement = () => {
     const filteredUsers = userData.filter(
         (user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()) || user.id.toString().includes(searchTerm),
     )
-
+    
     const fetchAllUser = async () => {
         try {
             const dataUsers = await getAllUser()
@@ -107,7 +107,7 @@ const UserManagement = () => {
             <DeleteUserModal
                 user={deleteModal.user}
                 onClose={() => setDeleteModal({ show: false, user: null })}
-                onConfirm={() => {}}
+                fetchAllUser={() => fetchAllUser()}
             />
         )}
 

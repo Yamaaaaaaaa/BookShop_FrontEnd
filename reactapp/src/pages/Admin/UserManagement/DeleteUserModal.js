@@ -1,6 +1,22 @@
 import { MdBook } from "react-icons/md"
+import { toast } from "react-toastify"
+import { deleteUser } from "../../../service/userService"
 
-const DeleteUserModal = ({ user, onClose, onConfirm }) => {
+const DeleteUserModal = ({ user, onClose, fetchAllUser }) => {
+	const handleDeleteUser = async (userId) => {
+		try {
+			const response = await deleteUser(userId)
+			if (response && response.status === 1) {                
+				toast.success(response.message)
+				onClose()
+				fetchAllUser()
+				return
+			}
+			toast.error(response.message)
+		} catch (error) {
+			toast.error("Error fetching All User:", error);
+		} 
+	}
     return (
 		<div className="modal-overlay">
 			<div className="modal-content delete-modal">
@@ -19,7 +35,7 @@ const DeleteUserModal = ({ user, onClose, onConfirm }) => {
 					<button className="btn btn-secondary" onClick={onClose}>
 						Cancel
 					</button>
-					<button className="btn btn-danger" onClick={onConfirm}>
+					<button className="btn btn-danger" onClick={() => handleDeleteUser(user.id)}>
 						Confirm
 					</button>
 				</div>
