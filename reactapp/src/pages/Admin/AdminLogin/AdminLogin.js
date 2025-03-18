@@ -131,15 +131,7 @@ const LoginPage = () => {
                     <h2 className="admin-login-page__brand">
                         Book<span className="admin-login-page__brand--highlight">land</span>
                     </h2>
-                    <p className="admin-login-page__manage">Manage Page</p>
-                    
-                    <p className="admin-login-page__cta">
-                        New to our platform? Sign Up now.
-                    </p>
-                    
-                    <button className="admin-login-page__button">
-                        SIGN UP
-                    </button>
+                    <p className="admin-login-page__manage">Manage Page</p>                    
                 </div>
             </div>
         </div>

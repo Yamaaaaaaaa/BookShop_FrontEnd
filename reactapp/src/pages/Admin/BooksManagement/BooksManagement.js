@@ -130,10 +130,10 @@ const BooksManagement = () => {
                                 <CategoryButton
                                     count={book.Categories.length}
                                     onClick={() =>
-                                    setCategoryModal({
-                                        show: true,
-                                        book: book,
-                                    })
+                                        setCategoryModal({
+                                            show: true,
+                                            book: book,
+                                        })
                                     }
                                 />
                             </td>

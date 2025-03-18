@@ -158,7 +158,7 @@ const Home = () => {
 							<p>{book.description}</p> */}
 							</Link>
 							<h4>{book.name}</h4>
-							<span className="product-card__price">${book.sale.toFixed(2)}</span>
+							<span className="product-card__price">{book.sale.toLocaleString()}đ</span>
 							<button className="product-card__add-to-cart" onClick={() => handleAddToCart(book.id, user.id)}>
 							<span className="cart-icon">🛒</span>
 							Add To Cart

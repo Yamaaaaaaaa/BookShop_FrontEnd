@@ -36,11 +36,11 @@ const Admin_SideBar = () => {
             icon: <MdCategory size={22} />,
             path: '/admin/categories'
         },
-        {
-            title: 'Series',
-            icon: <MdCollections size={22} />,
-            path: '/admin/series'
-        },        
+        // {
+        //     title: 'Series',
+        //     icon: <MdCollections size={22} />,
+        //     path: '/admin/series'
+        // },        
         {
             title: 'Users',
             icon: <MdGroup size={22} />,

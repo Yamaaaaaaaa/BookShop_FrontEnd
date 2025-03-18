@@ -9,8 +9,16 @@ export const loginClientService = async (userData) => {
 export const registerClientService = async (userData) => {
     return await axios.post( mainUrl + "/auth/client/register", userData)
 }
-
+export const addUserClientService = async (userData) => {
+    return await axios.post( mainUrl + "/auth/admin/add-user", userData)
+}
 export const loginAdminService = async (userData) => {
     return await instance.post( mainUrl + "/auth/admin/login", userData)
     // Phải có Creadential thì nó mới gán được cookie gửi tử FE
+}
+export const updateUserClientService = async (userData) => {
+    return await instance.put(mainUrl + "/auth/update-user", userData)
+}
+export const getAllGroup = async (userData) => {
+    return await instance.get(mainUrl + "/group/get-all-group", userData)
 }

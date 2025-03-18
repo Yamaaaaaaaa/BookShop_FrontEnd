@@ -1,0 +1,57 @@
+/* AdminDashboard.scss */
+$admin_primary-color: #859573;
+$admin_secondary-color: #4A5D47;
+$admin_text-color: #ffffff;
+
+.admin-dashboard {
+    padding: 20px;
+    // background-color: $admin_primary-color;
+    min-height: 100vh;
+    color: $admin_text-color;
+    
+}
+
+.dashboard-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    
+    background: $admin_primary-color;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: $admin_text-color;
+}
+
+.stat-card .icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: $admin_text-color;
+}
+
+.stat-card h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.stat-card p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.chart-container {
+    margin-top: 30px;
+    padding: 20px;
+    background: $admin_primary-color;
+    border-radius: 10px;
+}
