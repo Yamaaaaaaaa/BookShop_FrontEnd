@@ -13,6 +13,9 @@ export const deleteOwnBill = async (userId, billId) => {
 export const getAllBill = async (userId) => {
     return await instance.get(mainUrl + "/bill/get-all-bill");
 }
+export const getBillById = async (billId) => {
+    return await instance.get(mainUrl + "/bill/get-a-bill", {params: {billId}});
+}
 export const deleteBill = async (billId) => {
     return await instance.delete(mainUrl + "/bill/delete-bill", {
         params: {billId}
