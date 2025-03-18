@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { MdAdd, MdEdit, MdDelete, MdVisibility, MdCategory } from "react-icons/md"
+import { FaSortUp, FaSortDown, FaSort } from "react-icons/fa"
 import ViewBookModal from "./ViewBookModal"
 import AddEditBookModal from "./AddEditBookModal"
 import DeleteBookModal from "./DeleteBookModal"
@@ -11,6 +12,7 @@ import { getBooks } from "../../../service/bookService"
 import { toast } from "react-toastify"
 import { getAllCategories } from "../../../service/categoryService"
 import { getAllPublisher } from "../../../service/publisherService"
+
 const CategoryButton = ({ count, onClick }) => {
   return (
     <button className="category-button" onClick={onClick} title="View Categories">
@@ -32,6 +34,10 @@ const BooksManagement = () => {
   const [selectedSeries, setSelectedSeries] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
   const [seriesData, setSeriesData] = useState([])
+  
+  // Sorting states
+  const [sortField, setSortField] = useState("id")
+  const [sortDirection, setSortDirection] = useState("asc")
 
   // Handlers
   const handleAdd = (newBook) => {}
@@ -40,19 +46,51 @@ const BooksManagement = () => {
 
   const handleDelete = (id) => {}
 
-  const filteredBooks = bookData.filter((book) => {
-    const matchesSearch =
-      book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.Author.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.id.toString().includes(searchTerm)
+  // Handle sorting
+  const handleSort = (field) => {
+    if (sortField === field) {
+      // If already sorting by this field, toggle direction
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+    } else {
+      // If sorting by a new field, default to ascending
+      setSortField(field)
+      setSortDirection("asc")
+    }
+  }
 
-    const matchesSeries = selectedSeries === "" || (book.Serie && book.Serie.id.toString() === selectedSeries)
+  // Get filtered and sorted books
+  const getFilteredAndSortedBooks = () => {
+    // First filter the books
+    const filtered = bookData.filter((book) => {
+      const matchesSearch =
+        book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.Author.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.id.toString().includes(searchTerm)
 
-    const matchesCategory =
-      selectedCategory === "" || book.Categories.some((cat) => cat.id.toString() === selectedCategory)
+      const matchesSeries = selectedSeries === "" || (book.Serie && book.Serie.id.toString() === selectedSeries)
 
-    return matchesSearch && matchesSeries && matchesCategory
-  })
+      const matchesCategory =
+        selectedCategory === "" || book.Categories.some((cat) => cat.id.toString() === selectedCategory)
+
+      return matchesSearch && matchesSeries && matchesCategory
+    })
+
+    // Then sort the filtered books
+    return filtered.sort((a, b) => {
+      let comparison = 0
+
+      if (sortField === "id") {
+        comparison = a.id - b.id
+      } else if (sortField === "name") {
+        comparison = a.name.localeCompare(b.name)
+      }
+
+      // Reverse if descending
+      return sortDirection === "asc" ? comparison : -comparison
+    })
+  }
+
+  const filteredAndSortedBooks = getFilteredAndSortedBooks()
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -76,6 +114,7 @@ const BooksManagement = () => {
       toast.error("Error to fetch Books")
     }
   }
+  
   const fetchCategories = async () => {
     try {
       const listCategories = await getAllCategories()
@@ -89,6 +128,7 @@ const BooksManagement = () => {
       toast.error("Error fetching categories:", error)
     }
   }
+  
   const fetchPublishers = async () => {
     try {
       const listPublishers = await getAllPublisher()
@@ -99,6 +139,7 @@ const BooksManagement = () => {
       console.error("Error fetching publishers:", error)
     }
   }
+  
   const extractSeriesData = () => {
     const uniqueSeries = []
     const seriesIds = new Set()
@@ -112,6 +153,7 @@ const BooksManagement = () => {
 
     return uniqueSeries
   }
+  
   useEffect(() => {
     fetchInitialBook()
     fetchCategories()
@@ -123,6 +165,17 @@ const BooksManagement = () => {
       setSeriesData(extractSeriesData())
     }
   }, [bookData])
+
+  // Render sort icon based on current sort state
+  const renderSortIcon = (field) => {
+    if (sortField !== field) {
+      return <FaSort className="sort-icon" />
+    }
+    
+    return sortDirection === "asc" ? 
+      <FaSortUp className="sort-icon active" /> : 
+      <FaSortDown className="sort-icon active" />
+  }
 
   return (
     <div className="book-management">
@@ -179,8 +232,12 @@ const BooksManagement = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
+              <th onClick={() => handleSort("id")} className="sortable-header">
+                ID {renderSortIcon("id")}
+              </th>
+              <th onClick={() => handleSort("name")} className="sortable-header">
+                Name {renderSortIcon("name")}
+              </th>
               <th>Author</th>
               <th>Categories</th>
               <th>Series</th>
@@ -190,7 +247,7 @@ const BooksManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredBooks.map((book) => (
+            {filteredAndSortedBooks.map((book) => (
               <tr key={book.id}>
                 <td>{book.id}</td>
                 <td>{book.name}</td>
@@ -286,4 +343,3 @@ const BooksManagement = () => {
 }
 
 export default BooksManagement
-

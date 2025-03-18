@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, NavLink } from 'react-router-dom';
 import { 
   MdDashboard, 
@@ -6,45 +6,92 @@ import {
   MdMenuBook, 
   MdGroup, 
   MdCollections, 
-  MdLogout 
+  MdLogout,
+  MdPayment,
+  MdExpandMore,
+  MdExpandLess,
+  MdLibraryBooks
 } from 'react-icons/md';
-import './Admin_SideBar.scss';
 import { FaMoneyBill } from "react-icons/fa";
+import { FaUserEdit } from "react-icons/fa";
+import { SiAffinitypublisher } from "react-icons/si";
+import './Admin_SideBar.scss';
 
 const Admin_SideBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    
+    // State for dropdown toggles
+    const [contentOpen, setContentOpen] = useState(false);
+    const [financialOpen, setFinancialOpen] = useState(false);
+    
+    // Check if current path is in a group to auto-expand that group
+    useEffect(() => {
+        const currentPath = location.pathname;
+        
+        if (['/admin/books', '/admin/categories', '/admin/series', '/admin/authors', '/admin/publishers'].includes(currentPath)) {
+            setContentOpen(true);
+        }
+        
+        if (['/admin/bills', '/admin/payment-method'].includes(currentPath)) {
+            setFinancialOpen(true);
+        }
+    }, [location.pathname]);
 
-    const menuItems = [
+    // Individual menu items
+    const singleItems = [
         {
             title: 'Dashboard',
-            icon: <MdDashboard size={22} />,
+            icon: <MdDashboard size={20} />,
             path: '/admin/dashboard'
         },
         {
-            title: 'Bills',
-            icon: <FaMoneyBill size={22} />,
-            path: '/admin/bills'
+            title: 'Users',
+            icon: <MdGroup size={20} />,
+            path: '/admin/users'
         },
+    ];
+    
+    // Content management group
+    const contentItems = [
         {
             title: 'Books',
-            icon: <MdMenuBook size={22} />,
+            icon: <MdMenuBook size={20} />,
             path: '/admin/books'
         },
         {
             title: 'Categories',
-            icon: <MdCategory size={22} />,
+            icon: <MdCategory size={20} />,
             path: '/admin/categories'
         },
-        // {
-        //     title: 'Series',
-        //     icon: <MdCollections size={22} />,
-        //     path: '/admin/series'
-        // },        
         {
-            title: 'Users',
-            icon: <MdGroup size={22} />,
-            path: '/admin/users'
+            title: 'Series',
+            icon: <MdCollections size={20} />,
+            path: '/admin/series'
+        },
+        {
+            title: 'Authors',
+            icon: <FaUserEdit size={20} />,
+            path: '/admin/authors'
+        },
+        {
+            title: 'Publishers',
+            icon: <SiAffinitypublisher size={20} />,
+            path: '/admin/publishers'
+        },
+    ];
+    
+    // Financial management group
+    const financialItems = [
+        {
+            title: 'Bills',
+            icon: <FaMoneyBill size={20} />,
+            path: '/admin/bills'
+        },
+        {
+            title: 'Payment Method',
+            icon: <MdPayment size={20} />,
+            path: '/admin/payment-method'
         },
     ];
 
@@ -66,22 +113,86 @@ const Admin_SideBar = () => {
 
             {/* Navigation */}
             <nav className="admin-sidebar__nav">
-                {menuItems.map((item, index) => (
+                {/* Individual items */}
+                {singleItems.map((item) => (
                     <NavLink
-                        to={item.title}
-                        key={index}
-                        className="admin-sidebar__item "
-                        onClick={() => navigate(item.path)}
+                        key={item.path}
+                        to={item.path}
+                        className={({ isActive }) => 
+                            `admin-sidebar__item ${isActive ? 'active' : ''}`
+                        }
                     >
                         {item.icon}
                         <span>{item.title}</span>
                     </NavLink>
                 ))}
+                
+                {/* Content Management Group */}
+                <div className="admin-sidebar__group">
+                    <button 
+                        className="admin-sidebar__group-header"
+                        onClick={() => setContentOpen(!contentOpen)}
+                    >
+                        <div className="admin-sidebar__group-title">
+                            <MdLibraryBooks size={20} />
+                            <span>Content</span>
+                        </div>
+                        {contentOpen ? <MdExpandLess size={20} /> : <MdExpandMore size={20} />}
+                    </button>
+                    
+                    {contentOpen && (
+                        <div className="admin-sidebar__group-items">
+                            {contentItems.map((item) => (
+                                <NavLink
+                                    key={item.path}
+                                    to={item.path}
+                                    className={({ isActive }) => 
+                                        `admin-sidebar__item ${isActive ? 'active' : ''}`
+                                    }
+                                >
+                                    {item.icon}
+                                    <span>{item.title}</span>
+                                </NavLink>
+                            ))}
+                        </div>
+                    )}
+                </div>
+                
+                {/* Financial Management Group */}
+                <div className="admin-sidebar__group">
+                    <button 
+                        className="admin-sidebar__group-header"
+                        onClick={() => setFinancialOpen(!financialOpen)}
+                    >
+                        <div className="admin-sidebar__group-title">
+                            <FaMoneyBill size={20} />
+                            <span>Financial</span>
+                        </div>
+                        {financialOpen ? <MdExpandLess size={20} /> : <MdExpandMore size={20} />}
+                    </button>
+                    
+                    {financialOpen && (
+                        <div className="admin-sidebar__group-items">
+                            {financialItems.map((item) => (
+                                <NavLink
+                                    key={item.path}
+                                    to={item.path}
+                                    className={({ isActive }) => 
+                                        `admin-sidebar__item ${isActive ? 'active' : ''}`
+                                    }
+                                >
+                                    {item.icon}
+                                    <span>{item.title}</span>
+                                </NavLink>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </nav>
 
             {/* Logout Button */}
             <button className="admin-sidebar__logout" onClick={handleLogout}>
-                <MdLogout size={22} />
+                <MdLogout size={20} />
                 <span>Log Out</span>
             </button>
         </>

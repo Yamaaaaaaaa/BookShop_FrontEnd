@@ -37,7 +37,7 @@ const BillsManagement = () => {
     }
 
     const handleDeleteBill = async (billId) => {
-        if (window.confirm("Bạn có chắc chắn muốn xóa đơn hàng này?")) {
+        if (window.confirm("Are you sure to delete this bill?")) {
             const response = await deleteBill(billId)
             if (response) {
                 if (response.status === 1) {
@@ -52,7 +52,7 @@ const BillsManagement = () => {
 
     // Lấy danh sách các phương thức thanh toán duy nhất
     const paymentMethods = [
-        { value: "all", label: "Tất cả phương thức" },
+        { value: "all", label: "All Method" },
         ...Array.from(new Set(dataBill.filter((bill) => bill.PaymentMethod).map((bill) => bill.PaymentMethod.name))).map(
             (method) => ({ value: method, label: method }),
         ),
@@ -90,15 +90,15 @@ const BillsManagement = () => {
     const getStatusLabel = (status) => {
         switch (status) {
             case "pending":
-                return "Chờ xử lý"
+                return "Pending"
             case "approved":
-                return "Đã xác nhận"
+                return "Approved"
             case "shipping":
-                return "Đang giao"
+                return "Shipping"
             case "delivered":
-                return "Đã giao"
+                return "Delivered"
             case "cancelled":
-                return "Đã hủy"
+                return "Cancelled"
             default:
                 return status
         }
@@ -115,7 +115,7 @@ const BillsManagement = () => {
                 <MdSearch className="search-icon" />
                 <input
                     type="text"
-                    placeholder="Tìm kiếm theo ID hoặc tên khách hàng..."
+                    placeholder="Search by Name or ID..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -124,12 +124,12 @@ const BillsManagement = () => {
             <div className="bills-management__filter-group">
                 <div className="bills-management__filter">
                     <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                        <option value="all">Tất cả trạng thái</option>
-                        <option value="pending">Chờ xử lý</option>
-                        <option value="approved">Đã xác nhận</option>
-                        <option value="shipping">Đang giao</option>
-                        <option value="delivered">Đã giao</option>
-                        <option value="cancelled">Đã hủy</option>
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="shipping">Shipping</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
                 </div>
 
@@ -150,13 +150,13 @@ const BillsManagement = () => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Khách hàng</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Tổng tiền</th>
-                        <th>Phương thức thanh toán</th>
-                        <th>Trạng thái</th>
-                        <th>Thao tác</th>
+                        <th>Customer</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th>Total Cost</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -192,7 +192,7 @@ const BillsManagement = () => {
                     ) : (
                     <tr>
                         <td colSpan="8" className="no-results">
-                        Không tìm thấy đơn hàng nào.
+                            Bill not Founded
                         </td>
                     </tr>
                     )}
@@ -202,14 +202,14 @@ const BillsManagement = () => {
 
         <div className="bills-management__pagination">
             <div className="bills-management__pagination-info">
-                Hiển thị {filteredBills.length} trong tổng số {dataBill.length} đơn hàng
+                Display {filteredBills.length} on {dataBill.length} bills
             </div>
             <div className="bills-management__pagination-controls">
                 <button className="pagination-btn" disabled>
-                    Trước
+                    Before
                 </button>
                 <button className="pagination-btn" disabled>
-                    Sau
+                    After
                 </button>
             </div>
         </div>

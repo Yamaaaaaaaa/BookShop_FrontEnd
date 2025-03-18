@@ -214,13 +214,6 @@ const AdminDashboard = () => {
                                         <span>Role: {admin.Group.name}</span>
                                     </div>
                                 </div>
-                                <div className="admin-actions">
-                                    {admin.active && <div className="active-status"></div>}
-                                    <span className="status-text">Active</span>
-                                    <a href={`/admin/edit/${admin.id}`} className="edit-link">
-                                        <ExternalLink size={18} />
-                                    </a>
-                                </div>
                             </div>
                         ))}
                     </div>

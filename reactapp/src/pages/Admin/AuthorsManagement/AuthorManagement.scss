@@ -17,7 +17,7 @@ $light-bg: #f8f9fa;
 }
 
 // Main Container
-.series-management {
+.authors-management {
     padding: 10px;
     max-width: 1200px;
     // margin: 0 auto;
@@ -196,17 +196,23 @@ $light-bg: #f8f9fa;
             font-size: 14px;
         }
 
-        input {
+        input, .form-textarea {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid $border-color;
             border-radius: 4px;
             font-size: 14px;
+            font-family: inherit;
 
             &:focus {
                 outline: none;
                 border-color: $admin_primary-color;
             }
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
         }
     }
 }

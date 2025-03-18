@@ -9,6 +9,8 @@ import SeriesManagement from "../pages/Admin/SeriesManagement/SeriesManagement"
 import CategoriesManagement from "../pages/Admin/CategoriesManagement/CategoriesManagement"
 import BillsManagement from "../pages/Admin/BillManagement/BillManagement"
 import BillDetail from "../pages/Admin/BillManagement/BillDetail/BillDetail"
+import AuthorManagement from "../pages/Admin/AuthorsManagement/AuthorsManagement"
+import PublisherManagement from "../pages/Admin/PublisherMangement/PublisherManagement"
 
 const AdminRoute = () =>{
     return (
@@ -26,6 +28,8 @@ const AdminRoute = () =>{
                 <Route path="books" element={<BooksManagement/>}/>
                 <Route path="users" element={<UserManagement/>}/>
                 <Route path="series" element={<SeriesManagement/>}/>
+                <Route path="authors" element={<AuthorManagement/>}/>
+                <Route path="publishers" element={<PublisherManagement/>}/>
                 <Route path="categories" element={<CategoriesManagement/>}/>
                 <Route path="bills" element={<BillsManagement/>}/>
                 <Route path="bills/:id" element={<BillDetail/>}/>

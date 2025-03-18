@@ -21,10 +21,10 @@ const BillDetail = () => {
 					console.log("Bills",response.data);
 					
 				} else {
-					toast.error("Không thể tải thông tin đơn hàng")
+					toast.error("Failed to load Bill's Information")
 				}
 			} catch (error) {
-				toast.error("Đã xảy ra lỗi khi tải thông tin đơn hàng")
+				toast.error("Failed to load Bill's Information")
 			} finally {
 				setLoading(false)
 			}
@@ -36,29 +36,29 @@ const BillDetail = () => {
 		try {
 		const response = await updateBill(id, state)
 		if (response && response.status === 1) {
-			toast.success("Cập nhật trạng thái thành công")
+			toast.success("Update Status Successful")
 			// Cập nhật lại thông tin đơn hàng sau khi cập nhật trạng thái
 			setBill({ ...bill, state })
 		} else {
-			toast.error(response.message || "Cập nhật trạng thái thất bại")
+			toast.error(response.message || "Failed to Update Status")
 		}
 		} catch (error) {
-			toast.error("Đã xảy ra lỗi khi cập nhật trạng thái")
+			toast.error("Failed to Update Status")
 		}
   	}
 
   	const handleDeleteBill = async () => {
-    	if (window.confirm("Bạn có chắc chắn muốn xóa đơn hàng này?")) {
+    	if (window.confirm("Are you sure to delete this Bill?")) {
 			try {
 				const response = await deleteBill(id)
 				if (response && response.status === 1) {
 					toast.success(response.message)
 					navigate("/admin/bills")
 				} else {
-					toast.error(response.message || "Xóa đơn hàng thất bại")
+					toast.error(response.message || "Failed to Delete Status")
 				}
 			} catch (error) {
-				toast.error("Đã xảy ra lỗi khi xóa đơn hàng")
+				toast.error("Failed to Delete Status")
 			}
 		}
   	}
@@ -91,26 +91,26 @@ const BillDetail = () => {
   const getStatusLabel = (status) => {
     switch (status) {
       case "pending":
-        return "Chờ xử lý"
+        return "Pending"
       case "approved":
-        return "Đã xác nhận"
+        return "Approved"
       case "shipping":
-        return "Đang giao"
+        return "Shipping"
       case "delivered":
-        return "Đã giao"
+        return "Delivered"
       case "cancelled":
-        return "Đã hủy"
+        return "Cancelled"
       default:
         return status
     }
   }
 
   if (loading) {
-    return <div className="bill-detail__loading">Đang tải thông tin đơn hàng...</div>
+    return <div className="bill-detail__loading">Loading Bill's Infomation...</div>
   }
 
   if (!bill) {
-    return <div className="bill-detail__error">Không tìm thấy thông tin đơn hàng</div>
+    return <div className="bill-detail__error">Failed to load Bill's Information</div>
   }
 
   return (
@@ -119,21 +119,17 @@ const BillDetail = () => {
         <div className="bill-detail__back">
           <button className="back-button" onClick={() => navigate("/admin/bills")}>
             <MdArrowBack />
-            <span>Quay lại</span>
+            <span>Back</span>
           </button>
           <div>
-            <h1 className="bill-detail__title">Đơn hàng #{bill.id}</h1>
-            <p className="bill-detail__subtitle">Ngày đặt: {new Date(bill.createdAt).toLocaleDateString("vi-VN")}</p>
+            <h1 className="bill-detail__title">Bill #{bill.id}</h1>
+            <p className="bill-detail__subtitle">Created At: {new Date(bill.createdAt).toLocaleDateString("vi-VN")}</p>
           </div>
         </div>
         <div className="bill-detail__actions">
-          <button className="action-button print-button">
-            <MdPrint />
-            <span>In hóa đơn</span>
-          </button>
           <button className="action-button delete-button" onClick={handleDeleteBill}>
             <MdDelete />
-            <span>Xóa đơn hàng</span>
+            <span>Delete Bill</span>
           </button>
         </div>
       </div>
@@ -142,42 +138,42 @@ const BillDetail = () => {
         <div className="bill-detail__cards">
           <div className="bill-detail__card">
             <div className="card__header">
-              <h2>Thông tin đơn hàng</h2>
-              <p>Chi tiết về đơn hàng và trạng thái</p>
+              <h2>Bill's Infomation</h2>
+              <p>Bill Detail and Status</p>
             </div>
             <div className="card__content">
               <div className="info-grid">
                 <div className="info-item">
-                  <span className="info-label">Trạng thái đơn hàng</span>
+                  <span className="info-label">Status</span>
                   <span className={getStatusBadgeClass(bill.state)}>{getStatusLabel(bill.state)}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Phương thức thanh toán</span>
+                  <span className="info-label">Payment Method</span>
                   <span>{bill.PaymentMethod?.name || "N/A"}</span>
                 </div>
               </div>
               <div className="divider"></div>
               <div className="status-update">
-                <span className="info-label">Cập nhật trạng thái</span>
+                <span className="info-label">Update Status</span>
                 <div className="status-buttons">
                   {bill.state === "pending" && (
                     <button className="status-button approved" onClick={() => handleUpdateBill("approved")}>
-                      Xác nhận đơn hàng
+                      Confirm
                     </button>
                   )}
                   {bill.state === "approved" && (
                     <button className="status-button shipping" onClick={() => handleUpdateBill("shipping")}>
-                      Chuyển sang đang giao
+                      Change to Shipping
                     </button>
                   )}
                   {bill.state === "shipping" && (
                     <button className="status-button delivered" onClick={() => handleUpdateBill("delivered")}>
-                      Xác nhận đã giao
+                      Comfirm Delivered
                     </button>
                   )}
                   {bill.state !== "cancelled" && bill.state !== "delivered" && (
                     <button className="status-button cancelled" onClick={() => handleUpdateBill("cancelled")}>
-                      Hủy đơn hàng
+                      Cancel
                     </button>
                   )}
                 </div>
@@ -187,17 +183,17 @@ const BillDetail = () => {
 
           <div className="bill-detail__card">
             <div className="card__header">
-              <h2>Thông tin khách hàng</h2>
-              <p>Chi tiết về người đặt hàng</p>
+              <h2>Customer Infomation</h2>
+              <p>Customer Detail</p>
             </div>
             <div className="card__content">
               <div className="info-item">
-                <span className="info-label">Tên khách hàng</span>
+                <span className="info-label">Customer Name</span>
                 <span className="info-value">{bill.User.name}</span>
               </div>
               <div className="divider"></div>
               <div className="info-item">
-                <span className="info-label">Thông tin liên hệ</span>
+                <span className="info-label">Customer Info</span>
                 <div className="contact-info">
                   <div>{bill.User.email}</div>
                   <div>{bill.deliveryPhone}</div>
@@ -205,7 +201,7 @@ const BillDetail = () => {
               </div>
               <div className="divider"></div>
               <div className="info-item">
-                <span className="info-label">Địa chỉ giao hàng</span>
+                <span className="info-label">Delivery Address</span>
                 <span className="info-value">{bill.deliveryAddress}</span>
               </div>
             </div>
@@ -214,17 +210,17 @@ const BillDetail = () => {
 
         <div className="bill-detail__products">
           <div className="card__header">
-            <h2>Sản phẩm</h2>
+            <h2>Books: </h2>
           </div>
           <div className="products-table-container">
             <table className="products-table">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Tên sách</th>
-                  <th>Đơn giá</th>
-                  <th>Số lượng</th>
-                  <th>Thành tiền</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -241,19 +237,19 @@ const BillDetail = () => {
               <tfoot>
                 <tr>
                   <th colSpan="4" className="text-right">
-                    Tạm tính
+                    Price
                   </th>
                   <td>{formatCurrency(bill.totalCost)}</td>
                 </tr>
                 <tr>
                   <th colSpan="4" className="text-right">
-                    Phí vận chuyển
+                    Payment Cost
                   </th>
                   <td>{formatCurrency(0)}</td>
                 </tr>
                 <tr className="total-row">
                   <th colSpan="4" className="text-right">
-                    Tổng cộng
+                    Total
                   </th>
                   <td>{formatCurrency(bill.totalCost)}</td>
                 </tr>
