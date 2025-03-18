@@ -107,10 +107,7 @@ const BillsManagement = () => {
     return (
     <div className="bills-management">
         <div className="bills-management__header">
-            <h1>Quản lý đơn hàng</h1>
-            <p className="bills-management__description">
-                Quản lý và theo dõi tất cả đơn hàng trong hệ thống bán sách của bạn.
-            </p>
+            <h1>Bills Management</h1>
         </div>
 
         <div className="bills-management__filters">

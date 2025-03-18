@@ -1,6 +1,6 @@
 .bills-management {
-	padding: 24px;
-	background-color: #f9fafb;
+	padding: 10px;
+	// background-color: #f9fafb;
 	min-height: 100vh;
   
 	&__header {
@@ -182,21 +182,16 @@
 		transition: background-color 0.2s;
 	
 		&.view {
-			background-color: #eff6ff;
-			color: #2563eb;
+			background-color: #4CAF50;
+			color: white;
 	
-			&:hover {
-				background-color: #dbeafe;
-			}
+			&:hover { background-color: darken(#4CAF50, 10%); }
 		}
 	
 		&.delete {
-			background-color: #fee2e2;
-			color: #dc2626;
-	
-			&:hover {
-				background-color: #fecaca;
-			}
+			background-color: #F44336;
+                color: white;
+			&:hover { background-color: darken(#F44336, 10%); }
 		}
 	}
   

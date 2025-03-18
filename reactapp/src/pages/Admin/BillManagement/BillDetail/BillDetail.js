@@ -160,7 +160,7 @@ const BillDetail = () => {
               <div className="status-update">
                 <span className="info-label">Cập nhật trạng thái</span>
                 <div className="status-buttons">
-                  {bill.state !== "approved" && (
+                  {bill.state === "pending" && (
                     <button className="status-button approved" onClick={() => handleUpdateBill("approved")}>
                       Xác nhận đơn hàng
                     </button>

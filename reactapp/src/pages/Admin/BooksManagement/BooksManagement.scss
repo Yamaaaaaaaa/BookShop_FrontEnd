@@ -113,6 +113,25 @@
             }
         }
     }
+    &__filters {
+        select {
+			padding: 8px 12px;
+			border: 1px solid #e5e7eb;
+			border-radius: 6px;
+			background-color: white;
+			font-size: 14px;
+			outline: none;
+			cursor: pointer;
+			transition: border-color 0.2s;
+			height: 38px;
+            gap: 10px;
+			&:focus {
+				border-color: #2563eb;
+				box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+			}
+            
+		}
+    }
 }
 
 .price {
