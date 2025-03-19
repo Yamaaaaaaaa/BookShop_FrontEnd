@@ -1,0 +1,193 @@
+@import "../../../constant/color.scss";
+
+// Variables
+$danger-color: #dc3545;
+$border-color: #dee2e6;
+$text-color: #333;
+$light-bg: #f8f9fa;
+
+// Mixins
+@mixin button-base {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+// Main Container
+.payment-methods-management {
+    padding: 10px;
+    max-width: 1200px;
+    // margin: 0 auto;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            color: $text-color;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+    }
+
+    &__search {
+        input {
+            padding: 8px 12px;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+            width: 250px;
+            font-size: 14px;
+
+            &:focus {
+                outline: none;
+                border-color: $admin_primary-color;
+            }
+        }
+    }
+
+    &__add-btn {
+        @include button-base;
+        background-color: $admin_primary-color;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &:hover {
+            background-color: darken($admin_primary-color, 10%);
+        }
+
+        i {
+            font-size: 12px;
+        }
+    }
+
+    &__table {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            th, td {
+                padding: 12px 16px;
+                text-align: left;
+                border-bottom: 1px solid $border-color;
+                font-size: 14px;
+            }
+
+            th {
+                background-color: $light-bg;
+                font-weight: 500;
+                color: #666;
+            }
+
+            td {
+                color: $text-color;
+            }
+        }
+    }
+}
+
+// Action Buttons
+.action-cell {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &.edit {
+        background-color: #2196F3;
+        color: white;
+        &:hover { background-color: darken(#2196F3, 10%); }
+    }
+
+    &.view-qr {
+        background-color: #4CAF50;
+        color: white;
+        &:hover { background-color: darken(#4CAF50, 10%); }
+    }
+
+    &.delete:hover {
+        color: $danger-color;
+        background-color: rgba($danger-color, 0.1);
+    }
+}
+
+// Form textarea
+.form-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+
+    &:focus {
+        outline: none;
+        border-color: $admin_primary-color;
+    }
+}
+
+// QR Code Preview
+.qr-preview {
+    margin-top: 10px;
+    
+    p {
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #666;
+    }
+    
+    &-image {
+        max-width: 100px;
+        max-height: 100px;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+    }
+}
+
+// QR Modal
+.qr-modal {
+    width: 400px;
+    
+    .qr-image-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+        
+        .qr-image {
+            max-width: 250px;
+            max-height: 250px;
+            border: 1px solid $border-color;
+            border-radius: 4px;
+        }
+    }
+}
+
