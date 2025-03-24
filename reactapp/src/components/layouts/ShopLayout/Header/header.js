@@ -4,6 +4,7 @@ import "./header.scss"
 import { RiMenu2Line } from "react-icons/ri";
 import { LuShoppingCart } from "react-icons/lu";
 import { RiFindReplaceLine } from "react-icons/ri";
+import { FaRegHeart } from "react-icons/fa6";
 
 function Header() {
     const [searchQuery, setSearchQuery] = useState("")
@@ -85,9 +86,19 @@ function Header() {
             <div className="header__user-section">
                 <div className="header__user-section__icon-button">
                     <span className="header__user-section__icon-button__icon">
-                        <Link to="/cart"><LuShoppingCart /></Link>
+                        <Link to="/wish-list">
+                            <FaRegHeart />
+                            <span className="header__user-section__icon-button__icon__counter">5</span>
+                        </Link>
+                        
                     </span>
-                    <span className="header__user-section__icon-button__counter">5</span>
+                    <span className="header__user-section__icon-button__icon">
+                        <Link to="/cart">
+                            <LuShoppingCart />
+                            <span className="header__user-section__icon-button__icon__counter">5</span>
+                        </Link>
+                    </span>
+                    
                 </div>
 
                 <div className="header__user-section__user-profile" ref={dropdownRef}>

@@ -42,25 +42,21 @@ function AuthorSlider({ author, onPrev, onNext, currentIndex, totalAuthors }) {
 										<div className="author-slider__category">BEST OF AUTHORS</div>
 
 										<h1 className="author-slider__title">
-											{currentBooks[0].name}
+											{author.name}
 										</h1>
 
 										<div className="author-slider__author">
-											{author.name} <span className="separator">|</span> {currentBooks[0].Categories[0].name}
+											<span className="separator">|</span>
+											{
+												currentBooks[0].Categories.map((item) => {
+													return (
+														<>{item.name} <span className="separator">|</span></>
+													)
+												})
+											}
 										</div>
 
-										<div className="author-slider__description">{currentBooks[0].description}</div>
-
-										<div className="author-slider__price">
-											<span className="current-price">${currentBooks[0].sale.toFixed(1)}</span>
-											<span className="original-price">${currentBooks[0].originalCost.toFixed(2)}</span>
-											<span className="discount-badge">{(100 - (currentBooks[0].sale / currentBooks[0].originalCost) * 100).toFixed(2)}% OFF</span>
-										</div>
-
-										<div className="author-slider__actions">
-											<button className="btn btn-primary">Buy Now</button>
-											<button className="btn btn-outline">See Details</button>
-										</div>
+										<div className="author-slider__description">{author.description}</div>
 									</div>
 
 									<div className="author-slider__books">

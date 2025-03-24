@@ -25,6 +25,7 @@
         max-width: 1400px;
         margin: 0 auto;
         z-index: 5;
+        padding-bottom: 20px;
     }
 
 
@@ -108,30 +109,32 @@
         gap: 25px;
         z-index: 5;
         &__icon-button {
-            position: relative;
+            
             cursor: pointer;
         
             &__icon {
                 font-size: 22px;
                 text-decoration: none;
-        
+                margin-left: 25px;
                 a {
+                    position: relative;
                     text-decoration: none;
+                }
+                &__counter {
+                    position: absolute;
+                    top: -14px;
+                    right: -15px;
+                    background: $accent-color;
+                    color: $white;
+                    font-size: 12px;
+                    padding: 3px 3px;
+                    border-radius: 50px;
+                    min-width: 20px;
+                    text-align: center;
                 }
             }
   
-            &__counter {
-                position: absolute;
-                top: -8px;
-                right: -8px;
-                background: $accent-color;
-                color: $white;
-                font-size: 12px;
-                padding: 1px 6px;
-                border-radius: 12px;
-                min-width: 20px;
-                text-align: center;
-            }
+            
         }
         &__user-profile {
             @include flex-center;

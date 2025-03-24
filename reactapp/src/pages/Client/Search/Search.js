@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import "./Search.scss"
+import "../Shop/shop.scss"
 import { Link, useLocation } from "react-router-dom"
 import { getBooks } from "../../../service/bookService";
 

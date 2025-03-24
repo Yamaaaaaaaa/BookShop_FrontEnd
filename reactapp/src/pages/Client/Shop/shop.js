@@ -6,7 +6,7 @@ import { getBooks } from "../../../service/bookService";
 import { getAllCategories } from "../../../service/categoryService";
 import { getAllPublisher } from "../../../service/publisherService";
 import { toast } from "react-toastify";
-import { addBookToCartForUser } from "../../../service/userService";
+import { addBookToCartForUser, addBookToWishList, deleteBookOnWishList } from "../../../service/userService";
 
 
 const Shop = () => {
@@ -62,6 +62,31 @@ const Shop = () => {
             }
         }else{
             toast.error(response.message)
+        }
+    }
+    const handleAddToWishList = async (userId, bookId) => {
+        const response = await addBookToWishList(userId, bookId)
+    
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+            }
+            else{
+                toast.error(response.message)
+            }
+        }else{
+            toast.error(response.message)
+        }
+    }
+
+    const handleDeleteOnWishList = async (userId,bookId) => {
+        const responseGetCart = await deleteBookOnWishList({bookId: bookId, userId: userId})
+        
+        if(responseGetCart && responseGetCart.status === 1 && responseGetCart.data){
+            fetchInitialBook()
+            toast.success(responseGetCart.message)
+        } else {
+            toast.error(responseGetCart.message)
         }
     }
 
@@ -142,7 +167,7 @@ const Shop = () => {
     <main className="shop">
         <div className="shop__container">
             <aside className="shop__sidebar">
-                <h2>Filter Options</h2>
+                <h1 className="shop__sidebar__filtertitle">Filter Options</h1>
 
                 {/* Chọn khoảng giá */}
                 <div className="shop__filter-section">
@@ -239,10 +264,11 @@ const Shop = () => {
                             <div className="shop__book-image">
                                 <img src={book.bookImageUrl} alt={book.name} />
                                 <button
-                                    className={`shop__favorite-button ${favorites.includes(book.id) ? "active" : ""}`}
+                                    className={`shop__favorite-button`}
                                     onClick={(e) => {
-                                    e.preventDefault()
-                                    toggleFavorite(book.id)
+                                        e.preventDefault()
+                                        toggleFavorite(book.id)
+                                        handleAddToWishList(user.id, book.id)
                                     }}
                                 >
                                     ❤️
@@ -251,6 +277,11 @@ const Shop = () => {
 
                             <div className="shop__book-info">
                                 <h3 className="shop__book-title">{book.name}</h3>
+                                <div>
+                                    <span className="shop__book-cost">{book.sale.toLocaleString()}đ</span>
+                                    <span className="shop__book-orcost">{book.originalCost.toLocaleString()}đ</span>
+                                </div>
+                                
                                 {/* <span className="shop__book-price">${book.sale.toFixed(2)}</span> */}
                                 <button className="shop__add-to-cart" onClick={(e) => handleAddToCart(e, book.id, user.id)}>
                                     <span className="shop__cart-icon">🛒</span>
@@ -266,14 +297,14 @@ const Shop = () => {
 
       <div className={openSideBarFilter ? "shop__sidebarfilter openFilterSidebar": "shop__sidebarfilter closeFilterSidebar"}>
         <div className="shop__sidebarfilter__title">
-          <h1>Filter Option</h1>
-          <button onClick={() => setOpenSideBarFilter(false)}><RxExit /></button>
+            <h1>Filter Option</h1>
+            <button onClick={() => setOpenSideBarFilter(false)}><RxExit /></button>
         </div>
         
         <div className="shop__filter-section">
             <button className="shop__filter-section__section-header" onClick={() => toggleSection("price")}>
-              Price Range
-              <span className="shop__filter-section__arrow">{openSection === "price" ? "▼" : "▶"}</span>
+                Price Range
+                <span className="shop__filter-section__arrow">{openSection === "price" ? "▼" : "▶"}</span>
             </button>
             <div className={`shop__section-content ${openSection === "price" ? "active" : ""}`}>
               <div className="shop__price-range">

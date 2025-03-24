@@ -5,6 +5,7 @@ import { addBookToCartForUser } from "../../../service/userService"
 import { toast } from "react-toastify"
 import { Link } from "react-router-dom"
 import HeroSection from "./HeroSection/HeroSection"
+import Footer from "./Footer/Footer"
 
 const mockBooks = [
 	{
@@ -201,6 +202,7 @@ const Home = () => {
 					</div>
 				</div>
 			</div>
+			<Footer/>
 		</main>
   	)
 }

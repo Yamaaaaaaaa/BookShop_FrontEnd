@@ -5,6 +5,7 @@ import { authors } from "./mockdata"
 import "./HeroSection.scss"
 import { getAllAuthor } from "../../../../service/authorService"
 import { toast } from "react-toastify"
+import PartnerLogos from "./components/PartnerLogos"
 const authorDemo = {
   name: "Napoleon Hill",
   authorImage: "https://1.bp.blogspot.com/-bn1T1J66g4U/Xln98cp7R_I/AAAAAAAAPG8/qLYQIUmHJ-QqTyw1aEGs3oSrlGoCASwoQCLcBGAsYHQ/s1600/Eiichiro%2BOda%2Bterbaru.jpg",
@@ -89,7 +90,7 @@ function HeroSection() {
           currentIndex={currentAuthorIndex}
           totalAuthors={authorData.length}
         />
-        {/* <BookScroll books={authors[0].books} /> */}
+        <PartnerLogos />
       </div>
     </div>
   )

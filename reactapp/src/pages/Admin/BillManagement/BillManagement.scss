@@ -93,6 +93,20 @@
 				border-color: #2563eb;
 				box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 			}
+			&__status-completed {
+				background-color: #def7ec;
+				color: #046c4e;
+			  }
+			  
+			&__status-pending {
+				background-color: #fef3c7;
+				color: #92400e;
+			}
+			
+			&__status-cancelled {
+				background-color: #fee2e2;
+				color: #991b1b;
+			}
 		}
 	}
   

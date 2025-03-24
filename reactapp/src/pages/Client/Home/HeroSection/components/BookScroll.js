@@ -1,5 +1,6 @@
 import { useRef } from "react"
 import "../HeroSection.scss"
+import { Link } from "react-router-dom"
 
 function BookScroll({ books }) {
 	const scrollRef = useRef(null)
@@ -25,16 +26,18 @@ function BookScroll({ books }) {
 				<div className="book-scroll">
 					<div className="book-scroll__container" ref={scrollRef}>
 						{books.map((book, index) => (
-						<div className="book-card" key={index}>
-							<div className="book-card__image">
-								<img src={book.bookImageUrl || "/placeholder.svg"} alt={book.title} />
-							</div>
-							<div className="book-card__info">
-								<h3 className="book-card__title">{book.name}</h3>
-								<p className="book-card__author">by {book.Author.name}</p>
-								<div className="book-card__price">${book.sale.toFixed(1)}</div>
-							</div>
-						</div>
+							<Link className="book-card-link" to="/bookdetail" state={{id: book.id}}>
+								<div className="book-card" key={index}>
+									<div className="book-card__image">
+										<img src={book.bookImageUrl || "/placeholder.svg"} alt={book.title} />
+									</div>
+									<div className="book-card__info">
+										<h3 className="book-card__title">{book.name}</h3>
+										<p className="book-card__author">by {book.Author.name}</p>
+										<div className="book-card__price">{book.sale.toLocaleString()}đ</div>
+									</div>
+								</div>
+							</Link>
 						))}
 					</div>
 			

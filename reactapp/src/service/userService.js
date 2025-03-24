@@ -19,6 +19,23 @@ export const addBookToCartForUser = async (bookId, userId,quantity) => {
     });
 };
 
+export const getWishListForUser = async (userId) => {
+    return await instance.get(mainUrl + "/wish-list/get-wish-list", {
+        params: {userId}
+    })
+}
+
+export const addBookToWishList = async (userId, bookId) => {
+    return await instance.post(mainUrl + "/wish-list/add-book-to-wish-list", {userId, bookId})
+}
+
+export const deleteBookOnWishList = async (query) => {
+    return await instance.delete(mainUrl + "/wish-list/delete-book-in-wish-list", {
+        params: query
+    })
+}
+
+
 export const createBillForUser = async (billData) => {
     return await instance.post(mainUrl + "/bill/create-bill", billData);
 };
