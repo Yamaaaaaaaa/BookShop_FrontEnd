@@ -13,100 +13,6 @@ $text-color: #666;
   	padding: 80px 0;
 }
 
-// Main styles
-.hero-section {
-	background-color: var(--primary-color);
-	min-height: calc(100vh - 140px);
-	padding: 90px;
-	margin-top: 20px;
-	color: $white;
-	background-image: radial-gradient(circle, rgba(35,49,128,0.8) 0%, #1a237e 100%);
-	position: relative;
-	overflow: hidden;
-	border-radius: 15px;
-
-	&__content {
-		max-width: 600px;
-		position: relative;
-		z-index: 2;
-		&__category {
-			font-size: 0.9rem;
-			letter-spacing: 2px;
-			margin-bottom: 20px;
-			display: block;
-		}
-		&__title {
-			font-size: 3.5rem;
-			margin-bottom: 20px;
-		}
-		&__author {
-			color: white;
-			margin-bottom: 20px;
-		}
-		&__description {
-			line-height: 1.6;
-			margin-bottom: 30px;
-			color: rgba($white, 0.9);
-		}
-		&__price-section {
-			display: flex;
-			align-items: center;
-			gap: 15px;
-			margin-bottom: 30px;
-		
-			&__current-price {
-				font-size: 2rem;
-				font-weight: bold;
-				color: $accent-color;
-			}
-		
-			&__original-price {
-				text-decoration: line-through;
-				color: rgba($white, 0.6);
-			}
-		
-			&__discount {
-				background-color: #ff4444;
-				padding: 4px 8px;
-				border-radius: 4px;
-				font-size: 0.8rem;
-			}
-		}
-		&__cta-buttons {
-			display: flex;
-			gap: 20px;
-		
-			&__buy-now, &__see-details {
-				padding: 12px 30px;
-				border: none;
-				border-radius: 5px;
-				cursor: pointer;
-				font-weight: bold;
-				transition: all 0.3s ease;
-			}
-		
-			&__buy-now {
-				background-color: $accent-color;
-				color: $white;
-		
-				&:hover {
-				background-color: lighten($accent-color, 10%);
-				}
-			}
-		
-			&__see-details {
-				background-color: transparent;
-				border: 2px solid $white;
-				color: $white;
-		
-				&:hover {
-				background-color: rgba($white, 0.1);
-				}
-			}
-		}
-	}  
-}
-
 .recommended-section,
 .sale-section {
 	@include section-padding;
@@ -187,6 +93,11 @@ $text-color: #666;
 		font-weight: bold;
 		text-align: center;
 		margin-bottom: 15px;
+	}
+
+	&__original-price {
+		text-align: center;
+		text-decoration: line-through;
 	}
 
 	&__add-to-cart {

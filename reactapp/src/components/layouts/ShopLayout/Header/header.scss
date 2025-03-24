@@ -21,7 +21,7 @@
     &__top {
         @include flex-center;
         justify-content: space-between;
-        padding: 20px 50px;
+        padding: 0px 50px;
         max-width: 1400px;
         margin: 0 auto;
         z-index: 5;
@@ -257,13 +257,14 @@
             @include flex-center;
             list-style: none;
             gap: 40px;
+            
             &__nav-item {
                 position: relative;
             }
             &__nav-link {
                 text-decoration: none;
-                color: $text-color;
-                font-weight: 500;
+                color: $secondary-color;
+                font-weight: 700;
                 font-size: 15px;
                 transition: color 0.2s;
             

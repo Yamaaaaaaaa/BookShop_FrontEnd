@@ -8,6 +8,12 @@ export const getBooks = async (query) => {
     })
 }
 
+export const getBookData = async (query) => {
+    return await instance.get( mainUrl + "/book/get-all-book", {
+        params: query
+    })
+}
+
 export const getABooks = async (query) => {
     return await instance.get( mainUrl + "/book/get-a-book", {
         params: query
