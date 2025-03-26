@@ -1,3 +1,5 @@
+@import "../../../../constant/color.scss";
+
 .admin-header {
     display: flex;
     justify-content: space-between;
@@ -18,11 +20,11 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #859573;
+    background-color: $admin_primary-color;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: $admin_text-color;
     font-weight: 500;
     font-size: 19px;
 }
@@ -76,5 +78,5 @@
 }
 
 .admin-header__settings:hover {
-    color: #859573;
+    color: $admin_primary-color;
 }

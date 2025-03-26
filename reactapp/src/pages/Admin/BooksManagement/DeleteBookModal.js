@@ -1,8 +1,21 @@
 import React from 'react';
 import { MdDelete } from 'react-icons/md';
 import './Modal.scss';
+import { deleteBook } from '../../../service/bookService';
+import { toast } from 'react-toastify';
 
-const DeleteBookModal = ({ book, onClose, onConfirm }) => {
+const DeleteBookModal = ({ book, onClose, onConfirm, fetchInitialBook }) => {
+    const handleDeleteBook = async () => {
+        const response = await deleteBook(book.id)
+        if(response){
+            if(response.status === 1){
+                toast.success(response.message)
+                fetchInitialBook()
+                return
+            }
+        }
+        toast.error(response.message)
+    }
     return (
         <div className="modal-overlay">
             <div className="modal-content delete-modal">
@@ -23,7 +36,7 @@ const DeleteBookModal = ({ book, onClose, onConfirm }) => {
                     <button className="btn btn-secondary" onClick={onClose}>
                         CANCEL
                     </button>
-                    <button className="btn btn-danger" onClick={onConfirm}>
+                    <button className="btn btn-danger" onClick={() => handleDeleteBook()}>
                         CONFIRM
                     </button>
                 </div>

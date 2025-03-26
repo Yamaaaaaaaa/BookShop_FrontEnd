@@ -1,448 +1,445 @@
-// Variables
-$primary-color: #1a237e;
-$accent-color: #ff9800;
-$text-color: #333;
-$light-gray: #f5f5f5;
-$white: #fff;
+@import "../../../../constant/color.scss";
 
 // Mixins
 @mixin flex-center {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 @mixin button-style {
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 // Header styles
 .header {
-  position: relative;
-  background: $white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
-  &__top {
-    @include flex-center;
-    justify-content: space-between;
-    padding: 20px 50px;
-    max-width: 1400px;
-    margin: 0 auto;
-    z-index: 5;
-  }
-
-
-  &__logo-section {
-    display: flex;
-    flex-direction: column;
-    z-index: 5;
-    &__logo {
-      text-decoration: none;
-  
-      &-text {
-        font-size: 28px;
-        font-weight: bold;
-        letter-spacing: -0.5px;
-      }
-  
-      &-brand {
-        color: $primary-color;
-  
-        &--accent {
-          color: $accent-color;
-        }
-      }
-  
-      &-subtitle {
-        font-size: 13px;
-        color: #666;
-        margin-top: 2px;
-      }
-    }
-  }
-
-
-  &__search-section {
-    @include flex-center;
-    flex: 1;
-    max-width: 600px;
-    margin: 0 40px;
-    background: $light-gray;
-    border-radius: 8px;
-    overflow: hidden;
-    z-index: 5;
-    &__category-dropdown {
-      select {
-        padding: 14px 20px;
-        border: none;
-        background: transparent;
-        font-size: 14px;
-        color: $text-color;
-        cursor: pointer;
-        outline: none;
-        min-width: 120px;
-        margin-right: 15px;
-      }
-    }
-    &__search-bar {
-      display: flex;
-      flex: 1;
-      border-left: 1px solid #ddd;
-  
-      input {
-        width: 100%;
-        padding: 14px 20px;
-        border: none;
-        background: transparent;
-        font-size: 14px;
-        outline: none;
-      }
-    }
-    &__search-button {
-      @include button-style;
-      padding: 14px 20px;
-      background: transparent;
-      color: #666;
-    }
-  }
-
-
-  &__user-section {
-    @include flex-center;
-    gap: 25px;
-    z-index: 5;
-    &__icon-button {
-      position: relative;
-      cursor: pointer;
-  
-      &__icon {
-        font-size: 22px;
-        text-decoration: none;
-  
-        a {
-          text-decoration: none;
-        }
-      }
-  
-      &__counter {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background: $accent-color;
-        color: $white;
-        font-size: 12px;
-        padding: 1px 6px;
-        border-radius: 12px;
-        min-width: 20px;
-        text-align: center;
-      }
-    }
-    &__user-profile {
-      @include flex-center;
-      gap: 10px;
-      position: relative;
-      &__profile-trigger {
+    position: relative;
+    background: $white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    &__top {
         @include flex-center;
-        gap: 10px;
-        cursor: pointer;
-        &__avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-        &__user-info {
-          display: flex;
-          flex-direction: column;
-        }
-      
-        &__user-name {
-          font-weight: 600;
-          color: $text-color;
-        }
-      
-        &__user-email {
-          font-size: 12px;
-          color: #666;
-        }
-      }
-      &__profile-dropdown {
-        position: absolute;
-        top: calc(100% + 10px);
-        right: 0;
-        width: 240px;
-        background: $white;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        overflow: hidden;
-        &__dropdown-header {
-          padding: 16px;
-          border-bottom: 1px solid #eee;
-        }
-        &__dropdown-name {
-          display: block;
-          font-size: 16px;
-          font-weight: 600;
-          color: $text-color;
-          margin-bottom: 4px;
-        }
-      
-        &__dropdown-email {
-          display: block;
-          font-size: 14px;
-          color: #666;
-        }
-        &__dropdown-menu {
-          padding: 8px 0;
-        }
-      
-        &__dropdown-item {
-          @include flex-center;
-          padding: 12px 16px;
-          text-decoration: none;
-          color: $text-color;
-          transition: background-color 0.2s;
-      
-          &:hover {
-            background-color: $light-gray;
-          }
-      
-          &__dropdown-icon {
-            margin-right: 12px;
-            font-size: 18px;
-          }
-        }
-      
-        &__logout-button {
-          @include button-style;
-          width: calc(100% - 32px);
-          margin: 8px 16px 16px;
-          padding: 12px;
-          background: $accent-color;
-          color: $white;
-          border-radius: 4px;
-          font-size: 14px;
-          font-weight: 500;
-      
-          &:hover {
-            background: darken($accent-color, 10%);
-          }
-        }
-      }
+        justify-content: space-between;
+        padding: 0px 50px;
+        max-width: 1400px;
+        margin: 0 auto;
+        z-index: 5;
+        padding-bottom: 20px;
     }
-    &__open-sidebar{
-      cursor: pointer;
-      @include button-style;
-      padding: 10px 16px;
-      background: $accent-color;
-      color: $white;
-      border-radius: 6px;
-      font-weight: 500;
-      font-size: 14px;
-      display: none;
-      @media (max-width: 992px) {
-        display: block;
-      }
-    }
-  }
 
 
-  &__main-nav {
-    z-index: 5;
-    @include flex-center;
-    justify-content: space-between;
-    padding: 0 50px;
-    max-width: 1400px;
-    margin: 0 auto;
-    height: 60px;
-    border-top: 1px solid #eee;
-    &__nav-links {
-      @include flex-center;
-      list-style: none;
-      gap: 40px;
-      &__nav-item {
-        position: relative;
-      }
-      &__nav-link {
+    &__logo-section {
+        display: flex;
+        flex-direction: column;
+        z-index: 5;
+        &__logo {
         text-decoration: none;
-        color: $text-color;
-        font-weight: 500;
-        font-size: 15px;
-        transition: color 0.2s;
-    
-        &:hover {
-          color: $accent-color;
-        }
-      }
-    }
-    &__get-in-touch {
-      @include button-style;
-      padding: 12px 24px;
-      background: $accent-color;
-      color: $white;
-      border-radius: 6px;
-      font-weight: 500;
-      font-size: 14px;
   
-      &:hover {
-        background: darken($accent-color, 10%);
-      }
+            &-text {
+                font-size: 28px;
+                font-weight: bold;
+                letter-spacing: -0.5px;
+            }
+  
+            &-brand {
+                color: $primary-color;
+        
+                &--accent {
+                    color: $accent-color;
+                }
+            }
+  
+            &-subtitle {
+                font-size: 13px;
+                color: #666;
+                margin-top: 2px;
+            }
+        }
     }
-  }
 
-  &__side-bar{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    transform: translateX(-100%);
-    z-index: 0;
-    &__main{
-      width: 40%;
-      background-color: white;
-      padding: 25px 20px;
 
-      &__logo {
-        text-decoration: none;
-        margin-bottom: 20px;
-        &-text {
-          font-size: 28px;
-          font-weight: bold;
-          letter-spacing: -0.5px;
+    &__search-section {
+        @include flex-center;
+        flex: 1;
+        max-width: 600px;
+        margin: 0 40px;
+        background: $light-gray;
+        border-radius: 8px;
+        overflow: hidden;
+        z-index: 5;
+        &__category-dropdown {
+            select {
+                padding: 14px 20px;
+                border: none;
+                background: transparent;
+                font-size: 14px;
+                color: $text-color;
+                cursor: pointer;
+                outline: none;
+                min-width: 120px;
+                margin-right: 15px;
+            }
         }
-    
-        &-brand {
-          color: $primary-color;
-    
-          &--accent {
-            color: $accent-color;
-          }
-        }
-    
-        &-subtitle {
-          font-size: 13px;
-          color: #666;
-          margin-top: 2px;
-        }
-      }
-      &__search-bar {
+        &__search-bar {
         display: flex;
         flex: 1;
-        border: 1px solid #ddd;
-        margin-top: 15px;
-        margin-bottom: 30px;
-        input {
-          width: 100%;
-          padding: 14px 20px;
-          border: none;
-          background: transparent;
-          font-size: 14px;
-          outline: none;
+        border-left: 1px solid #ddd;
+    
+            input {
+                width: 100%;
+                padding: 14px 20px;
+                border: none;
+                background: transparent;
+                font-size: 14px;
+                outline: none;
+            }
         }
-      }
-      &__search-button {
-        @include button-style;
-        padding: 14px 20px;
-        background: transparent;
-        color: #666;
-      }
-      &__nav-links{
-        padding: 0;
-        &__nav-item{
-          margin-top: 20px;
-          padding-bottom: 5px;
-          border-bottom: 0.2px solid gray;
-          list-style-type: none;
+        &__search-button {
+            @include button-style;
+            padding: 14px 20px;
+            background: transparent;
+            color: #666;
         }
-        &__nav-link{
-          text-decoration: none;
-        }
-      }
     }
-    &__exit{
-      width: 70%;
-      background-color: black;
-      opacity: 60%;
-      cursor: pointer;
-    }
-  }
+
+
+    &__user-section {
+        @include flex-center;
+        gap: 25px;
+        z-index: 5;
+        &__icon-button {
+            
+            cursor: pointer;
+        
+            &__icon {
+                font-size: 22px;
+                text-decoration: none;
+                margin-left: 25px;
+                a {
+                    position: relative;
+                    text-decoration: none;
+                }
+                &__counter {
+                    position: absolute;
+                    top: -14px;
+                    right: -15px;
+                    background: $accent-color;
+                    color: $white;
+                    font-size: 12px;
+                    padding: 3px 3px;
+                    border-radius: 50px;
+                    min-width: 20px;
+                    text-align: center;
+                }
+            }
   
+            
+        }
+        &__user-profile {
+            @include flex-center;
+            gap: 10px;
+            position: relative;
+            &__profile-trigger {
+                @include flex-center;
+                gap: 10px;
+                cursor: pointer;
+                &__avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+                &__user-info {
+                    display: flex;
+                    flex-direction: column;
+                }
+            
+                &__user-name {
+                    font-weight: 600;
+                    color: $text-color;
+                }
+            
+                &__user-email {
+                    font-size: 12px;
+                    color: #666;
+                }
+            }
+            &__profile-dropdown {
+                position: absolute;
+                top: calc(100% + 10px);
+                right: 0;
+                width: 240px;
+                background: $white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                overflow: hidden;
+                &__dropdown-header {
+                    padding: 16px;
+                    border-bottom: 1px solid #eee;
+                }
+                &__dropdown-name {
+                    display: block;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: $text-color;
+                    margin-bottom: 4px;
+                }
+            
+                &__dropdown-email {
+                    display: block;
+                    font-size: 14px;
+                    color: #666;
+                }
+                &__dropdown-menu {
+                    padding: 8px 0;
+                }
+        
+                &__dropdown-item {
+                    @include flex-center;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    color: $text-color;
+                    transition: background-color 0.2s;
+                
+                    &:hover {
+                        background-color: $light-gray;
+                    }
+                
+                    &__dropdown-icon {
+                        margin-right: 12px;
+                        font-size: 18px;
+                    }
+                }
+        
+                &__logout-button {
+                    @include button-style;
+                    width: calc(100% - 32px);
+                    margin: 8px 16px 16px;
+                    padding: 12px;
+                    background: $accent-color;
+                    color: $white;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    font-weight: 500;
+                
+                    &:hover {
+                        background: darken($accent-color, 10%);
+                    }
+                }
+            }
+        }
+        &__open-sidebar{
+            cursor: pointer;
+            @include button-style;
+            padding: 10px 16px;
+            background: $accent-color;
+            color: $white;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            display: none;
+            @media (max-width: 992px) {
+                display: block;
+            }
+        }
+    }
+
+
+    &__main-nav {
+        z-index: 5;
+        @include flex-center;
+        justify-content: space-between;
+        padding: 0 50px;
+        max-width: 1400px;
+        margin: 0 auto;
+        height: 60px;
+        border-top: 1px solid #eee;
+        &__nav-links {
+            @include flex-center;
+            list-style: none;
+            gap: 40px;
+            
+            &__nav-item {
+                position: relative;
+            }
+            &__nav-link {
+                text-decoration: none;
+                color: $secondary-color;
+                font-weight: 700;
+                font-size: 15px;
+                transition: color 0.2s;
+            
+                &:hover {
+                    color: $accent-color;
+                }
+            }
+        }
+        &__get-in-touch {
+            @include button-style;
+            padding: 12px 24px;
+            background: $accent-color;
+            color: $white;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+        
+            &:hover {
+                background: darken($accent-color, 10%);
+            }
+        }
+    }
+
+    &__side-bar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        transform: translateX(-100%);
+        z-index: 0;
+        &__main{
+            width: 40%;
+            background-color: white;
+            padding: 25px 20px;
+
+            &__logo {
+                text-decoration: none;
+                margin-bottom: 20px;
+                &-text {
+                    font-size: 28px;
+                    font-weight: bold;
+                    letter-spacing: -0.5px;
+                }
+            
+                &-brand {
+                    color: $primary-color;
+                
+                    &--accent {
+                        color: $accent-color;
+                    }
+                }
+            
+                &-subtitle {
+                    font-size: 13px;
+                    color: #666;
+                    margin-top: 2px;
+                }
+            }
+            &__search-bar {
+                display: flex;
+                flex: 1;
+                border: 1px solid #ddd;
+                margin-top: 15px;
+                margin-bottom: 30px;
+                input {
+                    width: 100%;
+                    padding: 14px 20px;
+                    border: none;
+                    background: transparent;
+                    font-size: 14px;
+                    outline: none;
+                }
+            }
+            &__search-button {
+                @include button-style;
+                padding: 14px 20px;
+                background: transparent;
+                color: #666;
+            }
+            &__nav-links{
+                padding: 0;
+                &__nav-item{
+                    margin-top: 20px;
+                    padding-bottom: 5px;
+                    border-bottom: 0.2px solid gray;
+                    list-style-type: none;
+                }
+                &__nav-link{
+                    text-decoration: none;
+                }
+            }
+        }
+        &__exit{
+            width: 70%;
+            background-color: black;
+            opacity: 60%;
+            cursor: pointer;
+        }
+    }
 }
 .open1{
-  opacity: 1;
-  z-index: 99;
-  transition: none;
-  transform: translateX(0);
+    opacity: 1;
+    z-index: 99;
+    transition: none;
+    transform: translateX(0);
 }
 .open2{
-  opacity: 1;
-  z-index: 100;
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-  transform: translateX(0);
+    opacity: 1;
+    z-index: 100;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transform: translateX(0);
 }
 .close{
-  opacity: 0;
-  z-index: 0;
-  transition: none;
+    opacity: 0;
+    z-index: 0;
+    transition: none;
 }
 // Media queries
 @media (max-width: 1200px) {
-  .header {
-    &__top {
-      padding: 15px 20px;
-    }
+    .header {
+        &__top {
+            padding: 15px 20px;
+        }
 
-    &__main-nav {
-      padding: 0 20px;
-    }
+        &__main-nav {
+            padding: 0 20px;
+        }
 
-    &__nav-links {
-      gap: 20px;
+        &__nav-links {
+            gap: 20px;
+        }
+        &__search-section{
+            display: none;
+        }
+        &__user-section{
+            &__icon-button{
+                display: none;
+            }
+            &__user-profile{
+                display: none;
+            }
+        }
     }
-    &__search-section{
-      display: none;
-    }
-    &__user-section{
-      &__icon-button{
-        display: none;
-      }
-      &__user-profile{
-        display: none;
-      }
-    }
-  }
-  
 }
 
 @media (max-width: 992px) {
-  .header {
-    &__search-section {
-      max-width: 400px;
-      margin: 0 20px;
-    }
+    .header {
+        &__search-section {
+            max-width: 400px;
+            margin: 0 20px;
+        }
 
-    &__user-section {
-      gap: 15px;
+        &__user-section {
+            gap: 15px;
+        }
     }
-  }
 }
 
 @media (max-width: 768px) {
-  .header {
-    &__profile-dropdown {
-      width: 280px;
-    }
+    .header {
+        &__profile-dropdown {
+            width: 280px;
+        }
 
-    &__dropdown-item {
-      padding: 14px 16px;
+        &__dropdown-item {
+            padding: 14px 16px;
+        }
+        &__main-nav{
+            display: none;
+        }
     }
-    &__main-nav{
-      display: none;
-    }
-  }
 }
 

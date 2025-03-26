@@ -8,6 +8,8 @@ import Cart from "../pages/Client/Cart/cart"
 import Profile from "../pages/Client/Profile/profile"
 import BookDetail from "../pages/Client/BookDetail/bookdetail"
 import Register from "../pages/Client/Auth/Register/Register"
+import Search from "../pages/Client/Search/Search"
+import WishList from "../pages/Client/WishList/WishList"
 
 const ShopRoute = () =>{
     return (
@@ -17,13 +19,16 @@ const ShopRoute = () =>{
             <Route
                 path="/*"
                 element={
-                <ProtectRoute>
-                    <ShopLayout />
-                </ProtectRoute>
+                    <ProtectRoute>
+                        <ShopLayout />
+                    </ProtectRoute>
                 }
             >   
+                
                 <Route path="home" element={<Home/>}/>
                 <Route path="shop" element={<Shop/>}/>
+                <Route path="wish-list" element={<WishList/>}/>
+                <Route path="search" element={<Search/>}/>
                 <Route path="bookdetail" element={<BookDetail/>}/>
                 <Route path="profile" element={<Profile/>}/>
                 <Route path="cart" element={<Cart/>}/>

@@ -50,17 +50,12 @@ export default function Login() {
             const response = await loginClientService(formData)
             console.log("Response Login: ", response);
             
-            if(response && response.data && +response.data.status === 1 && response.data.access_token) {
-                sessionStorage.setItem('access_token', response.data.access_token);
-                sessionStorage.setItem('user', JSON.stringify(
-                    {
-                        email: formData.email,
-                        name: 'Test User'
-                    }
-                ));
-                navigate("/")
+            if(response && +response.status === 1 && response.access_token) {
+                sessionStorage.setItem('access_token', response.access_token);
+                sessionStorage.setItem('user', JSON.stringify(response.data));
+                navigate("/home")
             }else {
-                setLoginError(response.data.message);
+                setLoginError(response.message);
             }
         } catch (error) {
             console.error('Login error:', error);
