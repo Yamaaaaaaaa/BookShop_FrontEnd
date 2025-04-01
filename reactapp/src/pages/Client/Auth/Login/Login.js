@@ -78,7 +78,8 @@ export default function Login() {
                     </div>
                     <h2>Welcome Back</h2>
                     <p>Sign in to access your account</p>
-                
+                    <p>Test Account: son1@gmail.com</p>
+                    <p>Test Password: 1</p>
                     <div className="login-client__container__left__wrap-input">
                         <input
                             type="email"
