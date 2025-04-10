@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import "../BooksManagement/Modal.scss"
+import "../ModalStyle/Modal.scss"
 import { createPublisher, updatePublisher } from "../../../service/publisherService"
 import { toast } from "react-toastify"
 

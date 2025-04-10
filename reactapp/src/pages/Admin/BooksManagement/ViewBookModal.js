@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdBook } from 'react-icons/md';
-import './Modal.scss';
+import '../ModalStyle/Modal.scss';
 
 const ViewBookModal = ({ book, onClose, formatCurrency }) => {
     return (

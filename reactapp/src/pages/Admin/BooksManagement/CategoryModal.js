@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { MdBook } from "react-icons/md"
-import "./Modal.scss"
+import "../ModalStyle/Modal.scss"
 import { getAllPublisher } from "../../../service/publisherService"
 import { getAllAuthor } from "../../../service/authorService"
 import { getAllSeries } from "../../../service/serieService"

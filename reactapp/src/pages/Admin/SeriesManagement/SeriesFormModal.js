@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import "../BooksManagement/Modal.scss"
+import "../ModalStyle/Modal.scss"
 import { toast } from "react-toastify"
 import { createSeries, updateSeries } from "../../../service/serieService"
 

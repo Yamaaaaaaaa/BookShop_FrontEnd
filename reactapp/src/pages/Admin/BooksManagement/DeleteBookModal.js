@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdDelete } from 'react-icons/md';
-import './Modal.scss';
+import '../ModalStyle/Modal.scss';
 import { deleteBook } from '../../../service/bookService';
 import { toast } from 'react-toastify';
 

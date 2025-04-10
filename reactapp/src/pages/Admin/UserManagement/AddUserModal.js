@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import "../BooksManagement/Modal.scss"
+import "../ModalStyle/Modal.scss"
 import { MdBook } from "react-icons/md"
 import { addUserClientService, getAllGroup, updateUserClientService } from "../../../service/authService"
 import { toast } from "react-toastify"

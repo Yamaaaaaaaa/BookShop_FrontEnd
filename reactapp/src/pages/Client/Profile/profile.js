@@ -2,7 +2,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import "./profile.scss"
 import { LuShoppingCart } from "react-icons/lu"
-import { FaBell, FaLock, FaQuestion, FaRegHeart, FaUser } from "react-icons/fa"
+import { FaBell, FaLock, FaMoneyBillWave, FaQuestion, FaRegHeart, FaUser } from "react-icons/fa"
 import { FaShop } from "react-icons/fa6"
 import { IoIosExit } from "react-icons/io"
 import { useEffect, useState } from "react"
@@ -14,6 +14,7 @@ import { getAllBillForUser } from "../../../service/userService"
 import { toast } from "react-toastify"
 import BillDetailsModal from "./BillDetailModal"
 import ConfirmDeleteModal from "./ConfirmDeleteModal"
+import PaymentModal from "./PaymentModal"
 
 const Profile = () => {
     const navigate = useNavigate()
@@ -25,7 +26,28 @@ const Profile = () => {
     const [sortOrder, setSortOrder] = useState("desc") // desc = newest first
     const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [billToDelete, setBillToDelete] = useState(null)
-
+    const [showPaymentModal, setShowPaymentModal] = useState(false) // Add this state
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null) // Add this state
+    const handlePaymentClick = (bill) => {
+      // Check if payment method is cash on delivery
+      if (
+        bill.PaymentMethod.name.toLowerCase().includes("cash") ||
+        bill.PaymentMethod.name.toLowerCase().includes("cod") ||
+        bill.PaymentMethod.name.toLowerCase().includes("delivery")
+      ) {
+        toast.info("This order is cash on delivery. No payment needed.")
+        return
+      }
+  
+      // For other payment methods, show QR code
+      setSelectedPaymentMethod({
+        name: bill.PaymentMethod.name,
+        description: bill.PaymentMethod.description || "Please scan the QR code to complete payment",
+        qrUrl: bill.PaymentMethod.qrUrl,
+      })
+      setShowPaymentModal(true)
+    }
+    
     const fetchAllBillForUser = async () => {
         const responseGetBill = await getAllBillForUser(userProfile.id)
         console.log(responseGetBill)
@@ -286,6 +308,9 @@ const Profile = () => {
                       >
                         <TiDelete />
                       </button>
+                      <button className="action-btn payment-btn" onClick={() => handlePaymentClick(bill)}>
+                        <FaMoneyBillWave />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -309,6 +334,13 @@ const Profile = () => {
           onClose={() => setShowConfirmModal(false)}
           onConfirm={confirmDelete}
           billId={billToDelete.billId}
+        />
+      )}
+      {showPaymentModal && selectedPaymentMethod && (
+        <PaymentModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          paymentMethod={selectedPaymentMethod}
         />
       )}
     </div>
