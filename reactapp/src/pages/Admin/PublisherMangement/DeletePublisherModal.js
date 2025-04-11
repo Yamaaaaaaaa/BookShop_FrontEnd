@@ -1,8 +1,6 @@
-"use client"
-
 import { toast } from "react-toastify"
 import { deletePublisher } from "../../../service/publisherService"
-
+import "../ModalStyle/Modal.scss"
 const DeletePublisherModal = ({ publisher, onClose, onConfirm, fetchPublishers }) => {
   const handleDelete = async (e) => {
     e.preventDefault()

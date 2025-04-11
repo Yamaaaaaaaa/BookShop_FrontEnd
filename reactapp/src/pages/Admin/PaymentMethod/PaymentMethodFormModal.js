@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import "../ModalStyle/Modal.scss"
 import { toast } from "react-toastify"
@@ -94,27 +92,6 @@ const PaymentMethodFormModal = ({ paymentMethod, onClose, onSubmit, mode = "add"
                 onChange={(e) => setQrUrl(e.target.value)}
                 placeholder="Enter QR code URL"
               />
-              {qrUrl && (
-                <div className="qr-preview">
-                  <p>Preview:</p>
-                  <img
-                    src={qrUrl || "/placeholder.svg"}
-                    alt="QR Code Preview"
-                    className="qr-preview-image"
-                    onError={(e) => {
-                      // Set a flag to prevent infinite loop
-                      if (!e.target.hasAttribute("data-error-handled")) {
-                        e.target.setAttribute("data-error-handled", "true")
-                        e.target.src = "/placeholder.svg?height=100&width=100"
-                      }
-                      // Hide the image if even the placeholder fails
-                      e.target.onerror = () => {
-                        e.target.style.display = "none"
-                      }
-                    }}
-                  />
-                </div>
-              )}
             </div>
           </div>
           <div className="modal-footer">

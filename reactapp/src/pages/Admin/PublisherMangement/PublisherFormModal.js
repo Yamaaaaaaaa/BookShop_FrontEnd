@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import "../ModalStyle/Modal.scss"
 import { createPublisher, updatePublisher } from "../../../service/publisherService"
