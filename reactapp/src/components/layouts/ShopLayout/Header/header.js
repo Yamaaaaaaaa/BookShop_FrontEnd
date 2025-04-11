@@ -8,6 +8,8 @@ import { LuShoppingCart } from "react-icons/lu"
 import { RiFindReplaceLine } from "react-icons/ri"
 import { FaRegHeart } from "react-icons/fa6"
 import { IoMdNotificationsOutline } from "react-icons/io"
+import { deleteNoti, getNoti, updateNoti } from "../../../../service/notiService"
+import { toast } from "react-toastify"
 
 function Header() {
     const [searchQuery, setSearchQuery] = useState("")
@@ -19,20 +21,7 @@ function Header() {
     const navigate = useNavigate()
     const dropdownRef = useRef(null)
     const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false)
-    const [notifications, setNotifications] = useState([
-        {
-            id: 1,
-            message: "New book added to your wishlist",
-            time: "5 min ago",
-            read: false,
-        },
-        {
-            id: 2,
-            message: "Your order has been shipped",
-            time: "2 hours ago",
-            read: false,
-        },
-    ])
+    const [notifications, setNotifications] = useState([])
     const notificationDropdownRef = useRef(null)
 
     useEffect(() => {
@@ -61,18 +50,59 @@ function Header() {
         }
     }, [])
 
+    const handleFetchAllNotiForUser = async () => {
+        const response = await getNoti(undefined, userProfile.id)
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+                setNotifications(response.data)
+            }
+            else{
+                toast.error(response.message)
+            }
+            
+        }
+        else toast.error(response.message)
+    }
+    useEffect(() => {
+        handleFetchAllNotiForUser()
+    }, [])
+
     const handleLogout = () => {
         sessionStorage.removeItem("user")
         sessionStorage.removeItem("access_token")
         navigate("/login")
     }
 
-    const handleMarkAsRead = (id) => {
-        setNotifications(
-            notifications.map((notification) => (notification.id === id ? { ...notification, read: true } : notification)),
-        )
+    const handleMarkAsRead = async (id) => {
+        const response = await updateNoti({id: id, status: "checked"})
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+                handleFetchAllNotiForUser()
+            }
+            else{
+                toast.error(response.message)
+            }
+            
+        }
+        else toast.error(response.message)
     }
 
+    const handleDeleteNoti = async (id) => {
+        const response = await deleteNoti(id)
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+                handleFetchAllNotiForUser()
+            }
+            else{
+                toast.error(response.message)
+            }
+            
+        }
+        else toast.error(response.message)
+    }
     const unreadCount = notifications.filter((notification) => !notification.read).length
 
     return (
@@ -161,26 +191,31 @@ function Header() {
                                         >
                                             <div className="header__user-section__notification-dropdown__item-content">
                                                 <p className="header__user-section__notification-dropdown__message">
-                                                {notification.message}
+                                                {notification.content}
                                                 </p>
                                                 <span className="header__user-section__notification-dropdown__time">
-                                                {notification.time}
+                                                {notification.createdAt}
                                                 </span>
                                             </div>
                                             <div className="header__user-section__notification-dropdown__actions">
+                                                {
+                                                    notification.status === "unchecked" ? 
+                                                        <button
+                                                            className="header__user-section__notification-dropdown__action-btn"
+                                                            onClick={() => handleMarkAsRead(notification.id)}
+                                                            title="Mark as read"
+                                                        >
+                                                            <span className="checkmark">✓</span>
+                                                        </button>
+                                                    : <></>
+                                                }
+                                                
                                                 <button
                                                     className="header__user-section__notification-dropdown__action-btn"
-                                                    onClick={() => handleMarkAsRead(notification.id)}
+                                                    onClick={() => handleDeleteNoti(notification.id)}
                                                     title="Mark as read"
                                                 >
-                                                    <span className="checkmark">✓</span>
-                                                </button>
-                                                <button
-                                                    className="header__user-section__notification-dropdown__action-btn"
-                                                    onClick={() => handleMarkAsRead(notification.id)}
-                                                    title="Mark as read"
-                                                >
-                                                    <span className="checkmark">X</span>
+                                                    <span className="delete-btn">X</span>
                                                 </button>
                                             </div>
                                         </div>
