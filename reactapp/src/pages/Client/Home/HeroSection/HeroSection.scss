@@ -14,17 +14,16 @@ $border-color: rgba(255, 255, 255, 0.1);
 }
 
 
-.container {
-  max-width: 1300px;
+.book-app-container {
+  max-width: 1500px;
   margin: 0 auto;
   padding: 0;
   position: relative;
-  height: 100vh;
+  height: 80vh;
   overflow: hidden;
 }
 
 .book-app {
-  min-height: 100vh;
   color: white;
   background-color: $background-color;
   position: relative;
@@ -107,8 +106,8 @@ $border-color: rgba(255, 255, 255, 0.1);
     
     .author-image {
       position: absolute;
-      top: 50px; /* Dịch xuống 75px */
-      right: 50px; /* Dịch vào trong 75px */
+      top: 0px; /* Dịch xuống 75px */
+      right: 0px; /* Dịch vào trong 75px */
       border-radius: 20px;
       width: calc(100% - 100px); /* Giảm kích thước ảnh */
       height: calc(100% - 100px);
@@ -251,13 +250,13 @@ $border-color: rgba(255, 255, 255, 0.1);
   
   &__navigation {
     position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
+    top: 40%;
+    left: -18px;
+    right: -18px;
     @include flex(row, space-between, center);
     transform: translateY(-50%);
     pointer-events: none;
-    z-index: 10;
+    z-index: 100;
     padding: 0 1rem;
     
     .nav-button {
@@ -301,9 +300,9 @@ $border-color: rgba(255, 255, 255, 0.1);
   &__controls {
     @include flex(row, space-between, center);
     position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
+    top: 35%;
+    left: -20px;
+    right: -20px;
     transform: translateY(-50%);
     pointer-events: none;
     padding: 0 0.5rem;
@@ -333,6 +332,7 @@ $border-color: rgba(255, 255, 255, 0.1);
 }
 .book-card {
   min-width: 350px;
+  margin-bottom: 90px;
   background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   border-radius: 0.5rem;
