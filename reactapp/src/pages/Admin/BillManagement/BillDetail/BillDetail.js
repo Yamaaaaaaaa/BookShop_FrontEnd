@@ -1,75 +1,112 @@
+"use client"
+
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { MdArrowBack, MdPrint, MdDelete } from "react-icons/md"
+import { MdArrowBack, MdDelete } from "react-icons/md"
 import { toast } from "react-toastify"
 import "./BillDetail.scss"
 import { deleteBill, getBillById, updateBill } from "../../../../service/billService"
+import { StatusChangeModal } from "../NotiModal/StatusChangeModal"
+import { sendNotification } from "../NotiModal/notification-service"
 
 const BillDetail = () => {
-	const { id } = useParams()
-	const navigate = useNavigate()
-	const [bill, setBill] = useState(null)
-	const [loading, setLoading] = useState(true)
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [bill, setBill] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [pendingAction, setPendingAction] = useState("")
+	const [user] = useState(JSON.parse(sessionStorage.getItem("admin")))
+  
 
-  	useEffect(() => {
-    	const fetchBillDetail = async () => {
-			setLoading(true)
-			try {
-				const response = await getBillById(id)
-				if (response && response.status === 1) {
-					setBill(response.data)
-					console.log("Bills",response.data);
-					
-				} else {
-					toast.error("Failed to load Bill's Information")
-				}
-			} catch (error) {
-				toast.error("Failed to load Bill's Information")
-			} finally {
-				setLoading(false)
-			}
-    	}
-		fetchBillDetail()
-	}, [id])
+  useEffect(() => {
+    const fetchBillDetail = async () => {
+      setLoading(true)
+      try {
+        const response = await getBillById(id)
+        if (response && response.status === 1) {
+          setBill(response.data)
+          console.log("Bills", response.data)
+        } else {
+          toast.error("Failed to load Bill's Information")
+        }
+      } catch (error) {
+        toast.error("Failed to load Bill's Information")
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchBillDetail()
+  }, [id])
 
-	const handleUpdateBill = async (state) => {
-		try {
-		const response = await updateBill(id, state)
-		if (response && response.status === 1) {
-			toast.success("Update Status Successful")
-			// Cập nhật lại thông tin đơn hàng sau khi cập nhật trạng thái
-			setBill({ ...bill, state })
-		} else {
-			toast.error(response.message || "Failed to Update Status")
-		}
-		} catch (error) {
-			toast.error("Failed to Update Status")
-		}
-  	}
+  const openNotificationModal = (action) => {
+    setPendingAction(action)
+    setIsModalOpen(true)
+  }
 
-  	const handleDeleteBill = async () => {
-    	if (window.confirm("Are you sure to delete this Bill?")) {
-			try {
-				const response = await deleteBill(id)
-				if (response && response.status === 1) {
-					toast.success(response.message)
-					navigate("/admin/bills")
-				} else {
-					toast.error(response.message || "Failed to Delete Status")
-				}
-			} catch (error) {
-				toast.error("Failed to Delete Status")
-			}
-		}
-  	}
+  const handleNotificationSubmit = async (notificationData) => {
+    // First send the notification
+    try {
+      const notificationPayload = {
+        ...notificationData,
+        toId: bill.User.id,
+        // Assuming the current admin ID is available, otherwise you'll need to get it
+        fromId: user.id, // Replace with actual admin ID
+      }
 
-  	const formatCurrency = (value) => {
-		return new Intl.NumberFormat("vi-VN", {
-			style: "currency",
-			currency: "VND",
-			maximumFractionDigits: 0,
-		}).format(value)
-  	}
+      const notificationResponse = await sendNotification(notificationPayload)
+
+      if (notificationResponse.status === 1) {
+        // If notification was sent successfully, update the bill status
+        await handleUpdateBill(pendingAction)
+        setIsModalOpen(false)
+        setPendingAction("")
+      } else {
+        toast.error(notificationResponse.message || "Failed to send notification")
+      }
+    } catch (error) {
+      toast.error("Failed to send notification")
+    }
+  }
+
+  const handleUpdateBill = async (state) => {
+    try {
+      const response = await updateBill(id, state)
+      if (response && response.status === 1) {
+        toast.success("Update Status Successful")
+        // Cập nhật lại thông tin đơn hàng sau khi cập nhật trạng thái
+        setBill({ ...bill, state })
+      } else {
+        toast.error(response.message || "Failed to Update Status")
+      }
+    } catch (error) {
+      toast.error("Failed to Update Status")
+    }
+  }
+
+  const handleDeleteBill = async () => {
+    if (window.confirm("Are you sure to delete this Bill?")) {
+      try {
+        const response = await deleteBill(id)
+        if (response && response.status === 1) {
+          toast.success(response.message)
+          navigate("/admin/bills")
+        } else {
+          toast.error(response.message || "Failed to Delete Status")
+        }
+      } catch (error) {
+        toast.error("Failed to Delete Status")
+      }
+    }
+  }
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+      maximumFractionDigits: 0,
+    }).format(value)
+  }
 
   const getStatusBadgeClass = (status) => {
     switch (status) {
@@ -157,22 +194,22 @@ const BillDetail = () => {
                 <span className="info-label">Update Status</span>
                 <div className="status-buttons">
                   {bill.state === "pending" && (
-                    <button className="status-button approved" onClick={() => handleUpdateBill("approved")}>
+                    <button className="status-button approved" onClick={() => openNotificationModal("approved")}>
                       Confirm
                     </button>
                   )}
                   {bill.state === "approved" && (
-                    <button className="status-button shipping" onClick={() => handleUpdateBill("shipping")}>
+                    <button className="status-button shipping" onClick={() => openNotificationModal("shipping")}>
                       Change to Shipping
                     </button>
                   )}
                   {bill.state === "shipping" && (
-                    <button className="status-button delivered" onClick={() => handleUpdateBill("delivered")}>
+                    <button className="status-button delivered" onClick={() => openNotificationModal("delivered")}>
                       Comfirm Delivered
                     </button>
                   )}
                   {bill.state !== "cancelled" && bill.state !== "delivered" && (
-                    <button className="status-button cancelled" onClick={() => handleUpdateBill("cancelled")}>
+                    <button className="status-button cancelled" onClick={() => openNotificationModal("cancelled")}>
                       Cancel
                     </button>
                   )}
@@ -258,9 +295,19 @@ const BillDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Status Change Modal */}
+      <StatusChangeModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleNotificationSubmit}
+        currentStatus={bill.state}
+        newStatus={pendingAction}
+        fromId={user.id}
+        toId={bill.User.id}
+      />
     </div>
   )
 }
 
 export default BillDetail
-

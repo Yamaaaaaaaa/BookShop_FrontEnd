@@ -241,7 +241,7 @@ function Header() {
                         />
                         <div className="header__user-section__user-profile__profile-trigger__user-info">
                             <span className="header__user-section__user-profile__profile-trigger__user-name">
-                                {userProfile.name}
+                                {userProfile.name ? userProfile.name : "Null"}
                             </span>
                             <span className="header__user-section__user-profile__profile-trigger__user-email">
                                 {userProfile.email}
