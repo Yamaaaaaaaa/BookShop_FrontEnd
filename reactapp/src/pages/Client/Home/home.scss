@@ -22,14 +22,21 @@ $text-color: #666;
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 20px;
+		&__label_1 {
+			color: $primary-color;
+			font-size: 50px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		&__label_2 {
+			color: $primary-color;
+			font-size: 45px;
+			text-align: start;
+			margin-bottom: 20px;
+		}
 	}
 
-	&__label {
-		color: $primary-color;
-		font-size: 2.5rem;
-		text-align: center;
-		margin-bottom: 20px;
-	}
+	
 
 	&__subtitle {
 		text-align: center;
@@ -45,8 +52,13 @@ $text-color: #666;
 		gap: 30px;
 		margin-top: 40px;
 		place-items: start; // Cái này sẽ giúp nếu có 1, 2 phần tử (<min ptu) thì nó vẫn giữ kích cỡ, kéo về đầu giao diện
+	
+		max-height: 500px; // bạn chỉnh con số này theo ý muốn
+		overflow: hidden; // nội dung thừa sẽ bị ẩn
 	}
 }
+
+
 
 .product-card {
 	background: $white;

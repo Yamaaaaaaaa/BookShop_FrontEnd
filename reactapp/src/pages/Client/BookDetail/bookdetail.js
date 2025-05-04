@@ -5,6 +5,7 @@ import { getABooks } from "../../../service/bookService";
 import { toast } from "react-toastify";
 import { addBookToCartForUser, addBookToWishList, deleteBookOnWishList, getABookFromWishList } from "../../../service/userService";
 import { FaRegHeart } from "react-icons/fa";
+import BookCommentSection from "./components/BookComments/BookComments";
 
 const relatedBooks = [
     {
@@ -251,7 +252,7 @@ const BookDetail = () => {
                     <p>Customer reviews will be displayed here.</p>
                 </div>
             )}
-
+            <BookCommentSection bookId={bookData.id}/>
             <div className="book-detail__related-books">
                 <h2>RELATED BOOKS</h2>
                 <div className="book-detail__book-grid">

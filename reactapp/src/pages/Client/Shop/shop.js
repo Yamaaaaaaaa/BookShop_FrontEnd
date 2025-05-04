@@ -96,6 +96,8 @@ const Shop = () => {
             if (rcmBook?.data?.data) {
                 setBooks(rcmBook.data.data);
                 setFilterBooks(rcmBook.data.data);
+                console.log("AllBook: ", rcmBook.data.data);
+                
             }
         } catch (error) {
             console.error("Error fetching books:", error);
