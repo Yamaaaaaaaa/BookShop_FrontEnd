@@ -17,8 +17,9 @@ const Home = () => {
   const [user] = useState(JSON.parse(sessionStorage.getItem("user")))
   const [saleBooks, setSaleBooks] = useState([])
   const [blogs, setBlogs] = useState([])
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const totalSlides = 5 // Assuming we have 5 slides
+  const [visibleBooks, setVisibleBooks] = useState([])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const booksPerSlide = window.innerWidth >= 768 ? 5 : 1
 
   const fetchHeroBook = async () => {
     const rcmBook = await getBooks({
@@ -49,9 +50,9 @@ const Home = () => {
 
   const fetchSaleBook = async () => {
     const rcmBook = await getBooks({
-      limit: 5,
+      limit: 10,
     })
-    console.log(rcmBook.data)
+    console.log("sale: ", rcmBook.data)
 
     if (rcmBook && +rcmBook.data.status === 1) {
       setSaleBooks(rcmBook.data.data)
@@ -81,13 +82,27 @@ const Home = () => {
     fetchHeroBook()
   }, [])
 
+  useEffect(() => {
+    // Update visible books whenever saleBooks or currentIndex changes
+    if (saleBooks.length > 0) {
+      const endIndex = Math.min(currentIndex + booksPerSlide, saleBooks.length)
+      setVisibleBooks(saleBooks.slice(currentIndex, endIndex))
+    }
+  }, [saleBooks, currentIndex, booksPerSlide])
+
   // Navigation functions
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1))
+    setCurrentIndex((prev) => {
+      const newIndex = Math.max(0, prev - booksPerSlide)
+      return newIndex
+    })
   }
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1))
+    setCurrentIndex((prev) => {
+      const newIndex = Math.min(saleBooks.length - booksPerSlide, prev + booksPerSlide)
+      return newIndex
+    })
   }
 
   return (
@@ -144,11 +159,11 @@ const Home = () => {
               </button>
 
               <div className="books-on-sale__dots">
-                {[...Array(totalSlides)].map((_, i) => (
+                {[...Array(Math.ceil(saleBooks.length / booksPerSlide))].map((_, i) => (
                   <span
                     key={i}
-                    className={`books-on-sale__dot ${i === currentSlide ? "books-on-sale__dot--active" : ""}`}
-                    onClick={() => setCurrentSlide(i)}
+                    className={`books-on-sale__dot ${i === Math.floor(currentIndex / booksPerSlide) ? "books-on-sale__dot--active" : ""}`}
+                    onClick={() => setCurrentIndex(i * booksPerSlide)}
                   ></span>
                 ))}
               </div>
@@ -167,23 +182,28 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="books-on-sale__slider" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-            {saleBooks.map((book, index) => (
+          <div className="books-on-sale__slider">
+            {saleBooks.slice(currentIndex, currentIndex + booksPerSlide).map((book) => (
               <div key={book.id} className="book-item">
                 <Link to="/bookdetail" state={{ id: book.id }} className="book-item__image-link">
                   <img src={book.bookImageUrl || "/placeholder.svg"} alt={book.name} className="book-item__image" />
                 </Link>
                 <h3 className="book-item__title">{book.name}</h3>
+
                 <div className="book-item__categories">
-                  <span>SPORTS,</span> <span>DRAMA</span>
+                  {book.Categories.map((cate, idx) => (
+                    <p key={idx}>- {cate.name}</p>
+                  ))}
                 </div>
-                <div className="book-item__rating">
-                  <Star className="book-item__star" />
-                  <span>6.8</span>
-                </div>
-                <div className="book-item__price">
-                  <span className="book-item__current-price">${(book.sale / 23000).toFixed(1)}</span>
-                  <span className="book-item__original-price">${(book.originalCost / 23000).toFixed(1)}</span>
+                <div className="book-item__ctn-rating">
+                  <div className="book-item__rating">
+                    <Star className="book-item__star" />
+                    <span>{book.Book_Comments[0]?.rating || 5}</span>
+                  </div>
+                  <div className="book-item__price">
+                    <span className="book-item__current-price">${(book.sale / 23000).toFixed(1)}</span>
+                    <span className="book-item__original-price">${(book.originalCost / 23000).toFixed(1)}</span>
+                  </div>
                 </div>
               </div>
             ))}
