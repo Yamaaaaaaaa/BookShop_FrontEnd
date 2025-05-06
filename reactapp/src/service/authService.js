@@ -1,6 +1,9 @@
 import axios from "axios"
 import instance from "../setup/axiosCF"
-export const mainUrl = "http://localhost:8080/api/v1"
+
+export const mainUrl =  process.env.REACT_APP_API_ROUTE
+console.log("API_ROUTE", mainUrl);
+
 export const loginClientService = async (userData) => {
     return await instance.post( mainUrl + "/auth/client/login", userData)
     // Phải có Creadential thì nó mới gán được cookie gửi tử FE

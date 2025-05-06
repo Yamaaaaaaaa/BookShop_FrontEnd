@@ -2,7 +2,6 @@
 
 $text-color: #666;
 
-
 @mixin flex-center { // :))))
 	display: flex;
 	justify-content: center;
@@ -22,13 +21,18 @@ $text-color: #666;
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 20px;
-	}
-
-	&__label {
-		color: $primary-color;
-		font-size: 2.5rem;
-		text-align: center;
-		margin-bottom: 20px;
+		&__label_1 {
+			color: $primary-color;
+			font-size: 50px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		&__label_2 {
+			color: $primary-color;
+			font-size: 45px;
+			text-align: start;
+			margin-bottom: 20px;
+		}
 	}
 
 	&__subtitle {
@@ -45,6 +49,9 @@ $text-color: #666;
 		gap: 30px;
 		margin-top: 40px;
 		place-items: start; // Cái này sẽ giúp nếu có 1, 2 phần tử (<min ptu) thì nó vẫn giữ kích cỡ, kéo về đầu giao diện
+	
+		max-height: 500px; // bạn chỉnh con số này theo ý muốn
+		overflow: hidden; // nội dung thừa sẽ bị ẩn
 	}
 }
 
@@ -122,18 +129,250 @@ $text-color: #666;
 	}
 }
 
+/* Books on Sale Section Styling */
+.books-on-sale {
+  padding: 80px 0;
+  background-color: #f9fafb;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+  }
+  
+  &__title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #1e1b4b;
+    margin-bottom: 0;
+  }
+  
+  &__slider {
+    display: flex;
+    transition: transform 0.5s ease;
+    margin-bottom: 40px;
+  }
+  
+  &__navigation {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  &__nav-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #f8b76b;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: #f59e0b;
+    }
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  &__dots {
+    display: flex;
+    gap: 8px;
+  }
+  
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #e5e7eb;
+    cursor: pointer;
+    
+    &--active {
+      background-color: #f59e0b;
+    }
+  }
+}
+
+.book-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // padding: 0 20px;
+  margin-right: 20px;
+  
+  &__image-link {
+    display: block;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  &__image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e1b4b;
+    margin: 0 0 8px 0;
+  }
+  
+  &__categories {
+    color: #f59e0b;
+    font-size: 14px;
+    margin-bottom: 8px;
+    p{
+      margin: 0;
+      padding: 0;
+    }
+  }
+  
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #f59e0b;
+    // margin-bottom: 8px;
+    font-size: 19px;
+    font-weight: 550;
+  }
+  
+  &__star {
+    width: 16px;
+    height: 16px;
+    fill: #f59e0b;
+    stroke: none;
+  }
+  
+  &__ctn-rating{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  &__current-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e1b4b;
+  }
+  
+  &__original-price {
+    font-size: 16px;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+}
+
+/* Responsive layout for Books on Sale */
+@media (min-width: 768px) {
+  .books-on-sale {
+    &__slider {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      // gap: 20px;
+      transform: none !important; /* Override the transform on desktop */
+    }
+    
+    .book-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+}
 
 @media (max-width: 768px) {
-	.recommended-section__product-grid,
-	.sale-section__product-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
+  .recommended-section__product-grid,
+  .sale-section__product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .books-on-sale {
+    &__header {
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    &__title {
+      font-size: 36px;
+    }
+  }
+  
+  .books-on-sale__title {
+    font-size: 36px;
+  }
+  
+  .book-item__image {
+    height: 280px;
+  }
 }
 
 @media (max-width: 480px) {
-	.recommended-section__product-grid,
-	.sale-section__product-grid{
-		grid-template-columns: 1fr;
-	}
+  .recommended-section__product-grid,
+  .sale-section__product-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .books-on-sale__title {
+    font-size: 28px;
+  }
+  
+  .book-item__image {
+    height: 240px;
+  }
 }
 
+
+.books-on-sale {
+  &__slider {
+    display: flex;
+    transition: all 0.5s ease;
+    margin-bottom: 40px;
+    gap: 20px;
+  }
+
+  .book-item {
+    margin-right: 20px;
+  }
+
+  @media (min-width: 768px) {
+    &__slider {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .book-item {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__slider {
+      overflow-x: hidden;
+    }
+  }
+}

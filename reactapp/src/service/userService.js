@@ -24,7 +24,11 @@ export const getWishListForUser = async (userId) => {
         params: {userId}
     })
 }
-
+export const getABookFromWishList = async (userId, bookId) => {
+    return await instance.get(mainUrl + "/wish-list/get-a-book-in-wish-list", {
+        params: {userId: userId, bookId: bookId}
+    })
+}
 export const addBookToWishList = async (userId, bookId) => {
     return await instance.post(mainUrl + "/wish-list/add-book-to-wish-list", {userId, bookId})
 }

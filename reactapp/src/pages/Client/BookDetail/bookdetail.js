@@ -3,7 +3,9 @@ import "./bookdetail.scss";
 import { useLocation } from "react-router-dom";
 import { getABooks } from "../../../service/bookService";
 import { toast } from "react-toastify";
-import { addBookToCartForUser } from "../../../service/userService";
+import { addBookToCartForUser, addBookToWishList, deleteBookOnWishList, getABookFromWishList } from "../../../service/userService";
+import { FaRegHeart } from "react-icons/fa";
+import BookCommentSection from "./components/BookComments/BookComments";
 
 const relatedBooks = [
     {
@@ -47,11 +49,14 @@ const BookDetail = () => {
         description: "No description available.",
         bookImageUrl: "/placeholder.svg",
     });
+    const [checkInWishList, setCheckInWishList] = useState(false)
+
 
     const fetchBook = async () => {
         try {
             const response = await getABooks({ id: bookId });
             if (response?.status === 1) {
+                console.log(response.data);
                 setBookData(response.data);
                 toast.success(response.message);
             } else {
@@ -61,10 +66,22 @@ const BookDetail = () => {
             toast.error("Error fetching book data");
         }
     };
-
+    const checkBookInWishList = async () => {
+        try {
+            const response = await getABookFromWishList(userId, bookId);
+            if (response?.status === 1) {
+                setCheckInWishList(true)                
+                toast.success(response.message);
+            } else {
+                toast.error("Failed to get book data");
+            }
+        } catch (error) {
+            toast.error("Error fetching book data");
+        }
+    }
     const handleAddtoCard = async (e) => {
         const response = await addBookToCartForUser(bookId, userId, quantity)
-
+        
         if(response){
             if(+response.status === 1){
                 toast.success(response.message)
@@ -78,12 +95,44 @@ const BookDetail = () => {
         else toast.error(response.message)
     }
 
+    const handleAddtoWishList = async (e) => {
+        const response = await addBookToWishList(bookId, userId)
+        
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+                setCheckInWishList(true)
+            }
+            else{
+                toast.error(response.message)
+            }
+            
+        }
+        else toast.error(response.message)
+    }
+
+    const handleDeleteOnWishList = async (e) => {
+        const response = await deleteBookOnWishList({userId, bookId})
+        
+        if(response){
+            if(+response.status === 1){
+                toast.success(response.message)
+                setCheckInWishList(false)
+            }
+            else{
+                toast.error(response.message)
+            }
+            
+        }
+        else toast.error(response.message)
+    }
     useEffect(() => {
         if (!bookId) {
             toast.error("Book ID is missing");
             return;
         }
         fetchBook();
+        checkBookInWishList()
     }, [bookId]);
 
     return (
@@ -100,31 +149,54 @@ const BookDetail = () => {
                 <div className="book-detail__info">
                     <h1 className="book-detail__title">{bookData.name}</h1>
                     <div className="book-detail__author-info">
-                        <div>
-                            <small>Written by</small>
-                            <p>{bookData?.Author?.name || "Unknown Author"}</p>
+                        <div className="book-detail__author-img">
+                            <img 
+                                src={bookData.Author.authorImage}
+                                alt={bookData.name}
+                                className="book-detail__image"
+                            />
+                            <div>
+                                <small>Written by</small>
+                                <p className="">{bookData?.Author?.name || "Unknown Author"}</p>
+                            </div>
                         </div>
-                        <div>
+                        <div className="book-detail__author-info__author-if-item">
                             <small>Publisher</small>
                             <p>{bookData?.Publisher?.name || "Unknown Publisher"}</p>
-                        </div>
+                        </div>       
+                        <div className="book-detail__author-info__author-if-item">
+                            <small>Published Year</small>
+                            <p>1999</p>
+                        </div>             
                     </div>
 
                     <p className="book-detail__description">{bookData.description}</p>
-
-                    <div className="book-detail__price">
-                        ${bookData.sale?.toFixed(2)}{" "}
-                        <span className="book-detail__original-price">${bookData.originalCost?.toFixed(2)}</span>
-                    </div>
-
-                    <div className="book-detail__add-to-cart">
-                        <div className="book-detail__quantity">
-                            <button onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}>-</button>
-                            <input type="number" value={quantity} readOnly />
-                            <button onClick={() => setQuantity((prev) => prev + 1)}>+</button>
+                    <div className="book-detail__payment">
+                        <div className="book-detail__price">
+                            {bookData.sale?.toLocaleString()} VND{" "}
+                            <span className="book-detail__original-price">{bookData.originalCost?.toLocaleString()} VND</span>
                         </div>
-                        <button className="book-detail__cart-button" onClick={(e) => handleAddtoCard(e)}>Add To Cart</button>
-                    </div>
+
+                        <div className="book-detail__add-to-cart">
+                            <div className="book-detail__quantity">
+                                <button className="book-detail__btn-quantity" onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}>-</button>
+                                <input type="number" value={quantity} readOnly />
+                                <button className="book-detail__btn-quantity" onClick={() => setQuantity((prev) => prev + 1)}>+</button>
+                            </div>
+                            <button className="book-detail__cart-button" onClick={(e) => handleAddtoCard(e)}>Add To Cart</button>
+                            {
+                                checkInWishList === true ? 
+                                    <button className="book-detail__wish-button-true" onClick={(e) => handleDeleteOnWishList(e)}>
+                                        <FaRegHeart />
+                                    </button>
+                                :
+                                <button className="book-detail__wish-button-false" onClick={(e) => handleAddtoWishList(e)}>
+                                    <FaRegHeart />
+                                </button>
+                            }
+                            
+                        </div>   
+                    </div>        
                 </div>
             </div>
 
@@ -159,6 +231,17 @@ const BookDetail = () => {
                                 <td>Publisher</td>
                                 <td>{bookData?.Publisher?.name || "Unknown Publisher"}</td>
                             </tr>
+                            <tr>
+                                <td>Categories</td>
+                                <td>
+                                    {bookData?.Categories? 
+                                        bookData.Categories.map((item) => {
+                                            return <span>{item.name}</span>
+                                        })
+                                    : 
+                                    "Unknown Publisher"}
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -169,7 +252,7 @@ const BookDetail = () => {
                     <p>Customer reviews will be displayed here.</p>
                 </div>
             )}
-
+            <BookCommentSection bookId={bookData.id}/>
             <div className="book-detail__related-books">
                 <h2>RELATED BOOKS</h2>
                 <div className="book-detail__book-grid">

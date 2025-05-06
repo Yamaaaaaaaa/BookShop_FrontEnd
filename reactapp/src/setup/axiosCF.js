@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 // Khai báo 1 instance (1 object của axios)
 const instance = axios.create({
-    baseURL: "http://localhost:8081"
+    baseURL: "http://localhost:8080"
 });
 
 // Cấu hình header cho mỗi reaquest đính kèm Bearer vào header

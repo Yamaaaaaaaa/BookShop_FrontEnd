@@ -82,7 +82,7 @@ function HeroSection() {
   }, [])
   return (
     <div className="book-app">
-      <div className="container">
+      <div className="book-app-container">
         <AuthorSlider
           author={authorData[currentAuthorIndex] ? authorData[currentAuthorIndex] : authorDemo}
           onPrev={handlePrev}

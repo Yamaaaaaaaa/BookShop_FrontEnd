@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import "../BooksManagement/Modal.scss"
+import "../ModalStyle/Modal.scss"
 import { createCategories, updateCategories } from "../../../service/categoryService"
 import { toast } from "react-toastify"
 const CategoryFormModal = ({ category, onClose, onSubmit, mode = "add", fetchCategories}) => {

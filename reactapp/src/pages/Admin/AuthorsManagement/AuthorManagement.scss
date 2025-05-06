@@ -132,130 +132,130 @@ $light-bg: #f8f9fa;
     }
 }
 
-// Modal Styles (reusing from previous example)
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
+// // Modal Styles (reusing from previous example)
+// .modal-overlay {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-color: rgba(0, 0, 0, 0.5);
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     z-index: 1000;
+// }
 
-.modal-content {
-    background: white;
-    border-radius: 8px;
-    width: 500px;
-    max-width: 90%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+// .modal-content {
+//     background: white;
+//     border-radius: 8px;
+//     width: 500px;
+//     max-width: 90%;
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-    &.delete-modal {
-        width: 400px;
-    }
-}
+//     &.delete-modal {
+//         width: 400px;
+//     }
+// }
 
-.modal-header {
-    padding: 16px;
-    border-bottom: 1px solid $border-color;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+// .modal-header {
+//     padding: 16px;
+//     border-bottom: 1px solid $border-color;
+//     display: flex;
+//     align-items: center;
+//     gap: 12px;
 
-    .modal-icon {
-        width: 32px;
-        height: 32px;
-        background-color: $light-bg;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: $admin_primary-color;
-    }
+//     .modal-icon {
+//         width: 32px;
+//         height: 32px;
+//         background-color: $light-bg;
+//         border-radius: 8px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         color: $admin_primary-color;
+//     }
 
-    h2 {
-        margin: 0;
-        font-size: 18px;
-        color: $text-color;
-    }
-}
+//     h2 {
+//         margin: 0;
+//         font-size: 18px;
+//         color: $text-color;
+//     }
+// }
 
-.modal-body {
-    padding: 16px;
+// .modal-body {
+//     padding: 16px;
 
-    .form-group {
-        margin-bottom: 16px;
+//     .form-group {
+//         margin-bottom: 16px;
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #666;
-            font-size: 14px;
-        }
+//         label {
+//             display: block;
+//             margin-bottom: 8px;
+//             color: #666;
+//             font-size: 14px;
+//         }
 
-        input, .form-textarea {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid $border-color;
-            border-radius: 4px;
-            font-size: 14px;
-            font-family: inherit;
+//         input, .form-textarea {
+//             width: 100%;
+//             padding: 8px 12px;
+//             border: 1px solid $border-color;
+//             border-radius: 4px;
+//             font-size: 14px;
+//             font-family: inherit;
 
-            &:focus {
-                outline: none;
-                border-color: $admin_primary-color;
-            }
-        }
+//             &:focus {
+//                 outline: none;
+//                 border-color: $admin_primary-color;
+//             }
+//         }
         
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-    }
-}
+//         .form-textarea {
+//             resize: vertical;
+//             min-height: 100px;
+//         }
+//     }
+// }
 
-.modal-footer {
-    padding: 16px;
-    border-top: 1px solid $border-color;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
+// .modal-footer {
+//     padding: 16px;
+//     border-top: 1px solid $border-color;
+//     display: flex;
+//     justify-content: flex-end;
+//     gap: 12px;
+// }
 
-// Buttons
-.btn {
-    @include button-base;
+// // Buttons
+// .btn {
+//     @include button-base;
 
-    &-primary {
-        background-color: $admin_primary-color;
-        color: white;
+//     &-primary {
+//         background-color: $admin_primary-color;
+//         color: white;
 
-        &:hover {
-            background-color: darken($admin_primary-color, 10%);
-        }
-    }
+//         &:hover {
+//             background-color: darken($admin_primary-color, 10%);
+//         }
+//     }
 
-    &-secondary {
-        background-color: #e9ecef;
-        color: $text-color;
+//     &-secondary {
+//         background-color: #e9ecef;
+//         color: $text-color;
 
-        &:hover {
-            background-color: darken(#e9ecef, 10%);
-        }
-    }
+//         &:hover {
+//             background-color: darken(#e9ecef, 10%);
+//         }
+//     }
 
-    &-danger {
-        background-color: $danger-color;
-        color: white;
+//     &-danger {
+//         background-color: $danger-color;
+//         color: white;
 
-        &:hover {
-            background-color: darken($danger-color, 10%);
-        }
-    }
-}
+//         &:hover {
+//             background-color: darken($danger-color, 10%);
+//         }
+//     }
+// }
 
 // Delete Confirmation
 .delete-confirmation {

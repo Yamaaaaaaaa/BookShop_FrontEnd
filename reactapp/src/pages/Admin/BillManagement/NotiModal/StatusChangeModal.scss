@@ -1,0 +1,171 @@
+.status-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .status-modal {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        color: #111827;
+      }
+      
+      .close-button {
+        background: none;
+        border: none;
+        color: #6b7280;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        
+        &:hover {
+          color: #111827;
+        }
+      }
+    }
+    
+    &__body {
+      padding: 16px;
+      
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        
+        label {
+          font-size: 14px;
+          font-weight: 500;
+          color: #374151;
+        }
+        
+        input, textarea {
+          padding: 10px 12px;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          font-size: 14px;
+          
+          &:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+          }
+        }
+        
+        textarea {
+          resize: vertical;
+          min-height: 80px;
+        }
+      }
+      
+      .status-change {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        
+        .status-arrow {
+          font-size: 18px;
+          color: #6b7280;
+        }
+      }
+      
+      .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        
+        &--pending {
+          background-color: #f3f4f6;
+          color: #4b5563;
+        }
+        
+        &--approved {
+          background-color: #dbeafe;
+          color: #1d4ed8;
+        }
+        
+        &--shipping {
+          background-color: #e0f2fe;
+          color: #0369a1;
+        }
+        
+        &--delivered {
+          background-color: #dcfce7;
+          color: #15803d;
+        }
+        
+        &--cancelled {
+          background-color: #fee2e2;
+          color: #b91c1c;
+        }
+      }
+      
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 8px;
+        
+        button {
+          padding: 8px 16px;
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+        }
+        
+        .cancel-button {
+          background-color: white;
+          border: 1px solid #d1d5db;
+          color: #4b5563;
+          
+          &:hover {
+            background-color: #f3f4f6;
+          }
+        }
+        
+        .submit-button {
+          background-color: #2563eb;
+          border: 1px solid #2563eb;
+          color: white;
+          
+          &:hover {
+            background-color: #1d4ed8;
+          }
+        }
+      }
+    }
+  }
+  
