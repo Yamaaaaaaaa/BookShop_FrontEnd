@@ -4,20 +4,24 @@ import { MdDelete, MdVisibility, MdFilterList, MdSearch } from "react-icons/md"
 import { toast } from "react-toastify"
 import { deleteBill, getAllBill } from "../../../service/billService"
 import "./BillManagement.scss"
-
+import Pagination from "../../../components/Pagination"
 const BillsManagement = () => {
     const [dataBill, setDataBill] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
-    const [statusFilter, setStatusFilter] = useState("all")
-    const [paymentFilter, setPaymentFilter] = useState("all")
+    const [statusFilter, setStatusFilter] = useState("pending")
     const navigate = useNavigate()
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(6)
+    const [totalPages, setTotalPages] = useState(1)
+    
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
 
     const filteredBills = dataBill.filter((bill) => {
         const matchesSearch =
             bill.User.name.toLowerCase().includes(searchTerm.toLowerCase()) || bill.id.toString().includes(searchTerm)
-        const matchesStatus = statusFilter === "all" || bill.state === statusFilter
-        const matchesPayment = paymentFilter === "all" || (bill.PaymentMethod && bill.PaymentMethod.name === paymentFilter)
-        return matchesSearch && matchesStatus && matchesPayment
+        return matchesSearch
     })
 
     const handleViewBill = (billId) => {
@@ -25,11 +29,12 @@ const BillsManagement = () => {
     }
 
     const fetchAllBill = async () => {
-        const response = await getAllBill()
+        const response = await getAllBill({page, pageSize: limit, state: statusFilter})
         if (response) {
             if (response.status === 1) {
                 toast.success(response.message)
                 setDataBill(response.data)
+                setTotalPages(response.totalPages)
                 return
             }
         }
@@ -50,17 +55,10 @@ const BillsManagement = () => {
         }
     }
 
-    // Lấy danh sách các phương thức thanh toán duy nhất
-    const paymentMethods = [
-        { value: "all", label: "All Method" },
-        ...Array.from(new Set(dataBill.filter((bill) => bill.PaymentMethod).map((bill) => bill.PaymentMethod.name))).map(
-            (method) => ({ value: method, label: method }),
-        ),
-    ]
 
     useEffect(() => {
         fetchAllBill()
-    }, [])
+    }, [page, statusFilter])
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat("vi-VN", {
@@ -133,15 +131,6 @@ const BillsManagement = () => {
                     </select>
                 </div>
 
-                <div className="bills-management__filter">
-                    <select value={paymentFilter} onChange={(e) => setPaymentFilter(e.target.value)}>
-                    {paymentMethods.map((method) => (
-                        <option key={method.value} value={method.value}>
-                        {method.label}
-                        </option>
-                    ))}
-                    </select>
-                </div>
             </div>
         </div>
 
@@ -198,20 +187,11 @@ const BillsManagement = () => {
                     )}
                 </tbody>
             </table>
-        </div>
-
-        <div className="bills-management__pagination">
-            <div className="bills-management__pagination-info">
-                Display {filteredBills.length} on {dataBill.length} bills
-            </div>
-            <div className="bills-management__pagination-controls">
-                <button className="pagination-btn" disabled>
-                    Before
-                </button>
-                <button className="pagination-btn" disabled>
-                    After
-                </button>
-            </div>
+            <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </div>
     </div>
     )

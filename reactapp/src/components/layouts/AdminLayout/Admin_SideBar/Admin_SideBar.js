@@ -16,10 +16,12 @@ import { FaMoneyBill } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 import { SiAffinitypublisher } from "react-icons/si";
 import './Admin_SideBar.scss';
+import { useAdmin } from "../../../../context/AdminContext";
 
 const Admin_SideBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { logout } = useAdmin();
     
     // State for dropdown toggles
     const [contentOpen, setContentOpen] = useState(false);
@@ -96,8 +98,7 @@ const Admin_SideBar = () => {
     ];
 
     const handleLogout = () => {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('admin');
+        logout();
         navigate('/admin/login');
     };
 

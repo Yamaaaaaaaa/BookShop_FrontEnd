@@ -57,8 +57,8 @@ export default function Register() {
             console.log("Response Login: ", response);
             
             if(response && response.data && +response.data.status === 1 && response.data.access_token) {
-                sessionStorage.setItem('access_token', response.data.access_token);
-                sessionStorage.setItem('user', JSON.stringify(
+                localStorage.setItem('access_token', response.data.access_token);
+                localStorage.setItem('user', JSON.stringify(
                     {
                         email: formData.email,
                         name: 'Test User'

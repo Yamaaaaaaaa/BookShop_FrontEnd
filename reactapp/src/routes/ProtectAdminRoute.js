@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom"
+import { useAdmin } from "../context/AdminContext"
 
 const ProtectAdminRoute = ({ children }) => {
-    // Check if user is authenticated via sessionStorage
-    const isAuth = sessionStorage.getItem('admin') !== null
+    const { isAuthenticated } = useAdmin();
 
     // If not authenticated, redirect to login
-    if (!isAuth) {
+    if (!isAuthenticated) {
         return <Navigate to="/admin/login" replace />
     }
 

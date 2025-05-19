@@ -13,9 +13,9 @@ export default function BookComments({ bookId }) {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    // Safely get user from sessionStorage
+    // Safely get user from localStorage
     try {
-      const userData = sessionStorage.getItem("user")
+      const userData = localStorage.getItem("user")
       if (userData) {
         setUser(JSON.parse(userData))
       }

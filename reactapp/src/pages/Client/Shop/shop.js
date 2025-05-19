@@ -2,18 +2,22 @@ import { useEffect, useState } from "react"
 import "./shop.scss"
 import { Link } from "react-router-dom"
 import { RxExit } from "react-icons/rx";
-import { getBooks } from "../../../service/bookService";
+import { getBookData, getBooks } from "../../../service/bookService";
 import { getAllCategories } from "../../../service/categoryService";
 import { getAllPublisher } from "../../../service/publisherService";
 import { toast } from "react-toastify";
 import { addBookToCartForUser, addBookToWishList, deleteBookOnWishList } from "../../../service/userService";
-
+import Pagination from "../../../components/Pagination";
 
 const Shop = () => {
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(10)
+    const [totalPages, setTotalPages] = useState(1)
+
     const [books, setBooks] = useState([])
     const [categories, setCategories] = useState([])
     const [publishers, setPublishers] = useState([])
-    const [user] = useState(JSON.parse(sessionStorage.getItem("user")))
+    const [user] = useState(JSON.parse(localStorage.getItem("user")))
 
     //Lọc
     const [filteredBooks, setFilterBooks] = useState([])
@@ -92,18 +96,24 @@ const Shop = () => {
 
     const fetchInitialBook = async () => {
         try {
-            const rcmBook = await getBooks();
-            if (rcmBook?.data?.data) {
-                setBooks(rcmBook.data.data);
-                setFilterBooks(rcmBook.data.data);
-                console.log("AllBook: ", rcmBook.data.data);
-                
+            const rcmBook = await getBookData({page, pageSize: limit});
+            if (rcmBook?.data) {
+                setBooks(rcmBook.data);
+                setFilterBooks(rcmBook.data);
+                setTotalPages(rcmBook.totalPages || 1);
+                console.log("AllBook: ", rcmBook.data);
             }
         } catch (error) {
             console.error("Error fetching books:", error);
         }
     };
-    // Lấy các Data Ban đầu
+
+    // Add handlePageChange function
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
+
+    // Update useEffect to include page in dependencies
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -130,7 +140,7 @@ const Shop = () => {
         fetchInitialBook();
         fetchCategories();
         fetchPublishers();
-    }, []);
+    }, [page]); // Add page to dependencies
     
 
     useEffect(() => {
@@ -172,7 +182,7 @@ const Shop = () => {
                 <h1 className="shop__sidebar__filtertitle">Filter Options</h1>
 
                 {/* Chọn khoảng giá */}
-                <div className="shop__filter-section">
+                {/* <div className="shop__filter-section">
                     <button className="shop__filter-section__section-header" onClick={() => toggleSection("price")}>
                         Price Range
                         <span className="shop__filter-section__arrow">{openSection === "price" ? "▼" : "▶"}</span>
@@ -192,7 +202,7 @@ const Shop = () => {
                             <span>80.00</span>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 
                 {/* Lọc theo Category */}
                 <div className="shop__filter-section">
@@ -247,7 +257,7 @@ const Shop = () => {
             <div className="shop__books-section">
                 <div className="shop__books-header">
                     <h1>Books</h1>
-                    <div className="shop__view-options">
+                    {/* <div className="shop__view-options">
                         <select>
                             <option>Categories</option>
                         </select>
@@ -257,7 +267,7 @@ const Shop = () => {
                         <button onClick={() => setOpenSideBarFilter(true)}>
                             <span>Filter</span>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="shop__books-grid">
@@ -293,6 +303,13 @@ const Shop = () => {
                         </Link>
                     ))}
                 </div>
+
+                {/* Add Pagination component */}
+                <Pagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
             </div>
         </div>
 

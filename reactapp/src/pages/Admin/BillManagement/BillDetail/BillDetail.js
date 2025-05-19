@@ -16,7 +16,7 @@ const BillDetail = () => {
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [pendingAction, setPendingAction] = useState("")
-	const [user] = useState(JSON.parse(sessionStorage.getItem("admin")))
+	const [user] = useState(JSON.parse(localStorage.getItem("admin")))
   
 
   useEffect(() => {

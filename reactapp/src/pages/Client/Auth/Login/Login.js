@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./stylelogin.scss"
 import { loginClientService } from '../../../../service/authService';
-
+import { useAuth } from '../../../../context/AuthContext';
 
 export default function Login() {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -51,8 +52,7 @@ export default function Login() {
             console.log("Response Login: ", response);
             
             if(response && +response.status === 1 && response.access_token) {
-                sessionStorage.setItem('access_token', response.access_token);
-                sessionStorage.setItem('user', JSON.stringify(response.data));
+                login(response.data, response.access_token);
                 navigate("/home")
             }else {
                 setLoginError(response.message);

@@ -1,180 +1,138 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { MdAdd, MdEdit, MdDelete, MdVisibility, MdCategory } from "react-icons/md"
 import { FaSortUp, FaSortDown, FaSort } from "react-icons/fa"
-import ViewBookModal from "./ViewBookModal"
-import AddEditBookModal from "./AddEditBookModal"
-import DeleteBookModal from "./DeleteBookModal"
-import CategoryModal from "./CategoryModal"
-import "./BooksManagement.scss"
-import { getBooks } from "../../../service/bookService"
+import { MdAdd } from "react-icons/md"
+import ViewBookModal from "./modals/ViewBookModal"
+import AddEditBookModal from "./modals/AddEditBookModal"
+import DeleteBookModal from "./modals/DeleteBookModal"
+import CategoryModal from "./modals/CategoryModal"
+import { BookTableRows } from "./components/BookTableRow"
+import { useBookManagement } from "./hooks/useBookManagement"
+import Pagination from "./components/Pagination"
+import "./styles/BooksManagement.scss"
+import { updateBook, deleteBook } from "../../../service/bookService"
 import { toast } from "react-toastify"
-import { getAllCategories } from "../../../service/categoryService"
-import { getAllPublisher } from "../../../service/publisherService"
-
-const CategoryButton = ({ count, onClick }) => {
-  return (
-    <button className="category-button" onClick={onClick} title="View Categories">
-      <MdCategory />
-      <span>{count}</span>
-    </button>
-  )
-}
+import { useState } from "react"
 
 const BooksManagement = () => {
-  const [bookData, setBookData] = useState([])
-  const [categoryData, setCategoryData] = useState([])
-  const [viewModal, setViewModal] = useState({ show: false, book: null })
-  const [addEditModal, setAddEditModal] = useState({ show: false, type: null, book: null })
-  const [deleteModal, setDeleteModal] = useState({ show: false, book: null })
-  const [categoryModal, setCategoryModal] = useState({ show: false, book: null })
-  const [searchTerm, setSearchTerm] = useState("")
-  const [publishers, setPublishers] = useState([])
-  const [selectedSeries, setSelectedSeries] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("")
-  const [seriesData, setSeriesData] = useState([])
-  
-  // Sorting states
-  const [sortField, setSortField] = useState("id")
-  const [sortDirection, setSortDirection] = useState("asc")
+  const {
+    bookData,
+    categoryData,
+    publishers,
+    selectedSeries,
+    setSelectedSeries,
+    selectedCategory,
+    setSelectedCategory,
+    seriesData,
+    searchTerm,
+    setSearchTerm,
+    sortField,
+    sortDirection,
+    viewModal,
+    setViewModal,
+    addEditModal,
+    setAddEditModal,
+    deleteModal,
+    setDeleteModal,
+    categoryModal,
+    setCategoryModal,
+    fetchInitialBook,
+    handleSort,
+    getFilteredAndSortedBooks,
+    formatCurrency,
+    // Pagination
+    currentPage,
+    isLastPage,
+    totalPages,
+    handlePageChange,
+  } = useBookManagement()
 
-  // Handlers
-  const handleAdd = (newBook) => {}
-
-  const handleEdit = (updatedBook) => {}
-
-  const handleDelete = (id) => {}
-
-  // Handle sorting
-  const handleSort = (field) => {
-    if (sortField === field) {
-      // If already sorting by this field, toggle direction
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
-    } else {
-      // If sorting by a new field, default to ascending
-      setSortField(field)
-      setSortDirection("asc")
-    }
-  }
-
-  // Get filtered and sorted books
-  const getFilteredAndSortedBooks = () => {
-    // First filter the books
-    const filtered = bookData.filter((book) => {
-      const matchesSearch =
-        book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.Author.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.id.toString().includes(searchTerm)
-
-      const matchesSeries = selectedSeries === "" || (book.Serie && book.Serie.id.toString() === selectedSeries)
-
-      const matchesCategory =
-        selectedCategory === "" || book.Categories.some((cat) => cat.id.toString() === selectedCategory)
-
-      return matchesSearch && matchesSeries && matchesCategory
-    })
-
-    // Then sort the filtered books
-    return filtered.sort((a, b) => {
-      let comparison = 0
-
-      if (sortField === "id") {
-        comparison = a.id - b.id
-      } else if (sortField === "name") {
-        comparison = a.name.localeCompare(b.name)
-      }
-
-      // Reverse if descending
-      return sortDirection === "asc" ? comparison : -comparison
-    })
-  }
+  const [selectedBooks, setSelectedBooks] = useState([])
+  const [showDiscountModal, setShowDiscountModal] = useState(false)
+  const [discountPercent, setDiscountPercent] = useState(0)
+  const [isApplyingDiscount, setIsApplyingDiscount] = useState(false)
 
   const filteredAndSortedBooks = getFilteredAndSortedBooks()
-
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(value)
-  }
-
-  const fetchInitialBook = async () => {
-    try {
-      const rcmBook = await getBooks()
-      if (rcmBook?.data?.data) {
-        setBookData(rcmBook.data.data)
-        console.log(rcmBook.data.data)
-        toast.success(rcmBook.data.message)
-        return
-        // filteredBooks()
-      }
-      toast.error(rcmBook.data.message)
-    } catch (error) {
-      toast.error("Error to fetch Books")
-    }
-  }
-  
-  const fetchCategories = async () => {
-    try {
-      const listCategories = await getAllCategories()
-      if (listCategories?.data?.data) {
-        setCategoryData(listCategories.data.data)
-        console.log("All Cate: ", listCategories.data.data)
-        toast.success(listCategories.data.message)
-        return
-      }
-    } catch (error) {
-      toast.error("Error fetching categories:", error)
-    }
-  }
-  
-  const fetchPublishers = async () => {
-    try {
-      const listPublishers = await getAllPublisher()
-      if (listPublishers?.data?.data) {
-        setPublishers(listPublishers.data.data)
-      }
-    } catch (error) {
-      console.error("Error fetching publishers:", error)
-    }
-  }
-  
-  const extractSeriesData = () => {
-    const uniqueSeries = []
-    const seriesIds = new Set()
-
-    bookData.forEach((book) => {
-      if (book.Serie && !seriesIds.has(book.Serie.id)) {
-        seriesIds.add(book.Serie.id)
-        uniqueSeries.push(book.Serie)
-      }
-    })
-
-    return uniqueSeries
-  }
-  
-  useEffect(() => {
-    fetchInitialBook()
-    fetchCategories()
-    fetchPublishers()
-  }, [])
-
-  useEffect(() => {
-    if (bookData.length > 0) {
-      setSeriesData(extractSeriesData())
-    }
-  }, [bookData])
 
   // Render sort icon based on current sort state
   const renderSortIcon = (field) => {
     if (sortField !== field) {
       return <FaSort className="sort-icon" />
     }
-    
-    return sortDirection === "asc" ? 
-      <FaSortUp className="sort-icon active" /> : 
+
+    return sortDirection === "asc" ? (
+      <FaSortUp className="sort-icon active" />
+    ) : (
       <FaSortDown className="sort-icon active" />
+    )
+  }
+
+  const handleSelectBook = (bookId) => {
+    setSelectedBooks((prev) =>
+      prev.includes(bookId) ? prev.filter((id) => id !== bookId) : [...prev, bookId]
+    )
+  }
+
+  const handleSelectAll = () => {
+    if (selectedBooks.length === filteredAndSortedBooks.length) {
+      setSelectedBooks([])
+    } else {
+      setSelectedBooks(filteredAndSortedBooks.map((b) => b.id))
+    }
+  }
+
+  const handleBulkSale = () => {
+    setShowDiscountModal(true)
+  }
+
+  const handleApplyDiscount = async () => {
+    setIsApplyingDiscount(true)
+    try {
+      await Promise.all(
+        selectedBooks.map((id) => {
+          const book = filteredAndSortedBooks.find((b) => b.id === id)
+          if (!book) return null
+          const sale = Math.round(book.originalCost * (1 - discountPercent / 100))
+          return updateBook({
+            id: book.id,
+            name: book.name,
+            description: book.description,
+            originalCost: book.originalCost,
+            sale,
+            stock: book.stock,
+            publisherId: book.Publisher?.id,
+            authorId: book.Author?.id,
+            state: book.state,
+            publishedDate: book.publishedDate,
+            seriesId: book.Serie?.id,
+            // Thêm trường khác nếu BE yêu cầu
+          })
+        })
+      )
+      toast.success("Đã áp dụng giảm giá cho tất cả sách đã chọn!")
+      fetchInitialBook()
+      setSelectedBooks([])
+      setShowDiscountModal(false)
+      setDiscountPercent(0)
+    } catch (err) {
+      toast.error("Có lỗi khi giảm giá hàng loạt!")
+    } finally {
+      setIsApplyingDiscount(false)
+    }
+  }
+
+  const handleBulkDelete = async () => {
+    if (!window.confirm("Bạn chắc chắn muốn xóa tất cả sách đã chọn?")) return
+    try {
+      await Promise.all(
+        selectedBooks.map((id) => deleteBook(id))
+      )
+      toast.success("Đã xóa tất cả sách đã chọn!")
+      fetchInitialBook()
+      setSelectedBooks([])
+    } catch (err) {
+      toast.error("Có lỗi khi xóa sách hàng loạt!")
+    }
   }
 
   return (
@@ -226,12 +184,18 @@ const BooksManagement = () => {
           </button>
         </div>
       </div>
-
       {/* Table Section */}
       <div className="book-management__table">
         <table>
           <thead>
             <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  checked={selectedBooks.length === filteredAndSortedBooks.length && filteredAndSortedBooks.length > 0}
+                  onChange={handleSelectAll}
+                />
+              </th>
               <th onClick={() => handleSort("id")} className="sortable-header">
                 ID {renderSortIcon("id")}
               </th>
@@ -248,59 +212,92 @@ const BooksManagement = () => {
           </thead>
           <tbody>
             {filteredAndSortedBooks.map((book) => (
-              <tr key={book.id}>
-                <td>{book.id}</td>
-                <td>{book.name}</td>
-                <td>{book.Author.name}</td>
-                <td>
-                  <CategoryButton
-                    count={book.Categories.length}
-                    onClick={() =>
-                      setCategoryModal({
-                        show: true,
-                        book: book,
-                      })
-                    }
-                  />
-                </td>
-                <td>{book.Serie ? book.Serie.name : "Unknown"}</td>
-                <td>
-                  <div className="price">
-                    <span className="sale">{formatCurrency(book.sale)}</span>
-                    {book.originalCost > book.sale && (
-                      <span className="original">{formatCurrency(book.originalCost)}</span>
-                    )}
-                  </div>
-                </td>
-                <td>{book.stock}</td>
-                <td className="book-management__actions-cell">
-                  <button
-                    onClick={() => setViewModal({ show: true, book })}
-                    className="action-btn view"
-                    title="View Details"
-                  >
-                    <MdVisibility />
-                  </button>
-                  <button
-                    onClick={() => setAddEditModal({ show: true, type: "edit", book })}
-                    className="action-btn edit"
-                    title="Edit Book"
-                  >
-                    <MdEdit />
-                  </button>
-                  <button
-                    onClick={() => setDeleteModal({ show: true, book })}
-                    className="action-btn delete"
-                    title="Delete Book"
-                  >
-                    <MdDelete />
-                  </button>
-                </td>
-              </tr>
+              <BookTableRows
+                key={book.id}
+                books={[book]}
+                isSelected={selectedBooks.includes(book.id)}
+                onSelect={() => handleSelectBook(book.id)}
+                onView={(book) => setViewModal({ show: true, book })}
+                onEdit={(book) => setAddEditModal({ show: true, type: "edit", book })}
+                onDelete={(book) => setDeleteModal({ show: true, book })}
+                onCategoryView={(book) => setCategoryModal({ show: true, book })}
+              />
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Section */}
+      <Pagination
+        currentPage={currentPage}
+        isLastPage={isLastPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+
+      {/* Floating Bulk Bar */}
+      {selectedBooks.length > 0 && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 24,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 100,
+            background: '#fff',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
+            borderRadius: 12,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: 16,
+            padding: '16px 32px',
+            minWidth: 320,
+            maxWidth: 900,
+            margin: '0 auto',
+            transition: 'all 0.2s',
+          }}
+        >
+          <span style={{ color: '#333', fontWeight: 500 }}>
+            <b>{selectedBooks.length}</b> sách được chọn
+          </span>
+          <button onClick={handleBulkSale} className="btn btn-primary" style={{ minWidth: 120 }}>
+            <span style={{ marginRight: 6 }}>%</span> Giảm giá tất cả
+          </button>
+          <button onClick={handleBulkDelete} className="btn btn-danger" style={{ minWidth: 120 }}>
+            <span style={{ marginRight: 6 }}>🗑️</span> Xóa tất cả
+          </button>
+        </div>
+      )}
+
+      {/* Discount Modal */}
+      {showDiscountModal && (
+        <div className="modal-overlay">
+          <div className="modal-content" style={{ maxWidth: 350, width: '100%' }}>
+            <div className="modal-header">
+              <h2>Giảm giá hàng loạt</h2>
+            </div>
+            <div className="modal-body">
+              <label>Nhập % giảm giá cho tất cả sách đã chọn:</label>
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={discountPercent}
+                onChange={e => setDiscountPercent(Number(e.target.value))}
+                style={{ width: '100%', margin: '12px 0', padding: 8 }}
+                autoFocus
+              />
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-secondary" onClick={() => setShowDiscountModal(false)} disabled={isApplyingDiscount}>Hủy</button>
+              <button className="btn btn-primary" onClick={handleApplyDiscount} disabled={isApplyingDiscount || discountPercent <= 0 || discountPercent > 100}>
+                {isApplyingDiscount ? "Đang áp dụng..." : "Áp dụng"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modals */}
       {viewModal.show && (
@@ -316,7 +313,6 @@ const BooksManagement = () => {
           type={addEditModal.type}
           book={addEditModal.book}
           onClose={() => setAddEditModal({ show: false, type: null, book: null })}
-          onSubmit={addEditModal.type === "add" ? handleAdd : handleEdit}
           fetchInitialBook={fetchInitialBook}
         />
       )}
@@ -325,7 +321,6 @@ const BooksManagement = () => {
         <DeleteBookModal
           book={deleteModal.book}
           onClose={() => setDeleteModal({ show: false, book: null })}
-          onConfirm={() => handleDelete(deleteModal.book.id)}
           fetchInitialBook={fetchInitialBook}
         />
       )}

@@ -37,7 +37,7 @@ const relatedBooks = [
 const BookDetail = () => {
     const params = useLocation();
     const bookId = params.state?.id;
-    const userId = JSON.parse(sessionStorage.getItem("user"))?.id
+    const userId = JSON.parse(localStorage.getItem("user"))?.id
     const [activeTab, setActiveTab] = useState("details");
     const [quantity, setQuantity] = useState(1);
     const [bookData, setBookData] = useState({

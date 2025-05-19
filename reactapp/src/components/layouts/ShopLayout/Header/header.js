@@ -10,13 +10,14 @@ import { FaRegHeart } from "react-icons/fa6"
 import { IoMdNotificationsOutline } from "react-icons/io"
 import { deleteNoti, getNoti, updateNoti } from "../../../../service/notiService"
 import { toast } from "react-toastify"
+import { useAuth } from "../../../../context/AuthContext"
 
 function Header() {
     const [searchQuery, setSearchQuery] = useState("")
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [isSideBarOpen, setIsSideBarStatus] = useState(false)
-    const userProfile = JSON.parse(sessionStorage.getItem("user"))
-    console.log(userProfile)
+    const { user } = useAuth()
+    console.log(user)
 
     const navigate = useNavigate()
     const dropdownRef = useRef(null)
@@ -51,7 +52,7 @@ function Header() {
     }, [])
 
     const handleFetchAllNotiForUser = async () => {
-        const response = await getNoti(undefined, userProfile.id)
+        const response = await getNoti(undefined, user.id)
         if(response){
             if(+response.status === 1){
                 toast.success(response.message)
@@ -68,9 +69,10 @@ function Header() {
         handleFetchAllNotiForUser()
     }, [])
 
+    const { logout } = useAuth()
+
     const handleLogout = () => {
-        sessionStorage.removeItem("user")
-        sessionStorage.removeItem("access_token")
+        logout()
         navigate("/login")
     }
 
@@ -241,10 +243,10 @@ function Header() {
                         />
                         <div className="header__user-section__user-profile__profile-trigger__user-info">
                             <span className="header__user-section__user-profile__profile-trigger__user-name">
-                                {userProfile.name ? userProfile.name : "Null"}
+                                {user ? user.name : ""}
                             </span>
                             <span className="header__user-section__user-profile__profile-trigger__user-email">
-                                {userProfile.email}
+                                {user ? user.email : ""}
                             </span>
                         </div>
                     </div>
@@ -253,10 +255,10 @@ function Header() {
                     <div className="header__user-section__user-profile__profile-dropdown">
                         <div className="header__user-section__user-profile__profile-dropdown__dropdown-header">
                         <span className="header__user-section__user-profile__profile-dropdown__dropdown-name">
-                            {userProfile.name}
+                            {user ? user.name : ""}
                         </span>
                         <span className="header__user-section__user-profile__profile-dropdown__dropdown-email">
-                            {userProfile.email}
+                            {user ? user.email : ""}
                         </span>
                         </div>
 

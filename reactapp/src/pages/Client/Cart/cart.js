@@ -13,8 +13,8 @@ const Cart = () => {
   const [paymentMethods, setPaymentMethods] = useState([])
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [itemToDelete, setItemToDelete] = useState(null)
-  const user = sessionStorage.getItem("user")
-  const userID = JSON.parse(sessionStorage.getItem("user"))?.id || ""
+  const user = localStorage.getItem("user")
+  const userID = JSON.parse(localStorage.getItem("user"))?.id || ""
 
   const getCart = async () => {
     const responseGetCart = await getCartForUser(userID)

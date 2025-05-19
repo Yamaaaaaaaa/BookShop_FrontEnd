@@ -10,8 +10,8 @@ export const deleteOwnBill = async (userId, billId) => {
 
 
 // Admin:
-export const getAllBill = async (userId) => {
-    return await instance.get(mainUrl + "/bill/get-all-bill");
+export const getAllBill = async (query) => {
+    return await instance.get(mainUrl + "/bill/get-all-bill", {params: query});
 }
 export const getBillById = async (billId) => {
     return await instance.get(mainUrl + "/bill/get-a-bill", {params: {billId}});

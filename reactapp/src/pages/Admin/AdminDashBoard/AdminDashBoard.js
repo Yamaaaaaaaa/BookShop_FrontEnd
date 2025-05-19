@@ -210,8 +210,8 @@ const AdminDashboard = () => {
                                         <User size={24} />
                                     </div>
                                     <div className="admin-details">
-                                        <p>{admin.name}</p>
-                                        <span>Role: {admin.Group.name}</span>
+                                        <p>{admin ? admin.name : ""}</p>
+                                        <span>Role: {admin && admin.Group ? admin.Group.name : ""}</span>
                                     </div>
                                 </div>
                             </div>

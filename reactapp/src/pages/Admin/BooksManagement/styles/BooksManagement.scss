@@ -1,4 +1,4 @@
-@import "../../../constant/color.scss";
+@import "../../../../constant/color.scss";
 
 .book-management {
     padding: 10px;
@@ -148,5 +148,72 @@
         color: #666;
         text-decoration: line-through;
         font-size: 13px;
+    }
+}
+
+.category-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #e0e0e0;
+    }
+    
+    span {
+        font-size: 12px;
+        font-weight: 500;
+    }
+}
+
+.loading-row {
+    .loading-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid $admin_primary-color;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+    }
+}
+
+.empty-row {
+    .empty-state {
+        padding: 30px;
+        text-align: center;
+        color: #666;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    
+    .sort-icon {
+        margin-left: 5px;
+        color: #999;
+        
+        &.active {
+            color: $admin_primary-color;
+        }
     }
 }

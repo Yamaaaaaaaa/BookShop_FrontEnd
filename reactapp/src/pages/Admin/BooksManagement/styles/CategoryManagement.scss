@@ -1,0 +1,157 @@
+@import "../../../../constant/color.scss";
+
+.category-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.category-modal {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+    
+    h2 {
+      font-size: 18px;
+      color: $admin_secondary-color;
+      margin: 0;
+    }
+  }
+  
+  &__close-btn {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+  }
+  
+  &__content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  
+  &__description {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #666;
+    font-size: 14px;
+  }
+  
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      border-color: $admin_primary-color;
+      background-color: #f9f9f9;
+    }
+    
+    &.selected {
+      background-color: lighten($admin_primary-color, 30%);
+      border-color: $admin_primary-color;
+    }
+  }
+  
+  &__item-name {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  &__item-check {
+    color: $admin_primary-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 20px;
+    border-top: 1px solid #eee;
+    background-color: #f9f9f9;
+  }
+  
+  &__cancel-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    &:hover {
+      background-color: #f1f1f1;
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+  
+  &__save-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: $admin_primary-color;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: darken($admin_primary-color, 10%);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}

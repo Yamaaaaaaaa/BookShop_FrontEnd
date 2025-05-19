@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "./adminlogin.scss";
 import { loginAdminService } from "../../../service/authService";
 import { toast } from "react-toastify";
-
+import { useAdmin } from "../../../context/AdminContext";
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const { login } = useAdmin();
     
     const [formData, setFormData] = useState({
         email: '',
@@ -16,7 +17,6 @@ const LoginPage = () => {
     const [errors, setErrors] = useState({});
     const [loginError, setLoginError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -55,8 +55,7 @@ const LoginPage = () => {
             console.log("Response Admin Login: ", response);
             
             if(response && +response.status === 1 && response.access_token) {
-                sessionStorage.setItem('access_token', response.access_token);
-                sessionStorage.setItem('admin', JSON.stringify(response.data));
+                login(response.data, response.access_token);
                 navigate("/admin/dashboard")
                 toast.success(response.message)
                 return

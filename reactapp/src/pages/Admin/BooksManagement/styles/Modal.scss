@@ -1,0 +1,357 @@
+@import "../../../../constant/color.scss";
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  
+  &.delete-modal {
+    max-width: 400px;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  
+  .modal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: $admin_primary-color;
+    color: white;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+  
+  h2 {
+    font-size: 18px;
+    color: $admin_secondary-color;
+    margin: 0;
+  }
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(90vh - 130px);
+  
+  .form-group {
+    margin-bottom: 16px;
+    
+    &--two-thirds {
+      flex: 2;
+    }
+    
+    &--one-third {
+      flex: 1;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      
+      &:focus {
+        outline: none;
+        border-color: $admin_primary-color;
+      }
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 16px;
+    
+    .form-group {
+      flex: 1;
+    }
+  }
+  
+  &.delete-confirmation {
+    text-align: center;
+    padding: 30px 20px;
+    
+    p {
+      font-size: 16px;
+      color: #333;
+    }
+  }
+  
+  &.view-book {
+    display: flex;
+    gap: 20px;
+    
+    .view-book__info {
+      flex: 1;
+      
+      .info-row {
+        margin-bottom: 12px;
+        
+        label {
+          display: block;
+          font-weight: 500;
+          color: #666;
+          margin-bottom: 4px;
+        }
+        
+        span {
+          font-size: 15px;
+          color: #333;
+        }
+      }
+    }
+    
+    .view-book__image {
+      width: 200px;
+      
+      .image-placeholder {
+        width: 100%;
+        height: 250px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &.btn-primary {
+    background-color: $admin_primary-color;
+    color: white;
+    border: none;
+    
+    &:hover {
+      background-color: darken($admin_primary-color, 10%);
+    }
+    
+    &:disabled {
+      background-color: lighten($admin_primary-color, 20%);
+      cursor: not-allowed;
+    }
+  }
+  
+  &.btn-secondary {
+    background-color: white;
+    color: #666;
+    border: 1px solid #ddd;
+    
+    &:hover {
+      background-color: #f1f1f1;
+    }
+    
+    &:disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
+  }
+  
+  &.btn-danger {
+    background-color: #F44336;
+    color: white;
+    border: none;
+    
+    &:hover {
+      background-color: darken(#F44336, 10%);
+    }
+  }
+}
+
+// Dropdown styles
+.search-dropdown {
+  position: relative;
+  
+  .search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    
+    &:focus {
+      outline: none;
+      border-color: $admin_primary-color;
+    }
+  }
+  
+  .selected-item {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #333;
+    pointer-events: none;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    .dropdown-item {
+      padding: 10px;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #f5f5f5;
+      }
+      
+      &.no-results {
+        color: #999;
+        font-style: italic;
+        cursor: default;
+      }
+    }
+  }
+}
+
+// Image upload styles
+.image-upload-container {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+  .upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    
+    .file-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+    
+    .file-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      
+      svg {
+        margin-bottom: 8px;
+        color: $admin_primary-color;
+      }
+      
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+  
+  .image-preview {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .remove-image-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #F44336;
+      
+      &:hover {
+        background-color: white;
+      }
+    }
+  }
+}

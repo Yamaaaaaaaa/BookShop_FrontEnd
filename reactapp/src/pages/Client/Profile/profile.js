@@ -1,5 +1,4 @@
-
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, Navigate } from "react-router-dom"
 import "./profile.scss"
 import { LuShoppingCart } from "react-icons/lu"
 import { FaBell, FaLock, FaMoneyBillWave, FaQuestion, FaRegHeart, FaUser } from "react-icons/fa"
@@ -10,6 +9,7 @@ import { MdOutlinePageview } from "react-icons/md"
 import { TiDelete } from "react-icons/ti"
 import { deleteOwnBill, updateBill } from "../../../service/billService"
 import { getAllBillForUser } from "../../../service/userService"
+import { useAuth } from "../../../context/AuthContext"
 
 import { toast } from "react-toastify"
 import BillDetailsModal from "./BillDetailModal"
@@ -17,8 +17,8 @@ import ConfirmDeleteModal from "./ConfirmDeleteModal"
 import PaymentModal from "./PaymentModal"
 
 const Profile = () => {
+    const { user, logout } = useAuth()
     const navigate = useNavigate()
-    const [userProfile, setUserProfile] = useState({})
     const [billData, setBillData] = useState([])
     const [selectedBill, setSelectedBill] = useState(null)
     const [showModal, setShowModal] = useState(false)
@@ -26,10 +26,9 @@ const Profile = () => {
     const [sortOrder, setSortOrder] = useState("desc") // desc = newest first
     const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [billToDelete, setBillToDelete] = useState(null)
-    const [showPaymentModal, setShowPaymentModal] = useState(false) // Add this state
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null) // Add this state
+    const [showPaymentModal, setShowPaymentModal] = useState(false)
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null)
     const handlePaymentClick = (bill) => {
-      // Check if payment method is cash on delivery
       if (
         bill.PaymentMethod.name.toLowerCase().includes("cash") ||
         bill.PaymentMethod.name.toLowerCase().includes("cod") ||
@@ -38,8 +37,6 @@ const Profile = () => {
         toast.info("This order is cash on delivery. No payment needed.")
         return
       }
-  
-      // For other payment methods, show QR code
       setSelectedPaymentMethod({
         name: bill.PaymentMethod.name,
         description: bill.PaymentMethod.description || "Please scan the QR code to complete payment",
@@ -49,9 +46,8 @@ const Profile = () => {
     }
     
     const fetchAllBillForUser = async () => {
-        const responseGetBill = await getAllBillForUser(userProfile.id)
-        console.log(responseGetBill)
-
+        if (!user) return;
+        const responseGetBill = await getAllBillForUser(user.id)
         if (responseGetBill) {
             if (responseGetBill.status === 1 && responseGetBill.data) {
                 setBillData(responseGetBill.data)
@@ -116,30 +112,28 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    setUserProfile(JSON.parse(sessionStorage.getItem("user")))
     fetchAllBillForUser()
-  }, [])
+  }, [user])
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
   const handleLogout = () => {
-    sessionStorage.removeItem("token")
-    sessionStorage.removeItem("user")
+    logout()
     navigate("/login")
   }
 
   const getFilteredAndSortedBills = () => {
     let filteredBills = [...billData]
-
-    // Filter by state
     if (filterState !== "all") {
       filteredBills = filteredBills.filter((bill) => bill.state === filterState)
     }
-
-    // Sort by created_at
     filteredBills.sort((a, b) => {
       const dateA = new Date(a.date).getTime()
       const dateB = new Date(b.date).getTime()
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB
     })
-
     return filteredBills
   }
 
@@ -150,7 +144,7 @@ const Profile = () => {
           <div className="profile-image">
             <img src="https://bookland.dexignzone.com/xhtml/images/books/grid/book12.jpg" alt="Profile Picture" />
           </div>
-          <h2 className="profile-name">{userProfile.name}</h2>
+          <h2 className="profile-name">{user?.name || ""}</h2>
           <p className="profile-title">Customer</p>
         </div>
         <nav>
@@ -229,23 +223,23 @@ const Profile = () => {
           <div className="form-grid">
             <div className="form-group">
               <label className="form-label">Your Name:</label>
-              <input type="text" className="form-control" value={userProfile.name} />
+              <input type="text" className="form-control" value={user?.name || ""} readOnly />
             </div>
             <div className="form-group">
               <label className="form-label">Email:</label>
-              <input type="text" className="form-control" value={userProfile.email} />
+              <input type="text" className="form-control" value={user?.email || ""} readOnly />
             </div>
             <div className="form-group">
               <label className="form-label">Address:</label>
-              <input type="text" className="form-control" value={userProfile.address} />
+              <input type="text" className="form-control" value={user?.address || ""} readOnly />
             </div>
             <div className="form-group">
               <label className="form-label">Phone Number:</label>
-              <input type="text" className="form-control" value={userProfile.phone} />
+              <input type="text" className="form-control" value={user?.phone || ""} readOnly />
             </div>
             <div className="form-group full-width">
               <label className="form-label">Description:</label>
-              <textarea className="form-control"></textarea>
+              <textarea className="form-control" readOnly></textarea>
             </div>
           </div>
           <div>
@@ -304,7 +298,7 @@ const Profile = () => {
                       </button>
                       <button
                         className="action-btn delete-btn"
-                        onClick={() => handleDeleteClick(userProfile.id, bill.id, bill)}
+                        onClick={() => handleDeleteClick(user.id, bill.id, bill)}
                       >
                         <TiDelete />
                       </button>

@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 const ProtectRoute = ({ children }) => {
-    // Check if user is authenticated via sessionStorage
-    const isAuth = sessionStorage.getItem('access_token') !== null
+    const { isAuthenticated } = useAuth();
 
     // If not authenticated, redirect to login
-    if (!isAuth) {
+    if (!isAuthenticated) {
         return <Navigate to="/login" replace />
     }
 

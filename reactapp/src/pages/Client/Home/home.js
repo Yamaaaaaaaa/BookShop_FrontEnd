@@ -14,7 +14,7 @@ import { Star } from "lucide-react"
 const Home = () => {
   const [heroBook, setHeroBooks] = useState({})
   const [recommendedBooks, setRecommendBooks] = useState([])
-  const [user] = useState(JSON.parse(sessionStorage.getItem("user")))
+  const [user] = useState(JSON.parse(localStorage.getItem("user")))
   const [saleBooks, setSaleBooks] = useState([])
   const [blogs, setBlogs] = useState([])
   const [visibleBooks, setVisibleBooks] = useState([])

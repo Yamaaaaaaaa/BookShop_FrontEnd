@@ -13,15 +13,15 @@ const ViewAddressesModal = ({ user, onClose }) => {
           <div className="modal-body">
             <div className="form-group">
               <label>User</label>
-              <span>{user.name}</span>
+              <span>{user ? user.name : ""}</span>
             </div>
             <div className="form-group">
               <label>Addresses</label>
-              {user.addresses.map((address, index) => (
+              {user && user.addresses ? user.addresses.map((address, index) => (
                 <div key={index} className="address-item">
                   {address}
                 </div>
-              ))}
+              )) : null}
             </div>
           </div>
           <div className="modal-footer">

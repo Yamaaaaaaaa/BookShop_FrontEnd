@@ -77,10 +77,10 @@ const UserManagement = () => {
                     {filteredUsers.map((userData) => (
                         <tr key={userData.id}>
                             <td>{userData.id}</td>
-                            <td>{userData.name}</td>
-                            <td>{userData.email}</td>
-                            <td>{userData.Group.name}</td>
-                            <td>{userData.address} </td>
+                            <td>{userData ? userData.name : ""}</td>
+                            <td>{userData ? userData.email : ""}</td>
+                            <td>{userData && userData.Group ? userData.Group.name : ""}</td>
+                            <td>{userData ? userData.address : ""} </td>
                             <td className="action_btn">
                                 <button onClick={() => {
                                     setAddModal({
