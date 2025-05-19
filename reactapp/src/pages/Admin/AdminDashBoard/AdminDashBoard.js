@@ -7,7 +7,7 @@ import "./AdminDashBoard.scss"
 import { toast } from "react-toastify"
 import { getAllBill } from "../../../service/billService"
 import { getAllUser } from "../../../service/userService"
-import { getBooks } from "../../../service/bookService"
+import { getBooks, getMostBookData } from "../../../service/bookService"
 
 const AdminDashboard = () => {
     const statusColors = {
@@ -62,15 +62,13 @@ const AdminDashboard = () => {
     }
     const fetchInitialBook = async () => {
         try {
-            const rcmBook = await getBooks()
-            if (rcmBook?.data?.data) {
-                setBookData(rcmBook.data.data)
-                console.log(rcmBook.data.data)
-                toast.success(rcmBook.data.message)
+            const rcmBook = await getMostBookData()
+            if (rcmBook) {
+                setBookData(rcmBook)
+                console.log("BookData",rcmBook)
                 return
                 // filteredBooks()
             }
-            toast.error(rcmBook.data.message)
         } catch (error) {
             toast.error("Error to fetch Books")
         }
@@ -243,23 +241,23 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="branch-section">
-                        <h2>Branch Network</h2>
+                        <h2>Most Popular Books: </h2>
                         <div className="branch-list">
                             {books.map((book) => (
-                            <div key={book.id} className="branch-card">
-                                <div className="branch-info">
-                                    <div className="branch-avatar">
-                                        <Building size={18} />
+                                <div key={book.id} className="branch-card">
+                                    <div className="branch-info">
+                                        <div className="branch-avatar">
+                                            <Building size={18} />
+                                        </div>
+                                        <div className="branch-details">
+                                            <p>{book.Book.name}</p>
+                                            <span>Sold Amount: {book.totalQuantity}</span>
+                                        </div>
                                     </div>
-                                    <div className="branch-details">
-                                        <p>{book.name}</p>
-                                        <span>Book ID: {book.id}</span>
-                                    </div>
+                                    <a href={`/book/${book.id}`} className="edit-link">
+                                        <ExternalLink size={16} />
+                                    </a>
                                 </div>
-                                <a href={`/book/${book.id}`} className="edit-link">
-                                    <ExternalLink size={16} />
-                                </a>
-                            </div>
                             ))}
                         </div>
                     </div>

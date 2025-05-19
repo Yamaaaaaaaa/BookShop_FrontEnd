@@ -29,7 +29,7 @@ const BillsManagement = () => {
     }
 
     const fetchAllBill = async () => {
-        const response = await getAllBill({page, pageSize: limit, state: statusFilter})
+        const response = await getAllBill({page, pageSize: limit, state: statusFilter, sortOrder: "ASC"})
         if (response) {
             if (response.status === 1) {
                 toast.success(response.message)

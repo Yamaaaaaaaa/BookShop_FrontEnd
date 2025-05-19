@@ -79,3 +79,10 @@ export const updateBooksPrices = async (data) => {
 export const deleteBulkBooks = async (data) => {
     console.log(data);
 }
+
+
+export const getMostBookData = async (query) => {
+    return await instance.get( mainUrl + "/book/get-most-book", {
+        params: query
+    })
+}

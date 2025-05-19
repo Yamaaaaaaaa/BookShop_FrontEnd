@@ -11,8 +11,12 @@ import Pagination from "../../../components/Pagination";
 
 const Shop = () => {
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(10)
+    const [limit, setLimit] = useState(9)
     const [totalPages, setTotalPages] = useState(1)
+
+    // Thêm state cho sort
+    const [sortBy, setSortBy] = useState('id');
+    const [sortOrder, setSortOrder] = useState('ASC');
 
     const [books, setBooks] = useState([])
     const [categories, setCategories] = useState([])
@@ -96,7 +100,12 @@ const Shop = () => {
 
     const fetchInitialBook = async () => {
         try {
-            const rcmBook = await getBookData({page, pageSize: limit});
+            const rcmBook = await getBookData({
+                page,
+                pageSize: limit,
+                sortBy,
+                sortOrder
+            });
             if (rcmBook?.data) {
                 setBooks(rcmBook.data);
                 setFilterBooks(rcmBook.data);
@@ -107,6 +116,11 @@ const Shop = () => {
             console.error("Error fetching books:", error);
         }
     };
+
+    // Khi đổi sort thì reset page về 1
+    useEffect(() => {
+        setPage(1);
+    }, [sortBy, sortOrder]);
 
     // Add handlePageChange function
     const handlePageChange = (newPage) => {
@@ -140,7 +154,7 @@ const Shop = () => {
         fetchInitialBook();
         fetchCategories();
         fetchPublishers();
-    }, [page]); // Add page to dependencies
+    }, [page, sortBy, sortOrder]); // Thêm sortBy, sortOrder vào dependencies
     
 
     useEffect(() => {
@@ -257,17 +271,25 @@ const Shop = () => {
             <div className="shop__books-section">
                 <div className="shop__books-header">
                     <h1>Books</h1>
-                    {/* <div className="shop__view-options">
-                        <select>
-                            <option>Categories</option>
+                    <div className="shop__view-options">
+                        <select
+                            value={sortBy}
+                            onChange={e => setSortBy(e.target.value)}
+                        >
+                            <option value="id">Default</option>
+                            <option value="sale">Price</option>
                         </select>
-                        <select>
-                            <option>Newest</option>
+                        <select
+                            value={sortOrder}
+                            onChange={e => setSortOrder(e.target.value)}
+                        >
+                            <option value="ASC">High to Low</option>
+                            <option value="DESC">Low to High</option>
                         </select>
                         <button onClick={() => setOpenSideBarFilter(true)}>
                             <span>Filter</span>
                         </button>
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="shop__books-grid">
@@ -304,7 +326,6 @@ const Shop = () => {
                     ))}
                 </div>
 
-                {/* Add Pagination component */}
                 <Pagination
                     currentPage={page}
                     totalPages={totalPages}
